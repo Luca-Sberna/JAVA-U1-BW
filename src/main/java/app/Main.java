@@ -1,9 +1,19 @@
 package app;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import dao.MezzoDAO;
+import dao.PeriodiDiServizioDAO;
+import dao.TrattaDAO;
+import entities.Mezzo;
+import entities.Mezzo.stato;
+import entities.Mezzo.tipoMezzo;
+import entities.Tratta;
+import lombok.extern.slf4j.Slf4j;
 import util.JpaUtil;
 
+@Slf4j
 public class Main {
 
 	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
@@ -14,6 +24,23 @@ public class Main {
 		System.out.println("djddiee");
 
 		System.out.println("dd");
+		EntityManager em = emf.createEntityManager();
+		MezzoDAO md = new MezzoDAO(em);
+		PeriodiDiServizioDAO pdsd = new PeriodiDiServizioDAO(em);
+		TrattaDAO td = new TrattaDAO(em);
+
+		Tratta t1 = new Tratta("Roma", "Latina", 2.30);
+//		td.save(t1);
+
+		Tratta foundt1 = td.getById("10f49095-bb8c-4c3c-8206-656a8392577a");
+
+		Mezzo m1 = new Mezzo(60, stato.inServizio, tipoMezzo.Autobus, foundt1);
+		Mezzo m2 = new Mezzo(300, stato.inServizio, tipoMezzo.Tram, foundt1);
+//		md.save(m1);
+//		md.save(m2);
+		// i 2 mezzi hanno la stessa tratta
+
+		log.info(" " + td.getTimesTrattaPercorsa("10f49095-bb8c-4c3c-8206-656a8392577a"));
 
 	}
 
