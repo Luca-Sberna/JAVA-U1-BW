@@ -1,4 +1,6 @@
 /.metadata/
 /.persistence.xml/
 /.pom.xml/
-/.JpaUtil.java/
+/.META-INF/
+/.JpaUtil/
+/.util/
