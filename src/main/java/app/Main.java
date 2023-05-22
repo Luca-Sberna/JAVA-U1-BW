@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import dao.MezzoDAO;
-import dao.PeriodiDiServizioDAO;
 import dao.TrattaDAO;
 import entities.Mezzo;
 import entities.Mezzo.stato;
@@ -26,7 +25,6 @@ public class Main {
 		System.out.println("dd");
 		EntityManager em = emf.createEntityManager();
 		MezzoDAO md = new MezzoDAO(em);
-		PeriodiDiServizioDAO pdsd = new PeriodiDiServizioDAO(em);
 		TrattaDAO td = new TrattaDAO(em);
 
 		Tratta t1 = new Tratta("Roma", "Latina", 2.30);
