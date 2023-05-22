@@ -4,25 +4,32 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class EmissioneBiglietto {
 	@Id
-	protected UUID idEmissione;
-	protected UUID idBiglietto;
-	protected UUID idPuntoVendita;
-	protected LocalDate dataEmissione;
-	protected UUID idUtente;
+	@GeneratedValue
+	private UUID idEmissione;
+	private LocalDate dataEmissione;
+
+	@ManyToOne
+	@JoinColumn(name = "utenti")
+	private Utente utente;
+
+	@ManyToOne
+	@JoinColumn(name = "IdPuntoVendita")
+	private PuntiVendita IdPuntoVendita;
 
 	public void emettiBiglietto() {
 		this.emettiBiglietto();
@@ -30,11 +37,10 @@ public class EmissioneBiglietto {
 
 	@Override
 	public String toString() {
-		return "EmissioneBiglietto [idEmissione=" + idEmissione + ", idBiglietto=" + idBiglietto + ", idPuntoVendita="
-				+ idPuntoVendita + ", dataEmissione=" + dataEmissione + ", getIdEmissione()=" + getIdEmissione()
-				+ ", getIdBiglietto()=" + getIdBiglietto() + ", getIdPuntoVendita()=" + getIdPuntoVendita()
-				+ ", getDataEmissione()=" + getDataEmissione() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+		return "EmissioneBiglietti [idEmissione=" + idEmissione + ", dataEmissione=" + dataEmissione + ", utente="
+				+ utente + ", getIdEmissione()=" + getIdEmissione() + ", getDataEmissione()=" + getDataEmissione()
+				+ ", getUtente()=" + getUtente() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 
 }
