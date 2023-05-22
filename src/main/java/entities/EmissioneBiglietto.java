@@ -9,12 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class EmissioneBiglietto {
@@ -22,6 +24,12 @@ public class EmissioneBiglietto {
 	@GeneratedValue
 	private UUID idEmissione;
 	private LocalDate dataEmissione;
+	protected UUID idBiglietto;
+	protected UUID idPuntoVendita;
+
+	public void emettiBiglietto() {
+		this.emettiBiglietto();
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "utenti")
@@ -31,16 +39,18 @@ public class EmissioneBiglietto {
 	@JoinColumn(name = "IdPuntoVendita")
 	private PuntiVendita IdPuntoVendita;
 
-	public void emettiBiglietto() {
-		this.emettiBiglietto();
-	}
-
 	@Override
 	public String toString() {
-		return "EmissioneBiglietti [idEmissione=" + idEmissione + ", dataEmissione=" + dataEmissione + ", utente="
-				+ utente + ", getIdEmissione()=" + getIdEmissione() + ", getDataEmissione()=" + getDataEmissione()
-				+ ", getUtente()=" + getUtente() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		return "EmissioneBiglietto [idEmissione=" + idEmissione
+				+ ", dataEmissione=" + dataEmissione + ", idBiglietto="
+				+ idBiglietto + ", idPuntoVendita=" + idPuntoVendita
+				+ ", utente=" + utente + ", getIdEmissione()="
+				+ getIdEmissione() + ", getDataEmissione()="
+				+ getDataEmissione() + ", getIdBiglietto()=" + getIdBiglietto()
+				+ ", getIdPuntoVendita()=" + getIdPuntoVendita()
+				+ ", getUtente()=" + getUtente() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
 }
