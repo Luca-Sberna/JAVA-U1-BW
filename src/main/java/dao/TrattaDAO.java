@@ -52,4 +52,11 @@ public class TrattaDAO {
 		return (Long) q.getSingleResult();
 	}
 
+	public long getTimesTrattaPercorsaBySingleMezzo(String trattaId, String mezzoId) {
+		Query q = em.createQuery("SELECT COUNT(m) FROM Mezzo m WHERE m.tratta.id = :trattaId AND m.id = :mezzoId");
+		q.setParameter("trattaId", UUID.fromString(trattaId));
+		q.setParameter("mezzoId", UUID.fromString(mezzoId));
+		return (Long) q.getSingleResult();
+	}
+
 }

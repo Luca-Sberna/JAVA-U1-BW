@@ -40,8 +40,12 @@ public class Main {
 //		md.save(m2);
 		// i 2 mezzi hanno la stessa tratta
 
+		// quante volte è stata percorda una tratta
 		log.info(" " + td.getTimesTrattaPercorsa("10f49095-bb8c-4c3c-8206-656a8392577a"));
 
+		// quante volte è stata percorsa una tratta da un singolo Mezzo
+		log.info(" " + td.getTimesTrattaPercorsaBySingleMezzo("10f49095-bb8c-4c3c-8206-656a8392577a",
+				"b207b034-95f8-400c-99a1-ec80b45f5eb2"));
 	}
 
 }
