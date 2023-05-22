@@ -33,7 +33,7 @@ public class Utente {
 	private Tessera numeroTessera;
 
 	@OneToMany(mappedBy = "utente")
-	private Set<EmissioneBiglietti> biglietti;
+	private Set<EmissioneBiglietto> biglietti;
 
 	public Utente(String nome, String cognome) {
 		this.nome = nome;
