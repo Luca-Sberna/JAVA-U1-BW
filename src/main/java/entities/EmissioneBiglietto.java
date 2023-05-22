@@ -22,6 +22,7 @@ public class EmissioneBiglietto {
 	protected UUID idBiglietto;
 	protected UUID idPuntoVendita;
 	protected LocalDate dataEmissione;
+	protected UUID idUtente;
 
 	public void emettiBiglietto() {
 		this.emettiBiglietto();
