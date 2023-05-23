@@ -3,7 +3,6 @@ package entities;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -26,19 +25,17 @@ public abstract class PuntiVendita implements Emissione {
 	protected Integer numeroVendite;
 	protected String luogo;
 
-	@OneToMany(mappedBy = "puntoVendita", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "puntoVendita")
 	private Set<VenditoriAutorizzati> venditori;
 
-	@OneToMany(mappedBy = "puntoVendita", cascade = CascadeType.ALL)
-	private Set<DistributoriAutomatici> distibutori;
+	@OneToMany(mappedBy = "puntoVendita")
+	private Set<VenditoriAutorizzati> distibutori;
 
 	@Override
 	public String toString() {
-		return "PuntiVendita [idPuntoVendita=" + idPuntoVendita
-				+ ", numeroVendite=" + numeroVendite + ", luogo=" + luogo
-				+ ", getIdPuntoVendita()=" + getIdPuntoVendita()
-				+ ", getNumeroVendite()=" + getNumeroVendite() + ", getLuogo()="
-				+ getLuogo() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+		return "PuntiVendita [idPuntoVendita=" + idPuntoVendita + ", numeroVendite=" + numeroVendite + ", luogo="
+				+ luogo + ", getIdPuntoVendita()=" + getIdPuntoVendita() + ", getNumeroVendite()=" + getNumeroVendite()
+				+ ", getLuogo()=" + getLuogo() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 }

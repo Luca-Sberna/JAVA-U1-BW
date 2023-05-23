@@ -25,8 +25,9 @@ public class Tessera {
 	@Id
 	@GeneratedValue
 	private UUID numeroTessera;
+
 	@ManyToOne
-	@JoinColumn(name = "proprietario_id")
+	@JoinColumn(name = "proprietario")
 	private Utente proprietario;
 	private LocalDate dataScadenzaTessera;
 	private LocalDate dataEmissioneTessera;
@@ -43,9 +44,8 @@ public class Tessera {
 
 	@Override
 	public String toString() {
-		return "Tessera [numeroTessera=" + numeroTessera + ", proprietario="
-				+ proprietario + ", dataScadenzaTessera=" + dataScadenzaTessera
-				+ ", dataEmissioneTessera=" + dataEmissioneTessera + "]";
+		return "Tessera [numeroTessera=" + numeroTessera + ", proprietario=" + proprietario + ", dataScadenzaTessera="
+				+ dataScadenzaTessera + ", dataEmissioneTessera=" + dataEmissioneTessera + "]";
 	}
 
 }

@@ -25,9 +25,6 @@ public class VidimazioneBiglietti {
 	@Id
 	@GeneratedValue
 	private UUID id;
-	@ManyToOne
-	@JoinColumn(name = "biglietto_id")
-	private EmissioneBiglietto biglietto;
 
 	@ManyToOne
 	@JoinColumn(name = "idMezzo")
@@ -38,10 +35,9 @@ public class VidimazioneBiglietti {
 	@JoinColumn(name = "idBiglietto")
 	private EmissioneBiglietto bigliettoVidimato;
 
-	public VidimazioneBiglietti(EmissioneBiglietto biglietto, Mezzo mezzo,
-			LocalDate dataVidimazione) {
+	public VidimazioneBiglietti(EmissioneBiglietto biglietto, Mezzo mezzo, LocalDate dataVidimazione) {
 		super();
-		this.biglietto = biglietto;
+		this.bigliettoVidimato = biglietto;
 		this.mezzo = mezzo;
 		this.dataVidimazione = dataVidimazione;
 	}

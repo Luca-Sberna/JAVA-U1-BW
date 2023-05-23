@@ -2,9 +2,11 @@ package entities;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,12 +20,17 @@ public class VenditoriAutorizzati extends PuntiVendita {
 	protected UUID idPuntoVendita;
 	protected String nomeNegozio;
 	protected String tipoDiNegozio;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_emissione_biglietto")
 	private EmissioneBiglietto emissioneBiglietto;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_emissione_abbonamento")
 	private EmissioneAbbonamento emissioneAbbonamento;
 
 	@ManyToOne
 	@JoinColumn(name = "venditoriAutorizzati")
-	private PuntiVendita PuntoVendita;
+	private PuntiVendita puntoVendita;
 
 	public VenditoriAutorizzati(String nomeNegozio, String tipoDiNegozio) {
 		this.emissioneBiglietto = new EmissioneBiglietto();
@@ -31,13 +38,15 @@ public class VenditoriAutorizzati extends PuntiVendita {
 	}
 
 	@Override
-	public void emettiBiglietto() {
-		this.emissioneBiglietto.emettiBiglietto();
+	public EmissioneBiglietto emettiBiglietto(Utente utente) {
+		this.emissioneBiglietto.emettiBiglietto(utente);
+		return emissioneBiglietto;
 	}
 
 	@Override
-	public void emettiAbbonamento() {
-		this.emissioneAbbonamento.emettiAbbonamento();
+	public EmissioneAbbonamento emettiAbbonamento(Utente utente) {
+		this.emissioneAbbonamento.emettiAbbonamento(utente);
+		return emissioneAbbonamento;
 	}
 
 	@Override
