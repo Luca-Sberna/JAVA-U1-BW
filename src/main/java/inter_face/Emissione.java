@@ -1,8 +1,12 @@
 package inter_face;
 
-public interface Emissione {
-	public void emettiBiglietto();
+import entities.EmissioneAbbonamento;
+import entities.EmissioneBiglietto;
+import entities.Utente;
 
-	public void emettiAbbonamento();
+public interface Emissione {
+	public EmissioneBiglietto emettiBiglietto(Utente utente);
+
+	public EmissioneAbbonamento emettiAbbonamento(Utente utente);
 
 }

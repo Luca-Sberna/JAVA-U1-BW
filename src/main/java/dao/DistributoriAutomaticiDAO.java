@@ -21,8 +21,8 @@ public class DistributoriAutomaticiDAO {
 		transaction.commit();
 	}
 
-	public DistributoriAutomatici getById(UUID uuid) {
-		DistributoriAutomatici found = em.find(DistributoriAutomatici.class, uuid);
+	public DistributoriAutomatici getById(String uuid) {
+		DistributoriAutomatici found = em.find(DistributoriAutomatici.class, UUID.fromString(uuid));
 		if (found != null) {
 			System.out.println("Distributore" + " " + uuid + " " + "trovato");
 		} else {

@@ -38,13 +38,15 @@ public class VenditoriAutorizzati extends PuntiVendita {
 	}
 
 	@Override
-	public void emettiBiglietto() {
-		this.emissioneBiglietto.emettiBiglietto();
+	public EmissioneBiglietto emettiBiglietto(Utente utente) {
+		this.emissioneBiglietto.emettiBiglietto(utente);
+		return emissioneBiglietto;
 	}
 
 	@Override
-	public void emettiAbbonamento() {
-		this.emissioneAbbonamento.emettiAbbonamento();
+	public EmissioneAbbonamento emettiAbbonamento(Utente utente) {
+		this.emissioneAbbonamento.emettiAbbonamento(utente);
+		return emissioneAbbonamento;
 	}
 
 	@Override

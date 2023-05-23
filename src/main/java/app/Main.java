@@ -13,6 +13,8 @@ import dao.UtenteDAO;
 import dao.VenditoriAutorizzatiDAO;
 import entities.DistributoriAutomatici;
 import entities.DistributoriAutomatici.StatoDistributore;
+import entities.EmissioneAbbonamento;
+import entities.EmissioneBiglietto;
 import entities.Mezzo;
 import entities.Mezzo.statoMezzo;
 import entities.Mezzo.tipoMezzo;
@@ -52,6 +54,13 @@ public class Main {
 		Utente utente5 = new Utente("Paolo", "Maldini");
 		Utente utente6 = new Utente("Pop", "Smoke");
 
+		Utente foundutente6 = ud.getById("15431e5c-800f-4b3e-9ba3-334306a5a54b");
+		if (foundutente6 != null) {
+			log.info("trovato");
+		} else {
+			log.info("non trovato");
+		}
+
 		Tratta t1 = new Tratta("Roma", "Latina", 2.30);
 		Tratta t2 = new Tratta("Milano", "Roma", 5.30);
 		Tratta t3 = new Tratta("Napoli", "Milano", 9.30);
@@ -71,12 +80,15 @@ public class Main {
 //        md.save(m1);
 //        md.save(m2);
 
-//		EmissioneAbbonamento tessera1 = distributore2.emettiAbbonamento(utente1);
-//		EmissioneAbbonamento tessera2 = distributore3.emettiAbbonamento(utente2);
-//		EmissioneBiglietto biglietto1 = venditore1.emettiBiglietto(utente3);
-//		EmissioneBiglietto biglietto3 = venditore3.emettiBiglietto(utente5);
-//		EmissioneBiglietto biglietto2 = venditore2.emettiBiglietto(utente4);
-//		EmissioneBiglietto biglietto4 = venditore3.emettiBiglietto(utente6);
+		EmissioneAbbonamento tessera1 = distributore2.emettiAbbonamento(utente1);
+		EmissioneAbbonamento tessera2 = distributore3.emettiAbbonamento(utente2);
+		EmissioneBiglietto biglietto1 = venditore1.emettiBiglietto(utente3);
+		EmissioneBiglietto biglietto3 = venditore3.emettiBiglietto(utente5);
+		EmissioneBiglietto biglietto2 = venditore2.emettiBiglietto(utente4);
+		EmissioneBiglietto biglietto4 = venditore3.emettiBiglietto(utente6);
+
+		ebd.save(biglietto4);
+		ead.save(tessera2);
 
 		// quante volte è stata percorda una tratta
 		log.info(" " + td.getTimesTrattaPercorsa("10f49095-bb8c-4c3c-8206-656a8392577a"));
