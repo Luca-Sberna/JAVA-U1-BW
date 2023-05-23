@@ -3,6 +3,7 @@ package app;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import dao.DistributoriAutomaticiDAO;
 import dao.MezzoDAO;
 import dao.TrattaDAO;
 import entities.Mezzo;
@@ -21,6 +22,7 @@ public class Main {
 		EntityManager em = emf.createEntityManager();
 		MezzoDAO md = new MezzoDAO(em);
 		TrattaDAO td = new TrattaDAO(em);
+		DistributoriAutomaticiDAO dd = new DistributoriAutomaticiDAO(em);
 
 		Tratta t1 = new Tratta("Roma", "Latina", 2.30);
 //        td.save(t1);
@@ -34,11 +36,14 @@ public class Main {
 		// i 2 mezzi hanno la stessa tratta
 
 		// quante volte è stata percorda una tratta
-		log.info(" " + td.getTimesTrattaPercorsa("10f49095-bb8c-4c3c-8206-656a8392577a"));
+		log.info(" " + td.getTimesTrattaPercorsa(
+				"10f49095-bb8c-4c3c-8206-656a8392577a"));
 
 		// quante volte è stata percorsa una tratta da un singolo Mezzo
-		log.info(" " + td.getTimesTrattaPercorsaBySingleMezzo("10f49095-bb8c-4c3c-8206-656a8392577a",
+		log.info(" " + td.getTimesTrattaPercorsaBySingleMezzo(
+				"10f49095-bb8c-4c3c-8206-656a8392577a",
 				"b207b034-95f8-400c-99a1-ec80b45f5eb2"));
+
 	}
 
 }

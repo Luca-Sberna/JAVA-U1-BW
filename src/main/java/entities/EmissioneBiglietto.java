@@ -42,8 +42,8 @@ public class EmissioneBiglietto {
 	private PuntiVendita IdPuntoVendita;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "idBiglietto", referencedColumnName = "idBiglietto")
-	private VidimazioneBiglietto vidimazione;
+	@JoinColumn(name = "idBiglietti", referencedColumnName = "idBiglietto")
+	private VidimazioneBiglietti vidimazione;
 
 	@ManyToOne
 	@JoinColumn(name = "bigliettoEmesso")

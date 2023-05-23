@@ -3,6 +3,7 @@ package entities;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -25,11 +26,11 @@ public abstract class PuntiVendita implements Emissione {
 	protected Integer numeroVendite;
 	protected String luogo;
 
-	@OneToMany(mappedBy = "PuntoVendita")
+	@OneToMany(mappedBy = "puntoVendita", cascade = CascadeType.ALL)
 	private Set<VenditoriAutorizzati> venditori;
 
-	@OneToMany(mappedBy = "PuntoVendita")
-	private Set<VenditoriAutorizzati> distibutori;
+	@OneToMany(mappedBy = "puntoVendita", cascade = CascadeType.ALL)
+	private Set<DistributoriAutomatici> distibutori;
 
 	@Override
 	public String toString() {

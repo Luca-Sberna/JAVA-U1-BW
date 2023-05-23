@@ -25,7 +25,12 @@ public class VidimazioneBiglietti {
 	@Id
 	@GeneratedValue
 	private UUID id;
+	@ManyToOne
+	@JoinColumn(name = "biglietto_id")
 	private EmissioneBiglietto biglietto;
+
+	@ManyToOne
+	@JoinColumn(name = "idMezzo")
 	private Mezzo mezzo; // Mezzo sulla quale è stato vidimato
 	private LocalDate dataVidimazione;
 
