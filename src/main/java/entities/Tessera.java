@@ -1,11 +1,13 @@
 package entities;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -24,6 +26,9 @@ public class Tessera {
 	private Utente proprietario;
 	private LocalDate dataScadenzaTessera;
 	private LocalDate dataEmissioneTessera;
+
+	@OneToMany(mappedBy = "numeroTessera")
+	private Set<Utente> utentiTessera;
 
 	public Tessera(Utente proprietario, LocalDate dataEmissioneTessera) {
 

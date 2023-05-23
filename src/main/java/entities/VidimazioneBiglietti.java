@@ -6,6 +6,8 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -27,7 +29,12 @@ public class VidimazioneBiglietti {
 	private Mezzo mezzo; // Mezzo sulla quale è stato vidimato
 	private LocalDate dataVidimazione;
 
-	public VidimazioneBiglietti(EmissioneBiglietto biglietto, Mezzo mezzo, LocalDate dataVidimazione) {
+	@ManyToOne
+	@JoinColumn(name = "idBiglietto")
+	private EmissioneBiglietto bigliettoVidimato;
+
+	public VidimazioneBiglietti(EmissioneBiglietto biglietto, Mezzo mezzo,
+			LocalDate dataVidimazione) {
 		super();
 		this.biglietto = biglietto;
 		this.mezzo = mezzo;
