@@ -26,7 +26,7 @@ public class EmissioneBiglietto {
 	@GeneratedValue
 	private UUID idEmissione;
 	private LocalDate dataEmissione;
-	protected UUID idBiglietto;
+//	protected UUID idBiglietto;
 	protected UUID idPuntoVendita;
 
 	public void emettiBiglietto() {
@@ -52,11 +52,10 @@ public class EmissioneBiglietto {
 	@Override
 	public String toString() {
 		return "EmissioneBiglietto [idEmissione=" + idEmissione + ", dataEmissione=" + dataEmissione + ", idBiglietto="
-				+ idBiglietto + ", idPuntoVendita=" + idPuntoVendita + ", utente=" + utente + ", getIdEmissione()="
-				+ getIdEmissione() + ", getDataEmissione()=" + getDataEmissione() + ", getIdBiglietto()="
-				+ getIdBiglietto() + ", getIdPuntoVendita()=" + getIdPuntoVendita() + ", getUtente()=" + getUtente()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+				+ ", idPuntoVendita=" + idPuntoVendita + ", utente=" + utente + ", getIdEmissione()=" + getIdEmissione()
+				+ ", getDataEmissione()=" + getDataEmissione() + ", getIdBiglietto()=" + ", getIdPuntoVendita()="
+				+ getIdPuntoVendita() + ", getUtente()=" + getUtente() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
 
 }

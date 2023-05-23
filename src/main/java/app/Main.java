@@ -13,8 +13,6 @@ import dao.UtenteDAO;
 import dao.VenditoriAutorizzatiDAO;
 import entities.DistributoriAutomatici;
 import entities.DistributoriAutomatici.StatoDistributore;
-import entities.EmissioneAbbonamento;
-import entities.EmissioneBiglietto;
 import entities.Mezzo;
 import entities.Mezzo.statoMezzo;
 import entities.Mezzo.tipoMezzo;
@@ -73,12 +71,12 @@ public class Main {
 //        md.save(m1);
 //        md.save(m2);
 
-		EmissioneAbbonamento tessera1 = distributore2.emettiAbbonamento(utente1);
-		EmissioneAbbonamento tessera2 = distributore3.emettiAbbonamento(utente2);
-		EmissioneBiglietto biglietto1 = venditore1.emettiBiglietto(utente3);
-		EmissioneBiglietto biglietto3 = venditore3.emettiBiglietto(utente5);
-		EmissioneBiglietto biglietto2 = venditore2.emettiBiglietto(utente4);
-		EmissioneBiglietto biglietto4 = venditore3.emettiBiglietto(utente6);
+//		EmissioneAbbonamento tessera1 = distributore2.emettiAbbonamento(utente1);
+//		EmissioneAbbonamento tessera2 = distributore3.emettiAbbonamento(utente2);
+//		EmissioneBiglietto biglietto1 = venditore1.emettiBiglietto(utente3);
+//		EmissioneBiglietto biglietto3 = venditore3.emettiBiglietto(utente5);
+//		EmissioneBiglietto biglietto2 = venditore2.emettiBiglietto(utente4);
+//		EmissioneBiglietto biglietto4 = venditore3.emettiBiglietto(utente6);
 
 		// quante volte è stata percorda una tratta
 		log.info(" " + td.getTimesTrattaPercorsa("10f49095-bb8c-4c3c-8206-656a8392577a"));
