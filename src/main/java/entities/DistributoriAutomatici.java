@@ -51,8 +51,8 @@ public class DistributoriAutomatici extends PuntiVendita {
 //		this.emissioneAbbonamento = new EmissioneAbbonamento();
 //	}
 	public DistributoriAutomatici(StatoDistributore stato) {
-		this.emissioneBiglietto = new EmissioneBiglietto(); // Creiamo un'istanza di EmissioneBiglietto invece di
-															// DistributoriAutomatici
+		this.idPuntoVendita = UUID.randomUUID();
+		this.emissioneBiglietto = new EmissioneBiglietto();
 		this.emissioneAbbonamento = new EmissioneAbbonamento();
 	}
 
@@ -71,11 +71,16 @@ public class DistributoriAutomatici extends PuntiVendita {
 	@Override
 	public String toString() {
 		return "DistributoriAutomatici [idPuntoVendita=" + idPuntoVendita + ", stato=" + stato + ", emissioneBiglietto="
-				+ emissioneBiglietto + ", emissioneAbbonamento=" + emissioneAbbonamento + ", numeroVendite="
-				+ numeroVendite + ", luogo=" + luogo + ", getIdPuntoVendita()=" + getIdPuntoVendita() + ", getStato()="
-				+ getStato() + ", getEmissioneBiglietto()=" + getEmissioneBiglietto() + ", getEmissioneAbbonamento()="
-				+ getEmissioneAbbonamento() + ", toString()=" + ", getNumeroVendite()=" + getNumeroVendite()
-				+ ", getLuogo()=" + getLuogo() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
+				+ emissioneBiglietto + ", emissioneAbbonamento=" + emissioneAbbonamento + ", abbonamentiEmessi="
+				+ abbonamentiEmessi + ", bigliettiEmessi=" + bigliettiEmessi + ", puntoVendita=" + puntoVendita
+				+ ", numeroVendite=" + numeroVendite + ", luogo=" + luogo + ", getIdPuntoVendita()="
+				+ getIdPuntoVendita() + ", getStato()=" + getStato() + ", getEmissioneBiglietto()="
+				+ getEmissioneBiglietto() + ", getEmissioneAbbonamento()=" + getEmissioneAbbonamento()
+				+ ", getAbbonamentiEmessi()=" + getAbbonamentiEmessi() + ", getBigliettiEmessi()="
+				+ getBigliettiEmessi() + ", getPuntoVendita()=" + getPuntoVendita() + ", toString()=" + super.toString()
+				+ ", getNumeroVendite()=" + getNumeroVendite() + ", getLuogo()=" + getLuogo() + ", getVenditori()="
+				+ getVenditori() + ", getDistibutori()=" + getDistibutori() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + "]";
 	}
 
 }
