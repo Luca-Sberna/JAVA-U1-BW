@@ -3,11 +3,13 @@ package entities;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +40,14 @@ public class EmissioneBiglietto {
 	@ManyToOne
 	@JoinColumn(name = "IdPuntoVendita")
 	private PuntiVendita IdPuntoVendita;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "idBiglietto", referencedColumnName = "idBiglietto")
+	private VidimazioneBiglietto vidimazione;
+
+	@ManyToOne
+	@JoinColumn(name = "bigliettoEmesso")
+	private DistributoriAutomatici distributoreBi;
 
 	@Override
 	public String toString() {
