@@ -11,19 +11,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class DistributoriAutomatici extends PuntiVendita {
 	protected UUID idPuntoVendita;
 	@Enumerated(EnumType.STRING)
-	protected TipoEvento stato;
+	protected StatoDistributore stato;
 	private DistributoriAutomatici emissioneBiglietto;
 	private EmissioneAbbonamento emissioneAbbonamento;
 
-	public enum TipoEvento {
+	public enum StatoDistributore {
 		FUNZIONANTE, FUORI_SERVIZIO
 	}
 
@@ -37,8 +39,8 @@ public class DistributoriAutomatici extends PuntiVendita {
 	@JoinColumn(name = "distributoriAutomatici", nullable = false)
 	private PuntiVendita PuntoVendita;
 
-	public DistributoriAutomatici() {
-		this.emissioneBiglietto = new DistributoriAutomatici();
+	public DistributoriAutomatici(StatoDistributore stato) {
+		this.emissioneBiglietto = new DistributoriAutomatici(stato);
 		this.emissioneAbbonamento = new EmissioneAbbonamento();
 	}
 
@@ -54,18 +56,13 @@ public class DistributoriAutomatici extends PuntiVendita {
 
 	@Override
 	public String toString() {
-		return "DistributoriAutomatici [idPuntoVendita=" + idPuntoVendita
-				+ ", stato=" + stato + ", emissioneBiglietto="
-				+ emissioneBiglietto + ", emissioneAbbonamento="
-				+ emissioneAbbonamento + ", numeroVendite=" + numeroVendite
-				+ ", luogo=" + luogo + ", getIdPuntoVendita()="
-				+ getIdPuntoVendita() + ", getStato()=" + getStato()
-				+ ", getEmissioneBiglietto()=" + getEmissioneBiglietto()
-				+ ", getEmissioneAbbonamento()=" + getEmissioneAbbonamento()
-				+ ", toString()=" + super.toString() + ", getNumeroVendite()="
-				+ getNumeroVendite() + ", getLuogo()=" + getLuogo()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ "]";
+		return "DistributoriAutomatici [idPuntoVendita=" + idPuntoVendita + ", stato=" + stato + ", emissioneBiglietto="
+				+ emissioneBiglietto + ", emissioneAbbonamento=" + emissioneAbbonamento + ", numeroVendite="
+				+ numeroVendite + ", luogo=" + luogo + ", getIdPuntoVendita()=" + getIdPuntoVendita() + ", getStato()="
+				+ getStato() + ", getEmissioneBiglietto()=" + getEmissioneBiglietto() + ", getEmissioneAbbonamento()="
+				+ getEmissioneAbbonamento() + ", toString()=" + super.toString() + ", getNumeroVendite()="
+				+ getNumeroVendite() + ", getLuogo()=" + getLuogo() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + "]";
 	}
 
 }
