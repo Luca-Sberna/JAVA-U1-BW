@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,6 +27,7 @@ import lombok.Setter;
 @Setter
 public class EmissioneAbbonamento {
 	@Id
+	@GeneratedValue
 	protected UUID idEmissione;
 	protected UUID idPuntoVendita;
 	protected LocalDate dataEmissione;
@@ -47,24 +49,40 @@ public class EmissioneAbbonamento {
 	@OneToMany(mappedBy = "bigliettoVidimato")
 	private Set<VidimazioneBiglietti> vidimazioni;
 
-	public void emettiAbbonamento() {
-		this.emettiAbbonamento();
+	public EmissioneAbbonamento emettiAbbonamento(Utente utente) {
+		// Create a new EmissioneAbbonamento object
+		EmissioneAbbonamento abbonamento = new EmissioneAbbonamento();
+
+		// Set the properties of the new EmissioneAbbonamento object
+		abbonamento.setIdEmissione(UUID.randomUUID());
+		abbonamento.setIdPuntoVendita(this.idPuntoVendita);
+		abbonamento.setDataEmissione(LocalDate.now());
+
+		// Set the dataScadenzaAbbonamento property based on the desired TipoEvento
+		if (this.dataScadenzaAbbonamento == TipoEvento.SETTIMANALE) {
+			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusWeeks(1));
+		} else if (this.dataScadenzaAbbonamento == TipoEvento.MENSILE) {
+			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
+		}
+
+		// Set the other properties of the new EmissioneAbbonamento object as needed
+
+		return abbonamento;
+	}
+
+	private void setDataScadenzaAbbonamento(LocalDate dataScadenzaAbbonamento) {
+
 	}
 
 	@Override
 	public String toString() {
-		return "EmissioneAbbonamento [idEmissione=" + idEmissione
-				+ ", numeroTessera=" + numeroTessera + ", idPuntoVendita="
-				+ idPuntoVendita + ", dataEmissione=" + dataEmissione
-				+ ", dataScadenzaAbbonamento=" + dataScadenzaAbbonamento
-				+ ", getIdEmissione()=" + getIdEmissione()
-				+ ", getNumeroTessera()=" + getNumeroTessera()
-				+ ", getIdPuntoVendita()=" + getIdPuntoVendita()
-				+ ", getDataEmissione()=" + getDataEmissione()
-				+ ", getDataScadenzaAbbonamento()="
-				+ getDataScadenzaAbbonamento() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+		return "EmissioneAbbonamento [idEmissione=" + idEmissione + ", numeroTessera=" + numeroTessera
+				+ ", idPuntoVendita=" + idPuntoVendita + ", dataEmissione=" + dataEmissione
+				+ ", dataScadenzaAbbonamento=" + dataScadenzaAbbonamento + ", getIdEmissione()=" + getIdEmissione()
+				+ ", getNumeroTessera()=" + getNumeroTessera() + ", getIdPuntoVendita()=" + getIdPuntoVendita()
+				+ ", getDataEmissione()=" + getDataEmissione() + ", getDataScadenzaAbbonamento()="
+				+ getDataScadenzaAbbonamento() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 
 }

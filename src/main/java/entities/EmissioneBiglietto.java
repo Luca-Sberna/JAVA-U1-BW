@@ -27,10 +27,16 @@ public class EmissioneBiglietto {
 	private UUID idEmissione;
 	private LocalDate dataEmissione;
 //	protected UUID idBiglietto;
-	protected UUID idPuntoVendita;
+//	protected UUID idPuntoVendita;
 
-	public void emettiBiglietto() {
-		this.emettiBiglietto();
+	public EmissioneBiglietto emettiBiglietto(Utente utente) {
+		EmissioneBiglietto biglietto = new EmissioneBiglietto();
+
+		biglietto.setIdEmissione(UUID.randomUUID());
+		biglietto.setIdPuntoVendita(this.IdPuntoVendita);
+		biglietto.setDataEmissione(LocalDate.now());
+
+		return biglietto;
 	}
 
 	@ManyToOne
@@ -52,10 +58,19 @@ public class EmissioneBiglietto {
 	@Override
 	public String toString() {
 		return "EmissioneBiglietto [idEmissione=" + idEmissione + ", dataEmissione=" + dataEmissione + ", idBiglietto="
-				+ ", idPuntoVendita=" + idPuntoVendita + ", utente=" + utente + ", getIdEmissione()=" + getIdEmissione()
+				+ ", idPuntoVendita=" + IdPuntoVendita + ", utente=" + utente + ", getIdEmissione()=" + getIdEmissione()
 				+ ", getDataEmissione()=" + getDataEmissione() + ", getIdBiglietto()=" + ", getIdPuntoVendita()="
 				+ getIdPuntoVendita() + ", getUtente()=" + getUtente() + ", getClass()=" + getClass() + ", hashCode()="
 				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
+	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente, VidimazioneBiglietti vidimazione,
+			DistributoriAutomatici distributoreBi) {
+		super();
+		this.dataEmissione = dataEmissione;
+		this.utente = utente;
+		this.vidimazione = vidimazione;
+		this.distributoreBi = distributoreBi;
 	}
 
 }

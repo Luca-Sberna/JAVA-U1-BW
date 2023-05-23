@@ -43,7 +43,7 @@ public class DistributoriAutomatici extends PuntiVendita {
 	private Set<EmissioneBiglietto> bigliettiEmessi;
 
 	@ManyToOne
-	@JoinColumn(name = "distributoriAutomatici", nullable = false)
+	@JoinColumn(name = "distributoriAutomatici")
 	private PuntiVendita puntoVendita;
 
 //	public DistributoriAutomatici(StatoDistributore stato) {
@@ -57,13 +57,15 @@ public class DistributoriAutomatici extends PuntiVendita {
 	}
 
 	@Override
-	public void emettiBiglietto() {
-		this.emissioneBiglietto.emettiBiglietto();
+	public EmissioneBiglietto emettiBiglietto(Utente utente) {
+		this.emissioneBiglietto.emettiBiglietto(utente);
+		return emissioneBiglietto;
 	}
 
 	@Override
-	public void emettiAbbonamento() {
-		this.emissioneAbbonamento.emettiAbbonamento();
+	public EmissioneAbbonamento emettiAbbonamento(Utente utente) {
+		this.emissioneAbbonamento.emettiAbbonamento(utente);
+		return emissioneAbbonamento;
 	}
 
 	@Override
