@@ -32,4 +32,16 @@ public class MezzoDAO {
 		return found;
 
 	}
+
+	public void delete(Mezzo mezzo) {
+		em.getTransaction().begin();
+		mezzo = em.merge(mezzo);
+		em.remove(mezzo);
+		em.getTransaction().commit();
+	}
+
+	public void refresh(Mezzo mezzo) {
+		mezzo = em.merge(mezzo);
+		em.refresh(mezzo);
+	}
 }
