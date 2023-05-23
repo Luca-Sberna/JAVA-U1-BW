@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import inter_face.Emissione;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "punti_vendita")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
