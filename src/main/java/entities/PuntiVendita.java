@@ -25,19 +25,17 @@ public abstract class PuntiVendita implements Emissione {
 	protected Integer numeroVendite;
 	protected String luogo;
 
-	@OneToMany(mappedBy = "PuntoVendita")
+	@OneToMany(mappedBy = "puntoVendita")
 	private Set<VenditoriAutorizzati> venditori;
 
-	@OneToMany(mappedBy = "PuntoVendita")
+	@OneToMany(mappedBy = "puntoVendita")
 	private Set<VenditoriAutorizzati> distibutori;
 
 	@Override
 	public String toString() {
-		return "PuntiVendita [idPuntoVendita=" + idPuntoVendita
-				+ ", numeroVendite=" + numeroVendite + ", luogo=" + luogo
-				+ ", getIdPuntoVendita()=" + getIdPuntoVendita()
-				+ ", getNumeroVendite()=" + getNumeroVendite() + ", getLuogo()="
-				+ getLuogo() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+		return "PuntiVendita [idPuntoVendita=" + idPuntoVendita + ", numeroVendite=" + numeroVendite + ", luogo="
+				+ luogo + ", getIdPuntoVendita()=" + getIdPuntoVendita() + ", getNumeroVendite()=" + getNumeroVendite()
+				+ ", getLuogo()=" + getLuogo() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 }

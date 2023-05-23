@@ -22,7 +22,7 @@ public class DistributoriAutomatici extends PuntiVendita {
 	protected UUID idPuntoVendita;
 	@Enumerated(EnumType.STRING)
 	protected StatoDistributore stato;
-	private DistributoriAutomatici emissioneBiglietto;
+	private EmissioneBiglietto emissioneBiglietto;
 	private EmissioneAbbonamento emissioneAbbonamento;
 
 	public enum StatoDistributore {
@@ -37,10 +37,10 @@ public class DistributoriAutomatici extends PuntiVendita {
 
 	@ManyToOne
 	@JoinColumn(name = "distributoriAutomatici", nullable = false)
-	private PuntiVendita PuntoVendita;
+	private PuntiVendita puntoVendita;
 
 	public DistributoriAutomatici(StatoDistributore stato) {
-		this.emissioneBiglietto = new DistributoriAutomatici(stato);
+		this.emissioneBiglietto = new EmissioneBiglietto();
 		this.emissioneAbbonamento = new EmissioneAbbonamento();
 	}
 

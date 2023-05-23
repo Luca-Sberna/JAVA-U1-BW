@@ -23,7 +23,7 @@ public class VenditoriAutorizzati extends PuntiVendita {
 
 	@ManyToOne
 	@JoinColumn(name = "venditoriAutorizzati")
-	private PuntiVendita PuntoVendita;
+	private PuntiVendita puntoVendita;
 
 	public VenditoriAutorizzati(String nomeNegozio, String tipoDiNegozio) {
 		this.emissioneBiglietto = new EmissioneBiglietto();
