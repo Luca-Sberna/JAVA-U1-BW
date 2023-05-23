@@ -4,7 +4,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class JpaUtil {
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
+	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("JAVAUnit1BuildWekkk");
 
 	public static EntityManagerFactory getEntityManagerFactory() {
 		return emf;
