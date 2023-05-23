@@ -65,24 +65,24 @@ public class EmissioneAbbonamento {
 			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
 		}
 
+		// Set the other properties of the new EmissioneAbbonamento object as needed
+
 		return abbonamento;
 	}
 
 	private void setDataScadenzaAbbonamento(LocalDate dataScadenzaAbbonamento) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public String toString() {
-		return "EmissioneAbbonamento [idEmissione=" + idEmissione + ", idPuntoVendita=" + idPuntoVendita
-				+ ", dataEmissione=" + dataEmissione + ", dataScadenzaAbbonamento=" + dataScadenzaAbbonamento
-				+ ", numeroTessera=" + numeroTessera + ", distributoreAb=" + distributoreAb + ", vidimazioni="
-				+ vidimazioni + ", getIdEmissione()=" + getIdEmissione() + ", getIdPuntoVendita()="
-				+ getIdPuntoVendita() + ", getDataEmissione()=" + getDataEmissione() + ", getDataScadenzaAbbonamento()="
-				+ getDataScadenzaAbbonamento() + ", getNumeroTessera()=" + getNumeroTessera() + ", getDistributoreAb()="
-				+ getDistributoreAb() + ", getVidimazioni()=" + getVidimazioni() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+		return "EmissioneAbbonamento [idEmissione=" + idEmissione + ", numeroTessera=" + numeroTessera
+				+ ", idPuntoVendita=" + idPuntoVendita + ", dataEmissione=" + dataEmissione
+				+ ", dataScadenzaAbbonamento=" + dataScadenzaAbbonamento + ", getIdEmissione()=" + getIdEmissione()
+				+ ", getNumeroTessera()=" + getNumeroTessera() + ", getIdPuntoVendita()=" + getIdPuntoVendita()
+				+ ", getDataEmissione()=" + getDataEmissione() + ", getDataScadenzaAbbonamento()="
+				+ getDataScadenzaAbbonamento() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 
 }

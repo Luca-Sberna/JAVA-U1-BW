@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -21,6 +22,7 @@ import lombok.Setter;
 
 public abstract class PuntiVendita implements Emissione {
 	@Id
+	@GeneratedValue
 	protected UUID idPuntoVendita;
 	protected Integer numeroVendite;
 	protected String luogo;

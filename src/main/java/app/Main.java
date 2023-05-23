@@ -1,5 +1,7 @@
 package app;
 
+import java.time.LocalDate;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -54,6 +56,7 @@ public class Main {
 		Utente utente5 = new Utente("Paolo", "Maldini");
 		Utente utente6 = new Utente("Pop", "Smoke");
 
+//		ud.save(utente6);
 		Utente foundutente6 = ud.getById("15431e5c-800f-4b3e-9ba3-334306a5a54b");
 		if (foundutente6 != null) {
 			log.info("trovato");
@@ -87,8 +90,14 @@ public class Main {
 		EmissioneBiglietto biglietto2 = venditore2.emettiBiglietto(utente4);
 		EmissioneBiglietto biglietto4 = venditore3.emettiBiglietto(utente6);
 
-		ebd.save(biglietto4);
-		ead.save(tessera2);
+//		ebd.save(biglietto4);
+
+		DistributoriAutomatici distributore50 = new DistributoriAutomatici();
+//		dad.save(distributore50);
+		DistributoriAutomatici founddistributore50 = dad.getById("6d104827-fe97-4000-bf8b-5ac061942f52");
+		EmissioneBiglietto biglietto5 = new EmissioneBiglietto(LocalDate.of(2000, 01, 01), foundutente6, null,
+				founddistributore50);
+//		ebd.save(biglietto5);
 
 		// quante volte è stata percorda una tratta
 		log.info(" " + td.getTimesTrattaPercorsa("10f49095-bb8c-4c3c-8206-656a8392577a"));

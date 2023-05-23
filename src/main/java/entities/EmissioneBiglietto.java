@@ -26,6 +26,18 @@ public class EmissioneBiglietto {
 	@GeneratedValue
 	private UUID idEmissione;
 	private LocalDate dataEmissione;
+//	protected UUID idBiglietto;
+//	protected UUID idPuntoVendita;
+
+	public EmissioneBiglietto emettiBiglietto(Utente utente) {
+		EmissioneBiglietto biglietto = new EmissioneBiglietto();
+
+		biglietto.setIdEmissione(UUID.randomUUID());
+		biglietto.setIdPuntoVendita(this.IdPuntoVendita);
+		biglietto.setDataEmissione(LocalDate.now());
+
+		return biglietto;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "utenti")
@@ -33,7 +45,7 @@ public class EmissioneBiglietto {
 
 	@ManyToOne
 	@JoinColumn(name = "IdPuntoVendita")
-	private PuntiVendita idPuntoVendita;
+	private PuntiVendita IdPuntoVendita;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idBiglietto", referencedColumnName = "idBiglietto")
@@ -43,20 +55,10 @@ public class EmissioneBiglietto {
 	@JoinColumn(name = "bigliettoEmesso")
 	private DistributoriAutomatici distributoreBi;
 
-	public EmissioneBiglietto emettiBiglietto(Utente utente) {
-		EmissioneBiglietto biglietto = new EmissioneBiglietto();
-
-		biglietto.setIdEmissione(UUID.randomUUID());
-		biglietto.setIdPuntoVendita(this.idPuntoVendita);
-		biglietto.setDataEmissione(LocalDate.now());
-
-		return biglietto;
-	}
-
 	@Override
 	public String toString() {
 		return "EmissioneBiglietto [idEmissione=" + idEmissione + ", dataEmissione=" + dataEmissione + ", idBiglietto="
-				+ ", idPuntoVendita=" + idPuntoVendita + ", utente=" + utente + ", getIdEmissione()=" + getIdEmissione()
+				+ ", idPuntoVendita=" + IdPuntoVendita + ", utente=" + utente + ", getIdEmissione()=" + getIdEmissione()
 				+ ", getDataEmissione()=" + getDataEmissione() + ", getIdBiglietto()=" + ", getIdPuntoVendita()="
 				+ getIdPuntoVendita() + ", getUtente()=" + getUtente() + ", getClass()=" + getClass() + ", hashCode()="
 				+ hashCode() + ", toString()=" + super.toString() + "]";
