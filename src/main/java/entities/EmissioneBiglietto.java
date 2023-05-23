@@ -43,7 +43,7 @@ public class EmissioneBiglietto {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idBiglietto", referencedColumnName = "idBiglietto")
-	private VidimazioneBiglietto vidimazione;
+	private VidimazioneBiglietti vidimazione;
 
 	@ManyToOne
 	@JoinColumn(name = "bigliettoEmesso")
@@ -51,16 +51,12 @@ public class EmissioneBiglietto {
 
 	@Override
 	public String toString() {
-		return "EmissioneBiglietto [idEmissione=" + idEmissione
-				+ ", dataEmissione=" + dataEmissione + ", idBiglietto="
-				+ idBiglietto + ", idPuntoVendita=" + idPuntoVendita
-				+ ", utente=" + utente + ", getIdEmissione()="
-				+ getIdEmissione() + ", getDataEmissione()="
-				+ getDataEmissione() + ", getIdBiglietto()=" + getIdBiglietto()
-				+ ", getIdPuntoVendita()=" + getIdPuntoVendita()
-				+ ", getUtente()=" + getUtente() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+		return "EmissioneBiglietto [idEmissione=" + idEmissione + ", dataEmissione=" + dataEmissione + ", idBiglietto="
+				+ idBiglietto + ", idPuntoVendita=" + idPuntoVendita + ", utente=" + utente + ", getIdEmissione()="
+				+ getIdEmissione() + ", getDataEmissione()=" + getDataEmissione() + ", getIdBiglietto()="
+				+ getIdBiglietto() + ", getIdPuntoVendita()=" + getIdPuntoVendita() + ", getUtente()=" + getUtente()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
 
 }
