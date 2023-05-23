@@ -22,6 +22,7 @@ public class Main {
 		EntityManager em = emf.createEntityManager();
 		MezzoDAO md = new MezzoDAO(em);
 		TrattaDAO td = new TrattaDAO(em);
+
 		PuntiVenditaDAO pvd = new PuntiVenditaDAO(em);
 
 		Tratta t1 = new Tratta("Roma", "Latina", 2.30);

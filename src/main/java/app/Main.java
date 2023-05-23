@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import dao.MezzoDAO;
+import dao.PuntiVenditaDAO;
 import dao.TrattaDAO;
 import entities.Mezzo;
 import entities.Mezzo.stato;
@@ -22,6 +23,8 @@ public class Main {
 		MezzoDAO md = new MezzoDAO(em);
 		TrattaDAO td = new TrattaDAO(em);
 
+		PuntiVenditaDAO pvd = new PuntiVenditaDAO(em);
+
 		Tratta t1 = new Tratta("Roma", "Latina", 2.30);
 //        td.save(t1);
 
@@ -39,6 +42,10 @@ public class Main {
 		// quante volte è stata percorsa una tratta da un singolo Mezzo
 		log.info(" " + td.getTimesTrattaPercorsaBySingleMezzo("10f49095-bb8c-4c3c-8206-656a8392577a",
 				"b207b034-95f8-400c-99a1-ec80b45f5eb2"));
+
+		// Per arrivare alla vidimazione del biglietto in step
+		// Primo step : creare un punto vendita e salvarlo a db e trovare il suo id
+
 	}
 
 }
