@@ -5,27 +5,27 @@ import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import entities.Mezzo;
+import entities.Tessera;
 
-public class MezzoDAO {
+public class TesseraDAO {
 	private final EntityManager em;
 
-	public MezzoDAO(EntityManager em) {
+	public TesseraDAO(EntityManager em) {
 		this.em = em;
 	}
 
-	public void save(Mezzo e) {
+	public void save(Tessera e) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		em.persist(e);
 		transaction.commit();
 	}
 
-	public Mezzo getById(String id) {
-		Mezzo found = em.find(Mezzo.class, UUID.fromString(id));
+	public Tessera getById(String id) {
+		Tessera found = em.find(Tessera.class, UUID.fromString(id));
 
 		if (found != null) {
-			System.out.println("Mezzo" + " " + id + " " + "trovato");
+			System.out.println("Tessera" + " " + id + " " + "trovata");
 		} else {
 			System.out.println("Non abbiamo trovato niente");
 		}
@@ -33,15 +33,16 @@ public class MezzoDAO {
 
 	}
 
-	public void delete(Mezzo mezzo) {
+	public void delete(Tessera tessera) {
 		em.getTransaction().begin();
-		mezzo = em.merge(mezzo);
-		em.remove(mezzo);
+		tessera = em.merge(tessera);
+		em.remove(tessera);
 		em.getTransaction().commit();
 	}
 
-	public void refresh(Mezzo mezzo) {
-		mezzo = em.merge(mezzo);
-		em.refresh(mezzo);
+	public void refresh(Tessera tessera) {
+		tessera = em.merge(tessera);
+		em.refresh(tessera);
 	}
+
 }

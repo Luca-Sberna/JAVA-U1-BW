@@ -20,7 +20,7 @@ public class DistributoriAutomatici extends PuntiVendita {
 	protected UUID idPuntoVendita;
 	@Enumerated(EnumType.STRING)
 	protected TipoEvento stato;
-	private EmissioneBiglietto emissioneBiglietto;
+	private DistributoriAutomatici emissioneBiglietto;
 	private EmissioneAbbonamento emissioneAbbonamento;
 
 	public enum TipoEvento {
@@ -38,7 +38,7 @@ public class DistributoriAutomatici extends PuntiVendita {
 	private PuntiVendita PuntoVendita;
 
 	public DistributoriAutomatici() {
-		this.emissioneBiglietto = new EmissioneBiglietto();
+		this.emissioneBiglietto = new DistributoriAutomatici();
 		this.emissioneAbbonamento = new EmissioneAbbonamento();
 	}
 
