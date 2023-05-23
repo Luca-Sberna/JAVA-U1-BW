@@ -5,28 +5,27 @@ import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import entities.Mezzo;
-import entities.VidimazioneBiglietti;
+import entities.PuntiVendita;
 
-public class VidimazioneBigliettiDAO {
+public class PuntiVenditaDAO {
 	private final EntityManager em;
 
-	public VidimazioneBigliettiDAO(EntityManager em) {
+	public PuntiVenditaDAO(EntityManager em) {
 		this.em = em;
 	}
 
-	public void save(Mezzo e) {
+	public void save(PuntiVendita e) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		em.persist(e);
 		transaction.commit();
 	}
 
-	public VidimazioneBiglietti getById(String id) {
-		VidimazioneBiglietti found = em.find(VidimazioneBiglietti.class, UUID.fromString(id));
+	public PuntiVendita getById(String id) {
+		PuntiVendita found = em.find(PuntiVendita.class, UUID.fromString(id));
 
 		if (found != null) {
-			System.out.println("Biglietto vidimato" + " " + id + " " + "trovato");
+			System.out.println("Punto vendita" + " " + id + " " + "trovato");
 		} else {
 			System.out.println("Non abbiamo trovato niente");
 		}

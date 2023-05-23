@@ -34,7 +34,7 @@ public class Mezzo {
 	private UUID id;
 	private long capienza;
 	@Enumerated(EnumType.STRING)
-	private stato stato;
+	private statoMezzo stato;
 	@Enumerated(EnumType.STRING)
 	private tipoMezzo tipoMezzo;
 	@ManyToOne
@@ -43,7 +43,7 @@ public class Mezzo {
 
 //	private List<PeriodiDiServizio> periodiDiServizio;
 
-	public enum stato {
+	public enum statoMezzo {
 		inServizio, inManutenzione
 	}
 
@@ -51,7 +51,7 @@ public class Mezzo {
 		Autobus, Tram
 	}
 
-	public Mezzo(long capienza, stato stato, tipoMezzo tipoMezzo, Tratta tratta) {
+	public Mezzo(long capienza, statoMezzo stato, tipoMezzo tipoMezzo, Tratta tratta) {
 		super();
 		this.capienza = capienza;
 		this.stato = stato;

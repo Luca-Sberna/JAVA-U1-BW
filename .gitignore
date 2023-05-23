@@ -1,1 +1,4 @@
-/target/
+.metadata/
+.pom.xml
+.META-INF/
+.util/
