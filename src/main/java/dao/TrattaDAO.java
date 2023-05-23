@@ -34,6 +34,18 @@ public class TrattaDAO {
 
 	}
 
+	public void delete(Tratta tratta) {
+		em.getTransaction().begin();
+		tratta = em.merge(tratta);
+		em.remove(tratta);
+		em.getTransaction().commit();
+	}
+
+	public void refresh(Tratta tratta) {
+		tratta = em.merge(tratta);
+		em.refresh(tratta);
+	}
+
 //	public List<Tratta> getNumberTrattaPercorsa(String trattaId) {
 //		TypedQuery<Tratta> q = em
 //				.createQuery("SELECT m.id,COUNT(t) FROM Mezzo m JOIN m.tratta t WHERE t.id = :trattaId", Tratta.class);
