@@ -47,12 +47,18 @@ public class Main {
 		TesseraDAO ted = new TesseraDAO(em);
 		VidimazioneBigliettiDAO vbd = new VidimazioneBigliettiDAO(em);
 
-		DistributoriAutomatici distributore1 = new DistributoriAutomatici(StatoDistributore.FUORI_SERVIZIO);
-		DistributoriAutomatici distributore2 = new DistributoriAutomatici(StatoDistributore.FUNZIONANTE);
-		DistributoriAutomatici distributore3 = new DistributoriAutomatici(StatoDistributore.FUNZIONANTE);
-		VenditoriAutorizzati venditore1 = new VenditoriAutorizzati("Amazon", "E-Commerce");
-		VenditoriAutorizzati venditore2 = new VenditoriAutorizzati("TuttoQui", "Edicola");
-		VenditoriAutorizzati venditore3 = new VenditoriAutorizzati("Da Enrico", "Tabaccaio");
+		DistributoriAutomatici distributore1 = new DistributoriAutomatici(
+				StatoDistributore.FUORI_SERVIZIO);
+		DistributoriAutomatici distributore2 = new DistributoriAutomatici(
+				StatoDistributore.FUNZIONANTE);
+		DistributoriAutomatici distributore3 = new DistributoriAutomatici(
+				StatoDistributore.FUNZIONANTE);
+		VenditoriAutorizzati venditore1 = new VenditoriAutorizzati("Amazon",
+				"E-Commerce");
+		VenditoriAutorizzati venditore2 = new VenditoriAutorizzati("TuttoQui",
+				"Edicola");
+		VenditoriAutorizzati venditore3 = new VenditoriAutorizzati("Da Enrico",
+				"Tabaccaio");
 
 		Utente utente1 = new Utente("Luca", "Sberna");
 		Utente utente2 = new Utente("Nestor", "Cicardini");
@@ -87,7 +93,8 @@ public class Main {
 
 		Mezzo m1 = new Mezzo(60, statoMezzo.inServizio, tipoMezzo.Autobus, t2);
 		Mezzo m2 = new Mezzo(300, statoMezzo.inServizio, tipoMezzo.Tram, t1);
-		Mezzo m3 = new Mezzo(60, statoMezzo.inManutenzione, tipoMezzo.Autobus, t4);
+		Mezzo m3 = new Mezzo(60, statoMezzo.inManutenzione, tipoMezzo.Autobus,
+				t4);
 		Mezzo m4 = new Mezzo(300, statoMezzo.inServizio, tipoMezzo.Tram, t1);
 		Mezzo m5 = new Mezzo(60, statoMezzo.inServizio, tipoMezzo.Autobus, t3);
 //        md.save(m1);
@@ -100,8 +107,10 @@ public class Main {
 //		md.save(m5);
 //		md.save(m6);
 
-		EmissioneAbbonamento tessera1 = distributore2.emettiAbbonamento(utente1);
-		EmissioneAbbonamento tessera2 = distributore3.emettiAbbonamento(utente2);
+		EmissioneAbbonamento tessera1 = distributore2
+				.emettiAbbonamento(utente1);
+		EmissioneAbbonamento tessera2 = distributore3
+				.emettiAbbonamento(utente2);
 		EmissioneBiglietto biglietto1 = venditore1.emettiBiglietto(utente3);
 		EmissioneBiglietto biglietto3 = venditore3.emettiBiglietto(utente5);
 		EmissioneBiglietto biglietto2 = venditore2.emettiBiglietto(utente4);
@@ -116,14 +125,17 @@ public class Main {
 
 //		dad.save(distributore50);
 
-		DistributoriAutomatici founddistributore50 = dad.getById("6d104827-fe97-4000-bf8b-5ac061942f52");
-		EmissioneBiglietto biglietto5 = new EmissioneBiglietto(LocalDate.of(2000, 01, 01), foundutente6, null,
+		DistributoriAutomatici founddistributore50 = dad
+				.getById("6d104827-fe97-4000-bf8b-5ac061942f52");
+		EmissioneBiglietto biglietto5 = new EmissioneBiglietto(
+				LocalDate.of(2000, 01, 01), foundutente6, null,
 				founddistributore50);
 //		ebd.save(biglietto5);
 
-//		Mezzo foundm1 = md.getById("2c548dd0-d9a8-4491-bdb3-306a14601f9d");
-//		EmissioneBiglietto foundeb1 = ebd.getById("9051a41b-81ce-4afb-ae5b-01616fb374e2");
-//
+		Mezzo foundm1 = md.getById("2c548dd0-d9a8-4491-bdb3-306a14601f9d");
+		EmissioneBiglietto foundeb1 = ebd
+				.getById("9051a41b-81ce-4afb-ae5b-01616fb374e2");
+
 //		VidimazioneBiglietti vidimazione1 = new VidimazioneBiglietti(foundeb1, foundm1, LocalDate.now());
 
 //		vbd.save(vidimazione1);
@@ -150,38 +162,13 @@ public class Main {
 				+ nVidimazioni);
 
 		// quante volte è stata percorda una tratta
-		log.info(" " + td.getTimesTrattaPercorsa("10f49095-bb8c-4c3c-8206-656a8392577a"));
+		log.info(" " + td.getTimesTrattaPercorsa(
+				"10f49095-bb8c-4c3c-8206-656a8392577a"));
 
 		// quante volte è stata percorsa una tratta da un singolo Mezzo
-		log.info(" " + td.getTimesTrattaPercorsaBySingleMezzo("10f49095-bb8c-4c3c-8206-656a8392577a",
+		log.info(" " + td.getTimesTrattaPercorsaBySingleMezzo(
+				"10f49095-bb8c-4c3c-8206-656a8392577a",
 				"b207b034-95f8-400c-99a1-ec80b45f5eb2"));
-
-		// Query : trovare il numero di biglietti vidimati in base al mezzo in step
-		// 1 Step) Creo un biglietto vidimato (biglietto5 di popsmoke) nel mezzo m2 e lo
-		// salvo in db
-//		td.save(t5);
-
-		Tratta foundtratta5 = td.getById("5c82df50-9f63-448e-98ba-532e7c73cb41");
-		Mezzo m7 = new Mezzo(300, statoMezzo.inServizio, tipoMezzo.Tram, foundtratta5);
-//		md.save(m6);
-		Mezzo foundmezzo7 = md.getById("b207b034-95f8-400c-99a1-ec80b45f5eb2");
-		VidimazioneBiglietti bigliettovidimato1 = new VidimazioneBiglietti(biglietto5, foundmezzo7,
-				LocalDate.of(2023, 01, 01));
-//		vbd.save(bigliettovidimato1);
-
-		log.info("Il numero dei biglietti vidimati nel range che stavi cercando sono  "
-				+ vbd.getBigliettiVidimatiPerMezzoInRange(foundmezzo7, LocalDate.of(2022, 11, 11),
-						LocalDate.of(2023, 12, 12)));
-		// Query:trovare abbonamento attivo in base a numeroTessera in step(Nestor)
-		// Query:trovare abbonamento attivo in base a numeroTessera in
-		// step(Nestor)
-
-		// 1Step) creo tessera e la salvo in db
-//		Tessera tesserautente6 = new Tessera(foundutente6, LocalDate.of(2023, 02, 02),
-//				LocalDate.of(2023, 02, 02).plusYears(1));
-//		ted.save(tesserautente6);
-
-		// 2Step)
 
 		// Query : trovare il numero di biglietti vidimati in base al mezzo in
 		// step
@@ -205,6 +192,30 @@ public class Main {
 						+ vbd.getBigliettiVidimatiPerMezzoInRange(foundmezzo7,
 								LocalDate.of(2022, 11, 11),
 								LocalDate.of(2023, 12, 12)));
+		// Query:trovare abbonamento attivo in base a numeroTessera in
+		// step(Nestor)
+		// Query:trovare abbonamento attivo in base a numeroTessera in
+		// step(Nestor)
+
+		// 1Step) creo tessera e la salvo in db
+//		Tessera tesserautente6 = new Tessera(foundutente6, LocalDate.of(2023, 02, 02),
+//				LocalDate.of(2023, 02, 02).plusYears(1));
+//		ted.save(tesserautente6);
+
+		// 2Step)
+
+		// Query : trovare il numero di biglietti vidimati in base al mezzo in
+		// step
+		// 1 Step) Creo un biglietto vidimato (biglietto5 di popsmoke) nel mezzo
+		// m2 e lo
+		// salvo in db
+//		td.save(t5);
+
+		log.info(
+				"Il numero dei biglietti vidimati nel range che stavi cercando sono  "
+						+ vbd.getBigliettiVidimatiPerMezzoInRange(foundmezzo7,
+								LocalDate.of(2022, 11, 11),
+								LocalDate.of(2023, 12, 12)));
 
 		ted.getAbbonamentoAttivo("6ba25f38-57f8-414d-8e20-ffd79aa80713")
 				.stream().forEach(a -> log.info(a.toString()));
@@ -215,16 +226,20 @@ public class Main {
 //				LocalDate.of(2023, 02, 02).plusYears(1));
 //		ted.save(tesserautente6);
 
-		Tessera foundtessera6 = ted.getById("e4ce6eda-e367-4933-acf8-b95db07ca3d8");
+		Tessera foundtessera6 = ted
+				.getById("e4ce6eda-e367-4933-acf8-b95db07ca3d8");
 
 		// 2Step) Creo abbonamento attivo e lo salvo nel db
 
-		EmissioneAbbonamento abbonamento1 = new EmissioneAbbonamento(LocalDate.of(2023, 05, 20),
-				LocalDate.of(2023, 05, 20).plusMonths(1), TipoEvento.MENSILE, foundtessera6);
+		EmissioneAbbonamento abbonamento1 = new EmissioneAbbonamento(
+				LocalDate.of(2023, 05, 20),
+				LocalDate.of(2023, 05, 20).plusMonths(1), TipoEvento.MENSILE,
+				foundtessera6);
 //		ead.save(abbonamento1);
 
 //		log.info(ead.findAbbonamentiAttiviByNumeroTessera("e4ce6eda-e367-4933-acf8-b95db07ca3d8").toString());
-		ead.findAbbonamentiAttiviByNumeroTessera("e4ce6eda-e367-4933-acf8-b95db07ca3d8").stream()
+		ead.findAbbonamentiAttiviByNumeroTessera(
+				"e4ce6eda-e367-4933-acf8-b95db07ca3d8").stream()
 				.forEach(abbonamento -> log.info(abbonamento.toString()));
 		em.close();
 		emf.close();
