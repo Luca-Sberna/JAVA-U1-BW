@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import entities.Mezzo;
 import entities.VidimazioneBiglietti;
 
 public class VidimazioneBigliettiDAO {
@@ -37,7 +38,8 @@ public class VidimazioneBigliettiDAO {
 
 	}
 
-	public Long getBigliettiVidimatiPerMezzoInRange(Mezzo mezzo, LocalDate inizioRange, LocalDate fineRange) {
+	public Long getBigliettiVidimatiPerMezzoInRange(Mezzo mezzo,
+			LocalDate inizioRange, LocalDate fineRange) {
 		TypedQuery<Long> q = em.createQuery(
 				"SELECT COUNT(v) FROM VidimazioneBiglietti v WHERE v.mezzo = :mezzo AND v.dataVidimazione BETWEEN :inizioRange AND :fineRange",
 				Long.class);
