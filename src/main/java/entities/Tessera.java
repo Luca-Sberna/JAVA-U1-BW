@@ -29,8 +29,8 @@ public class Tessera {
 	@ManyToOne
 	@JoinColumn(name = "proprietario")
 	private Utente proprietario;
-	private LocalDate dataScadenzaTessera;
 	private LocalDate dataEmissioneTessera;
+	private LocalDate dataScadenzaTessera;
 
 	@OneToMany(mappedBy = "numeroTessera")
 	private Set<Utente> utentiTessera;
@@ -46,6 +46,13 @@ public class Tessera {
 	public String toString() {
 		return "Tessera [numeroTessera=" + numeroTessera + ", proprietario=" + proprietario + ", dataScadenzaTessera="
 				+ dataScadenzaTessera + ", dataEmissioneTessera=" + dataEmissioneTessera + "]";
+	}
+
+	public Tessera(Utente proprietario, LocalDate dataScadenzaTessera, LocalDate dataEmissioneTessera) {
+		super();
+		this.proprietario = proprietario;
+		this.dataEmissioneTessera = dataEmissioneTessera;
+		this.dataScadenzaTessera = dataScadenzaTessera;
 	}
 
 }

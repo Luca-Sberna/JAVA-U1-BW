@@ -13,6 +13,7 @@ import dao.TesseraDAO;
 import dao.TrattaDAO;
 import dao.UtenteDAO;
 import dao.VenditoriAutorizzatiDAO;
+import dao.VidimazioneBigliettiDAO;
 import entities.DistributoriAutomatici;
 import entities.DistributoriAutomatici.StatoDistributore;
 import entities.EmissioneAbbonamento;
@@ -23,6 +24,7 @@ import entities.Mezzo.tipoMezzo;
 import entities.Tratta;
 import entities.Utente;
 import entities.VenditoriAutorizzati;
+import entities.VidimazioneBiglietti;
 import lombok.extern.slf4j.Slf4j;
 import util.JpaUtil;
 
@@ -41,6 +43,7 @@ public class Main {
 		VenditoriAutorizzatiDAO vad = new VenditoriAutorizzatiDAO(em);
 		UtenteDAO ud = new UtenteDAO(em);
 		TesseraDAO ted = new TesseraDAO(em);
+		VidimazioneBigliettiDAO vbd = new VidimazioneBigliettiDAO(em);
 
 		DistributoriAutomatici distributore1 = new DistributoriAutomatici(StatoDistributore.FUORI_SERVIZIO);
 		DistributoriAutomatici distributore2 = new DistributoriAutomatici(StatoDistributore.FUNZIONANTE);
@@ -71,7 +74,6 @@ public class Main {
 		Tratta t5 = new Tratta("Milano", "Rho", 1.30);
 
 //        td.save(t1);
-
 		Tratta foundt = td.getById("10f49095-bb8c-4c3c-8206-656a8392577a");
 
 		Mezzo m1 = new Mezzo(60, statoMezzo.inServizio, tipoMezzo.Autobus, t2);
@@ -79,7 +81,6 @@ public class Main {
 		Mezzo m3 = new Mezzo(60, statoMezzo.inManutenzione, tipoMezzo.Autobus, t4);
 		Mezzo m4 = new Mezzo(300, statoMezzo.inServizio, tipoMezzo.Tram, t1);
 		Mezzo m5 = new Mezzo(60, statoMezzo.inServizio, tipoMezzo.Autobus, t3);
-		Mezzo m6 = new Mezzo(300, statoMezzo.inServizio, tipoMezzo.Tram, t5);
 //        md.save(m1);
 //        md.save(m2);
 
@@ -106,7 +107,34 @@ public class Main {
 		log.info(" " + td.getTimesTrattaPercorsaBySingleMezzo("10f49095-bb8c-4c3c-8206-656a8392577a",
 				"b207b034-95f8-400c-99a1-ec80b45f5eb2"));
 
+		// Query:trovare abbonamento attivo in base a numeroTessera in step(Nestor)
+
+		// 1Step) creo tessera e la salvo in db
+//		Tessera tesserautente6 = new Tessera(foundutente6, LocalDate.of(2023, 02, 02),
+//				LocalDate.of(2023, 02, 02).plusYears(1));
+//		ted.save(tesserautente6);
+
+		// 2Step)
+
+		// Query : trovare il numero di biglietti vidimati in base al mezzo in step
+		// 1 Step) Creo un biglietto vidimato (biglietto5 di popsmoke) nel mezzo m2 e lo
+		// salvo in db
+//		td.save(t5);
+
+		Tratta foundtratta5 = td.getById("5c82df50-9f63-448e-98ba-532e7c73cb41");
+		Mezzo m6 = new Mezzo(300, statoMezzo.inServizio, tipoMezzo.Tram, foundtratta5);
+//		md.save(m6);
+		Mezzo foundmezzo6 = md.getById("b207b034-95f8-400c-99a1-ec80b45f5eb2");
+		VidimazioneBiglietti bigliettovidimato1 = new VidimazioneBiglietti(biglietto5, foundmezzo6,
+				LocalDate.of(2023, 01, 01));
+//		vbd.save(bigliettovidimato1);
+
+		log.info("Il numero dei biglietti vidimati nel range che stavi cercando sono  "
+				+ vbd.getBigliettiVidimatiPerMezzoInRange(foundmezzo6, LocalDate.of(2022, 11, 11),
+						LocalDate.of(2023, 12, 12)));
+
 		em.close();
+		emf.close();
 	}
 
 }
