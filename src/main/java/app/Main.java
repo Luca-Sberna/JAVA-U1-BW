@@ -138,11 +138,11 @@ public class Main {
 		EmissioneAbbonamento abbonamento3 = new EmissioneAbbonamento(LocalDate.now(), LocalDate.now().plusWeeks(1),
 				TipoEvento.SETTIMANALE, tessera3);
 //		ead.save(abbonamento3);
-
-		long nVidimazioni = md.getNumeroBigliettiVidimati("2c548dd0-d9a8-4491-bdb3-306a14601f9d");
-
-		log.info("Numero di biglietti vidimati su mezzo " + foundm1.getTipoMezzo() + " con id " + foundm1.getId() + ": "
-				+ nVidimazioni);
+//
+//		long nVidimazioni = md.getNumeroBigliettiVidimati("2c548dd0-d9a8-4491-bdb3-306a14601f9d");
+//
+//		log.info("Numero di biglietti vidimati su mezzo " + foundm1.getTipoMezzo() + " con id " + foundm1.getId() + ": "
+//				+ nVidimazioni);
 
 		// quante volte è stata percorda una tratta
 		log.info(" " + td.getTimesTrattaPercorsa("10f49095-bb8c-4c3c-8206-656a8392577a"));
@@ -180,6 +180,20 @@ public class Main {
 //		log.info(ead.findAbbonamentiAttiviByNumeroTessera("e4ce6eda-e367-4933-acf8-b95db07ca3d8").toString());
 		ead.findAbbonamentiAttiviByNumeroTessera("e4ce6eda-e367-4933-acf8-b95db07ca3d8").stream()
 				.forEach(abbonamento -> log.info(abbonamento.toString()));
+
+		// Query per trovare tessere scadute che devono essere rinnovate
+//		ud.save(utente3);
+		Utente foundutente3 = ud.getById("c4af4dae-4a44-4591-a3a0-54be0cb25a80");
+		Tessera tesserascaduta = new Tessera(foundutente3, LocalDate.of(2021, 04, 04),
+				LocalDate.of(2021, 04, 04).plusYears(1));
+		Tessera tesserascaduta2 = new Tessera(foundutente3, LocalDate.of(2022, 04, 04),
+				LocalDate.of(2022, 04, 04).plusYears(1));
+//		ted.save(tesserascaduta2);
+//		ted.save(tesserascaduta);
+//		
+
+		ted.trovaTessereScadutePerUtente("c4af4dae-4a44-4591-a3a0-54be0cb25a80").stream()
+				.forEach(t -> log.info(t.toString()));
 
 		em.close();
 		emf.close();
