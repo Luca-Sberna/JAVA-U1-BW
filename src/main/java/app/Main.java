@@ -69,11 +69,11 @@ public class Main {
 			log.info("non trovato");
 		}
 
-		Tratta t1 = new Tratta("Roma", "Latina", 2.30);
-		Tratta t2 = new Tratta("Milano", "Roma", 5.30);
-		Tratta t3 = new Tratta("Napoli", "Milano", 9.30);
-		Tratta t4 = new Tratta("Torino", "Firenze", 3.30);
-		Tratta t5 = new Tratta("Milano", "Rho", 1.30);
+		Tratta t1 = new Tratta("Roma", "Latina", 2.30, 70.32);
+		Tratta t2 = new Tratta("Milano", "Roma", 5.30, 477.0);
+		Tratta t3 = new Tratta("Napoli", "Milano", 9.30, 658.20);
+		Tratta t4 = new Tratta("Torino", "Firenze", 3.30, 318.32);
+		Tratta t5 = new Tratta("Milano", "Rho", 1.30, 14.0);
 
 //        td.save(t1);
 //		td.save(t1);

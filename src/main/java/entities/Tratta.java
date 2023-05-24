@@ -14,7 +14,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "tratte")
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,13 +24,14 @@ public class Tratta {
 	private UUID id;
 	private String zonaPartenza;
 	private String capolinea;
-	private double tempoMedioTratta;
+	private Double tempoMedioTratta;
+	private Double lunghezzaTratta;
 
-	public Tratta(String zonaPartenza, String capolinea, double tempoMedioTratta) {
+	public Tratta(String zonaPartenza, String capolinea, double tempoMedioTratta, double lunghezzaTratta) {
 		super();
 		this.zonaPartenza = zonaPartenza;
 		this.capolinea = capolinea;
 		this.tempoMedioTratta = tempoMedioTratta;
+		this.lunghezzaTratta = lunghezzaTratta;
 	}
-
 }
