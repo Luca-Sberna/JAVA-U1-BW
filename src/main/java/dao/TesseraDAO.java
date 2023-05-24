@@ -57,8 +57,9 @@ public class TesseraDAO {
 	}
 
 	public List<Tessera> trovaTessereScadutePerUtente(String idUtente) {
-		String jpql = "SELECT t FROM Tessera t WHERE t.proprietario.idUtente = :idUtente AND t.dataScadenzaTessera < CURRENT_DATE()";
-		TypedQuery<Tessera> query = em.createQuery(jpql, Tessera.class);
+		TypedQuery<Tessera> query = em.createQuery(
+				"SELECT t FROM Tessera t WHERE t.proprietario.idUtente = :idUtente AND t.dataScadenzaTessera < CURRENT_DATE()",
+				Tessera.class);
 		query.setParameter("idUtente", UUID.fromString(idUtente));
 		return query.getResultList();
 	}
