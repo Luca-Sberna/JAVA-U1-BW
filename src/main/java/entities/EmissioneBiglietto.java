@@ -11,14 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class EmissioneBiglietto {
@@ -57,19 +55,34 @@ public class EmissioneBiglietto {
 
 	@Override
 	public String toString() {
-		return "EmissioneBiglietto [idEmissione=" + idEmissione + ", dataEmissione=" + dataEmissione + ", idBiglietto="
-				+ ", idPuntoVendita=" + IdPuntoVendita + ", utente=" + utente + ", getIdEmissione()=" + getIdEmissione()
-				+ ", getDataEmissione()=" + getDataEmissione() + ", getIdBiglietto()=" + ", getIdPuntoVendita()="
-				+ getIdPuntoVendita() + ", getUtente()=" + getUtente() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+		return "EmissioneBiglietto [idEmissione=" + idEmissione
+				+ ", dataEmissione=" + dataEmissione + ", idBiglietto="
+				+ ", idPuntoVendita=" + IdPuntoVendita + ", utente=" + utente
+				+ ", getIdEmissione()=" + getIdEmissione()
+				+ ", getDataEmissione()=" + getDataEmissione()
+				+ ", getIdBiglietto()=" + ", getIdPuntoVendita()="
+				+ getIdPuntoVendita() + ", getUtente()=" + getUtente()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 
-	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente, VidimazioneBiglietti vidimazione,
+	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente,
+			VidimazioneBiglietti vidimazione,
 			DistributoriAutomatici distributoreBi) {
 		super();
 		this.dataEmissione = dataEmissione;
 		this.utente = utente;
 		this.vidimazione = vidimazione;
+		this.distributoreBi = distributoreBi;
+	}
+
+	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente,
+			PuntiVendita idPuntoVendita,
+			DistributoriAutomatici distributoreBi) {
+		super();
+		this.dataEmissione = dataEmissione;
+		this.utente = utente;
+		IdPuntoVendita = idPuntoVendita;
 		this.distributoreBi = distributoreBi;
 	}
 
