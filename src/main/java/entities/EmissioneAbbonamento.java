@@ -67,9 +67,6 @@ public class EmissioneAbbonamento {
 					.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
 		}
 
-		// Set the other properties of the new EmissioneAbbonamento object as
-		// needed
-
 		return abbonamento;
 	}
 

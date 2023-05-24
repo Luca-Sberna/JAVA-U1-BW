@@ -27,7 +27,7 @@ public class ViaggioDAO {
 		Viaggio found = em.find(Viaggio.class, UUID.fromString(id));
 
 		if (found != null) {
-			System.out.println("Mezzo" + " " + id + " " + "trovato");
+			System.out.println("Viaggio" + " " + id + " " + "trovato");
 		} else {
 			System.out.println("Non abbiamo trovato niente");
 		}
@@ -50,6 +50,9 @@ public class ViaggioDAO {
 	public List<Double> getDurataViaggio() {
 		List<Double> durataViaggio = new ArrayList<>();
 		try {
+			// la funzione TIMESTAMPDIFF di SQL sottrae i campi orarioPartenza e
+			// orarioArrivo,calcolo la differenza in secondi e la divide per 60 per ottenere
+			// il risultato in minuti (restituendo i risultati in lista).
 			String query = "SELECT TIMESTAMPDIFF(SECOND, v.orarioPartenza, v.orarioArrivo) / 60.0 FROM Viaggio v";
 			List<?> results = em.createNativeQuery(query).getResultList();
 			for (Object result : results) {
