@@ -15,14 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class EmissioneAbbonamento {
@@ -31,6 +29,7 @@ public class EmissioneAbbonamento {
 	protected UUID idEmissione;
 	protected UUID idPuntoVendita;
 	protected LocalDate dataEmissione;
+	protected LocalDate dataScadenza;
 	@Enumerated(EnumType.STRING)
 	protected TipoEvento tipoAbbonamento;
 
@@ -67,7 +66,8 @@ public class EmissioneAbbonamento {
 			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
 		}
 
-		// Set the other properties of the new EmissioneAbbonamento object as needed
+		// Set the other properties of the new EmissioneAbbonamento object as
+		// needed
 
 		return abbonamento;
 	}

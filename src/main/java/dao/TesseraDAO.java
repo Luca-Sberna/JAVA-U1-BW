@@ -1,10 +1,13 @@
 package dao;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
+import entities.EmissioneAbbonamento;
 import entities.Tessera;
 
 public class TesseraDAO {
@@ -43,6 +46,14 @@ public class TesseraDAO {
 	public void refresh(Tessera tessera) {
 		tessera = em.merge(tessera);
 		em.refresh(tessera);
+	}
+
+	public List<EmissioneAbbonamento> getAbbonamentoAttivo(String nTessera) {
+		TypedQuery<EmissioneAbbonamento> q = em.createQuery(
+				"SELECT t FROM EmissioneAbbonamento t WHERE t.numeroTessera.numeroTessera = :nTessera AND t.dataEmissione IS NOT NULL AND t.dataScadenza > CURRENT_DATE()",
+				EmissioneAbbonamento.class);
+		q.setParameter("nTessera", UUID.fromString(nTessera));
+		return q.getResultList();
 	}
 
 }

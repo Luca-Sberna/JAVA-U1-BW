@@ -36,7 +36,8 @@ public class VidimazioneBigliettiDAO {
 
 	}
 
-	public Long getBigliettiVidimatiPerMezzoInRange(Mezzo mezzo, LocalDate inizioRange, LocalDate fineRange) {
+	public Long getBigliettiVidimatiPerMezzoInRange(Mezzo mezzo,
+			LocalDate inizioRange, LocalDate fineRange) {
 		TypedQuery<Long> q = em.createQuery(
 				"SELECT COUNT(v) FROM VidimazioneBiglietti v WHERE v.mezzo = :mezzo AND v.dataVidimazione BETWEEN :inizioRange AND :fineRange",
 				Long.class);
