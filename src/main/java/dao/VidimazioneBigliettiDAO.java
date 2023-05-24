@@ -5,7 +5,6 @@ import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import entities.Mezzo;
 import entities.VidimazioneBiglietti;
 
 public class VidimazioneBigliettiDAO {
@@ -15,7 +14,7 @@ public class VidimazioneBigliettiDAO {
 		this.em = em;
 	}
 
-	public void save(Mezzo e) {
+	public void save(VidimazioneBiglietti e) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		em.persist(e);
@@ -23,10 +22,12 @@ public class VidimazioneBigliettiDAO {
 	}
 
 	public VidimazioneBiglietti getById(String id) {
-		VidimazioneBiglietti found = em.find(VidimazioneBiglietti.class, UUID.fromString(id));
+		VidimazioneBiglietti found = em.find(VidimazioneBiglietti.class,
+				UUID.fromString(id));
 
 		if (found != null) {
-			System.out.println("Biglietto vidimato" + " " + id + " " + "trovato");
+			System.out
+					.println("Biglietto vidimato" + " " + id + " " + "trovato");
 		} else {
 			System.out.println("Non abbiamo trovato niente");
 		}
