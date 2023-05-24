@@ -48,8 +48,6 @@ public class EmissioneAbbonamento {
 	@OneToMany(mappedBy = "bigliettoVidimato")
 	private Set<VidimazioneBiglietti> vidimazioni;
 
-	private LocalDate dataScadenza;
-
 	public EmissioneAbbonamento emettiAbbonamento(Utente utente) {
 		// Create a new EmissioneAbbonamento object
 		EmissioneAbbonamento abbonamento = new EmissioneAbbonamento();
@@ -65,9 +63,6 @@ public class EmissioneAbbonamento {
 		} else if (this.tipoAbbonamento == TipoEvento.MENSILE) {
 			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
 		}
-
-		// Set the other properties of the new EmissioneAbbonamento object as
-		// needed
 
 		return abbonamento;
 	}
