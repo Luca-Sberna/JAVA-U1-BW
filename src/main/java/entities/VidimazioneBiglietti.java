@@ -35,8 +35,7 @@ public class VidimazioneBiglietti {
 	@JoinColumn(name = "idBiglietto")
 	private EmissioneBiglietto bigliettoVidimato;
 
-	public VidimazioneBiglietti(EmissioneBiglietto biglietto, Mezzo mezzo,
-			LocalDate dataVidimazione) {
+	public VidimazioneBiglietti(EmissioneBiglietto biglietto, Mezzo mezzo, LocalDate dataVidimazione) {
 		super();
 		this.bigliettoVidimato = biglietto;
 		this.mezzo = mezzo;
@@ -47,7 +46,7 @@ public class VidimazioneBiglietti {
 		super();
 		this.bigliettoVidimato = biglietto;
 		this.mezzo = mezzo;
-		this.dataVidimazione = dataVidimazione;
+
 	}
 
 }
