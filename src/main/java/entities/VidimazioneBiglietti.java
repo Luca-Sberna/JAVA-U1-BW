@@ -47,7 +47,6 @@ public class VidimazioneBiglietti {
 		super();
 		this.bigliettoVidimato = biglietto;
 		this.mezzo = mezzo;
-		this.dataVidimazione = dataVidimazione;
 	}
 
 }

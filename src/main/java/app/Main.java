@@ -17,10 +17,12 @@ import dao.VidimazioneBigliettiDAO;
 import entities.DistributoriAutomatici;
 import entities.DistributoriAutomatici.StatoDistributore;
 import entities.EmissioneAbbonamento;
+import entities.EmissioneAbbonamento.TipoEvento;
 import entities.EmissioneBiglietto;
 import entities.Mezzo;
 import entities.Mezzo.statoMezzo;
 import entities.Mezzo.tipoMezzo;
+import entities.Tessera;
 import entities.Tratta;
 import entities.Utente;
 import entities.VenditoriAutorizzati;
@@ -65,9 +67,9 @@ public class Main {
 		Utente utente5 = new Utente("Paolo", "Maldini");
 		Utente utente6 = new Utente("Pop", "Smoke");
 
-		ud.save(utente6);
+//		ud.save(utente6);
 		Utente foundutente6 = ud
-				.getById("15431e5c-800f-4b3e-9ba3-334306a5a54b");
+				.getById("0365e5cc-7c24-4333-8ecb-18de26e8bb2a");
 		if (foundutente6 != null) {
 			log.info("trovato");
 		} else {
@@ -109,6 +111,7 @@ public class Main {
 				.emettiAbbonamento(utente1);
 		EmissioneAbbonamento tessera2 = distributore3
 				.emettiAbbonamento(utente2);
+
 		EmissioneBiglietto biglietto1 = venditore1.emettiBiglietto(utente3);
 		EmissioneBiglietto biglietto3 = venditore3.emettiBiglietto(utente5);
 		EmissioneBiglietto biglietto2 = venditore2.emettiBiglietto(utente4);
@@ -138,6 +141,16 @@ public class Main {
 				foundm1, LocalDate.now());
 
 //		vbd.save(vidimazione1);
+
+		Tessera tessera3 = new Tessera(foundutente6, LocalDate.now());
+
+//		ted.save(tessera3);
+
+		EmissioneAbbonamento abbonamento3 = new EmissioneAbbonamento(
+				LocalDate.now(), LocalDate.now().plusWeeks(1),
+				TipoEvento.SETTIMANALE, tessera3);
+
+//		ead.save(abbonamento3);
 
 		long nVidimazioni = md.getNumeroBigliettiVidimati(
 				"2c548dd0-d9a8-4491-bdb3-306a14601f9d");
@@ -187,6 +200,10 @@ public class Main {
 						+ vbd.getBigliettiVidimatiPerMezzoInRange(foundmezzo7,
 								LocalDate.of(2022, 11, 11),
 								LocalDate.of(2023, 12, 12)));
+
+		ted.getAbbonamentoAttivo("6ba25f38-57f8-414d-8e20-ffd79aa80713")
+				.stream().forEach(a -> log.info(a.toString()));
+		;
 
 		em.close();
 		emf.close();

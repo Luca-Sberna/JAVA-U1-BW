@@ -24,7 +24,8 @@ public class EmissioneAbbonamentoDAO {
 	public EmissioneAbbonamento getById(UUID uuid) {
 		EmissioneAbbonamento found = em.find(EmissioneAbbonamento.class, uuid);
 		if (found != null) {
-			System.out.println("Emissione abbonamento" + " " + uuid + " " + "trovata");
+			System.out.println(
+					"Emissione abbonamento" + " " + uuid + " " + "trovata");
 		} else {
 			System.out.println("Non abbiamo trovato nessun emissione");
 		}
@@ -42,4 +43,5 @@ public class EmissioneAbbonamentoDAO {
 		emissioneAbbonamento = em.merge(emissioneAbbonamento);
 		em.refresh(emissioneAbbonamento);
 	}
+
 }

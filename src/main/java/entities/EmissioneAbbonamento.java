@@ -15,14 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class EmissioneAbbonamento {
@@ -31,8 +29,9 @@ public class EmissioneAbbonamento {
 	protected UUID idEmissione;
 	protected UUID idPuntoVendita;
 	protected LocalDate dataEmissione;
+	protected LocalDate dataScadenza;
 	@Enumerated(EnumType.STRING)
-	protected TipoEvento dataScadenzaAbbonamento;
+	protected TipoEvento tipoAbbonameto;
 
 	public enum TipoEvento {
 		SETTIMANALE, MENSILE
@@ -58,14 +57,18 @@ public class EmissioneAbbonamento {
 		abbonamento.setIdPuntoVendita(this.idPuntoVendita);
 		abbonamento.setDataEmissione(LocalDate.now());
 
-		// Set the dataScadenzaAbbonamento property based on the desired TipoEvento
-		if (this.dataScadenzaAbbonamento == TipoEvento.SETTIMANALE) {
-			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusWeeks(1));
-		} else if (this.dataScadenzaAbbonamento == TipoEvento.MENSILE) {
-			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
+		// Set the dataScadenzaAbbonamento property based on the desired
+		// TipoEvento
+		if (this.tipoAbbonameto == TipoEvento.SETTIMANALE) {
+			abbonamento
+					.setDataScadenzaAbbonamento(LocalDate.now().plusWeeks(1));
+		} else if (this.tipoAbbonameto == TipoEvento.MENSILE) {
+			abbonamento
+					.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
 		}
 
-		// Set the other properties of the new EmissioneAbbonamento object as needed
+		// Set the other properties of the new EmissioneAbbonamento object as
+		// needed
 
 		return abbonamento;
 	}
@@ -76,13 +79,21 @@ public class EmissioneAbbonamento {
 
 	@Override
 	public String toString() {
-		return "EmissioneAbbonamento [idEmissione=" + idEmissione + ", numeroTessera=" + numeroTessera
-				+ ", idPuntoVendita=" + idPuntoVendita + ", dataEmissione=" + dataEmissione
-				+ ", dataScadenzaAbbonamento=" + dataScadenzaAbbonamento + ", getIdEmissione()=" + getIdEmissione()
-				+ ", getNumeroTessera()=" + getNumeroTessera() + ", getIdPuntoVendita()=" + getIdPuntoVendita()
-				+ ", getDataEmissione()=" + getDataEmissione() + ", getDataScadenzaAbbonamento()="
-				+ getDataScadenzaAbbonamento() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		return "EmissioneAbbonamento [idEmissione=" + idEmissione
+				+ ", idPuntoVendita=" + idPuntoVendita + ", dataEmissione="
+				+ dataEmissione + ", dataScadenza=" + dataScadenza
+				+ ", tipoAbbonameto=" + tipoAbbonameto + ", numeroTessera="
+				+ numeroTessera + ", distributoreAb=" + distributoreAb
+				+ ", vidimazioni=" + vidimazioni + "]";
+	}
+
+	public EmissioneAbbonamento(LocalDate dataEmissione, LocalDate dataScadenza,
+			TipoEvento tipoAbbonameto, Tessera numeroTessera) {
+		super();
+		this.dataEmissione = dataEmissione;
+		this.dataScadenza = dataScadenza;
+		this.tipoAbbonameto = tipoAbbonameto;
+		this.numeroTessera = numeroTessera;
 	}
 
 }
