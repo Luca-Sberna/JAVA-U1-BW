@@ -5,6 +5,15 @@ import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import dao.DistributoriAutomaticiDAO;
+import dao.EmissioneAbbonamentoDAO;
+import dao.EmissioneBigliettoDAO;
+import dao.MezzoDAO;
+import dao.TesseraDAO;
+import dao.TrattaDAO;
+import dao.UtenteDAO;
+import dao.VenditoriAutorizzatiDAO;
+import dao.VidimazioneBigliettiDAO;
 import entities.VenditoriAutorizzati;
 import util.JpaUtil;
 
@@ -15,8 +24,15 @@ public class MainInterattivo {
 		Scanner scanner = new Scanner(System.in);
 		EntityManager em = emf.createEntityManager();
 
-		// Codice di configurazione iniziale, come l'inizializzazione dei DAO e
-		// l'importazione dei dati
+		MezzoDAO md = new MezzoDAO(em);
+		TrattaDAO td = new TrattaDAO(em);
+		EmissioneBigliettoDAO ebd = new EmissioneBigliettoDAO(em);
+		EmissioneAbbonamentoDAO ead = new EmissioneAbbonamentoDAO(em);
+		DistributoriAutomaticiDAO dad = new DistributoriAutomaticiDAO(em);
+		VenditoriAutorizzatiDAO vad = new VenditoriAutorizzatiDAO(em);
+		UtenteDAO ud = new UtenteDAO(em);
+		TesseraDAO ted = new TesseraDAO(em);
+		VidimazioneBigliettiDAO vbd = new VidimazioneBigliettiDAO(em);
 
 		// Prompt per l'utente
 		System.out.println("Benvenuto all'app di trasporti pubblici!");
@@ -29,7 +45,6 @@ public class MainInterattivo {
 		int venditoreScelto = scanner.nextInt();
 		VenditoriAutorizzati venditore = null;
 
-		// Assegna il venditore selezionato in base all'input dell'utente
 		switch (venditoreScelto) {
 		case 1:
 			venditore = new VenditoriAutorizzati("Amazon", "E-Commerce");
@@ -47,7 +62,6 @@ public class MainInterattivo {
 			System.exit(0);
 		}
 
-		// Prompt per l'utente per selezionare biglietti o abbonamenti
 		System.out.println("Cosa desideri acquistare?");
 		System.out.println("1. Biglietto");
 		System.out.println("2. Abbonamento");
@@ -57,14 +71,14 @@ public class MainInterattivo {
 
 		switch (tipoAcquisto) {
 		case 1:
-			// Logica per l'acquisto del biglietto
+			// Logica per l'acquisto del biglietto <--- inserire qui
 
 			System.out.println("Seleziona un mezzo per la tratta disponibile:");
-			// Recupera i mezzi disponibili per la tratta e visualizzali all'utente
+			// Recupera i mezzi disponibili per la tratta e visualizzali all'utente <---
+			// inserire qui
 
 			int mezzoScelto = scanner.nextInt();
 
-			// Emetti il biglietto e visualizza un messaggio di augurio
 			System.out.println("Biglietto emesso!");
 			System.out.println("Buon viaggio! WOOOO!");
 			System.out.println("***Ricordarsi di convalidare il biglietto sul mezzo!***");
@@ -76,7 +90,7 @@ public class MainInterattivo {
 			String confermaTimbro = scanner.next();
 
 			if (confermaTimbro.equalsIgnoreCase("S")) {
-				// Logica per il timbro del biglietto sul mezzo selezionato
+				// Logica per il timbro del biglietto sul mezzo selezionato <--- inserire qui
 				System.out.println(
 						"Biglietto timbrato correttamente sul mezzo " + mezzoScelto + "bravo picciotto buon viaggio!.");
 			} else {
@@ -85,17 +99,14 @@ public class MainInterattivo {
 			}
 			break;
 		case 2:
-			// Logica per l'acquisto dell'abbonamento
+			// Logica per l'acquisto dell'abbonamento <--- inserire qui
 
-			// Emetti l'abbonamento
 			System.out.println("Abbonamento emesso!");
-
-			// Recupera i mezzi disponibili e visualizzali all'utente
 
 			int uscita;
 			do {
-				System.out.println("Ecco i mezzi disponibili per la tratta: (premi 0 per uscire)");
-				// Recupera i mezzi disponibili e visualizzali all'utente
+				System.out.println("Ecco i mezzi disponibili: (premi 0 per uscire)");
+				// Recupera i mezzi disponibili e visualizzali all'utente <--- inserire qui
 
 				uscita = scanner.nextInt();
 				if (uscita == 0) {
@@ -104,7 +115,8 @@ public class MainInterattivo {
 					emf.close();
 					System.exit(0);
 				} else {
-					// Altre possibili azioni in base alla selezione del mezzo
+					// Altre possibili azioni in base alla selezione del mezzo <--- inserire qui
+					// (opzionale)
 				}
 			} while (uscita != 0);
 
@@ -117,7 +129,7 @@ public class MainInterattivo {
 			String confermaTessera = scanner.next();
 
 			if (confermaTessera.equalsIgnoreCase("S")) {
-				// Logica per il timbro del biglietto sul mezzo selezionato
+				// Logica per il timbro del biglietto sul mezzo selezionato <--- inserire qui
 				System.out.println("Tessera timbrata correttamente sul mezzo bravo picciotto buon viaggio!.");
 			} else {
 				System.out.println(
