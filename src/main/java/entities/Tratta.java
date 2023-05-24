@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Table(name = "tratte")
@@ -20,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @NoArgsConstructor
 @ToString
-@Slf4j
 public class Tratta {
 	@Id
 	@GeneratedValue
