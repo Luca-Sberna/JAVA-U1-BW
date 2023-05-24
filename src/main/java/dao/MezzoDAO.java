@@ -1,10 +1,12 @@
 package dao;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import entities.Mezzo;
 
@@ -62,6 +64,11 @@ public class MezzoDAO {
 			e.printStackTrace();
 		}
 		return totalKilometers;
+	}
+
+	public List<Mezzo> getAllMezzi() {
+		TypedQuery<Mezzo> query = em.createQuery("SELECT m FROM Mezzo m", Mezzo.class);
+		return query.getResultList();
 	}
 
 }
