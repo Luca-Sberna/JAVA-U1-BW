@@ -17,7 +17,8 @@ public class VenditoriAutorizzatiDAO {
 	public void save(VenditoriAutorizzati venditoriAutorizzati) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		em.persist(venditoriAutorizzati);
+		VenditoriAutorizzati mergedVenditore = em.merge(venditoriAutorizzati);
+		em.persist(mergedVenditore);
 		transaction.commit();
 	}
 

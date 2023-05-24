@@ -1,5 +1,6 @@
 package app;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,8 +16,9 @@ import dao.TrattaDAO;
 import dao.UtenteDAO;
 import dao.VenditoriAutorizzatiDAO;
 import dao.VidimazioneBigliettiDAO;
-import entities.Utente;
+import entities.EmissioneBiglietto;
 import entities.Mezzo;
+import entities.Utente;
 import entities.VenditoriAutorizzati;
 import util.JpaUtil;
 
@@ -60,12 +62,15 @@ public class MainInterattivo {
 		switch (venditoreScelto) {
 		case 1:
 			venditore = new VenditoriAutorizzati("Amazon", "E-Commerce");
+			vad.save(venditore);
 			break;
 		case 2:
 			venditore = new VenditoriAutorizzati("TuttoQui", "Edicola");
+			vad.save(venditore);
 			break;
 		case 3:
 			venditore = new VenditoriAutorizzati("Da Enrico", "Tabaccaio");
+			vad.save(venditore);
 			break;
 		default:
 			System.out.println("Selezione non valida. Uscita dall'app.");
@@ -83,9 +88,15 @@ public class MainInterattivo {
 
 		switch (tipoAcquisto) {
 		case 1:
-			// Logica per l'acquisto del biglietto <--- inserire qui
+			// Logica per l'acquisto del biglietto
+			EmissioneBiglietto bigliettoScelto = new EmissioneBiglietto(
+					LocalDate.now(), utente, venditore);
+
+//			System.out.println(venditore.emettiBiglietto(utente).toString());
+			ebd.save(bigliettoScelto);
 
 			System.out.println("Seleziona un mezzo per la tratta disponibile:");
+
 			// Recupera i mezzi disponibili e visualizzali all'utente
 			List<Mezzo> mezziDisponibili = md.getAllMezzi();
 			for (Mezzo mezzo : mezziDisponibili) {
@@ -122,11 +133,13 @@ public class MainInterattivo {
 
 			int uscita;
 			do {
-				System.out.println("Ecco i mezzi disponibili: (premi 0 per uscire)");
+				System.out.println(
+						"Ecco i mezzi disponibili: (premi 0 per uscire)");
 				// Recupera i mezzi disponibili e visualizzali all'utente
 				List<Mezzo> mezziDisponibiliPerTessera = md.getAllMezzi();
 				for (Mezzo mezzo : mezziDisponibiliPerTessera) {
-					System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo());
+					System.out.println(
+							mezzo.getId() + ". " + mezzo.getTipoMezzo());
 				}
 
 				uscita = scanner.nextInt();
@@ -168,5 +181,7 @@ public class MainInterattivo {
 			emf.close();
 			System.exit(0);
 		}
+		em.close();
+		emf.close();
 	}
 }

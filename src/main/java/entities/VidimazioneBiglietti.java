@@ -32,10 +32,11 @@ public class VidimazioneBiglietti {
 	private LocalDate dataVidimazione;
 
 	@ManyToOne
-	@JoinColumn(name = "idBiglietto")
+	@JoinColumn(name = "idBigliettoEmesso")
 	private EmissioneBiglietto bigliettoVidimato;
 
-	public VidimazioneBiglietti(EmissioneBiglietto biglietto, Mezzo mezzo, LocalDate dataVidimazione) {
+	public VidimazioneBiglietti(EmissioneBiglietto biglietto, Mezzo mezzo,
+			LocalDate dataVidimazione) {
 		super();
 		this.bigliettoVidimato = biglietto;
 		this.mezzo = mezzo;

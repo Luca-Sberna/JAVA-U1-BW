@@ -1,12 +1,13 @@
 package entities;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,44 +22,63 @@ public class VenditoriAutorizzati extends PuntiVendita {
 	protected String nomeNegozio;
 	protected String tipoDiNegozio;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_emissione_biglietto")
-	private EmissioneBiglietto emissioneBiglietto;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_emissione_abbonamento")
-	private EmissioneAbbonamento emissioneAbbonamento;
+	@OneToMany(mappedBy = "venditoreBi")
+	private Set<EmissioneBiglietto> biglietti;
+
+	@OneToMany(mappedBy = "distributoreAb")
+	private Set<EmissioneAbbonamento> abbonamenti;
 
 	@ManyToOne
 	@JoinColumn(name = "venditoriAutorizzati")
 	private PuntiVendita puntoVendita;
 
 	public VenditoriAutorizzati(String nomeNegozio, String tipoDiNegozio) {
-		this.emissioneBiglietto = new EmissioneBiglietto();
-		this.emissioneAbbonamento = new EmissioneAbbonamento();
+		this.idPuntoVendita = UUID.randomUUID();
+		this.biglietti = new HashSet<>();
+		this.biglietti.add(new EmissioneBiglietto());
+
+		this.abbonamenti = new HashSet<>();
+		this.abbonamenti.add(new EmissioneAbbonamento());
+		this.nomeNegozio = nomeNegozio;
+		this.tipoDiNegozio = tipoDiNegozio;
+
 	}
 
 	@Override
 	public EmissioneBiglietto emettiBiglietto(Utente utente) {
-		this.emissioneBiglietto.emettiBiglietto(utente);
-		return emissioneBiglietto;
+		for (EmissioneBiglietto biglietto : biglietti) {
+			biglietto.emettiBiglietto(utente);
+			return biglietto;
+		}
+		return null;
 	}
 
 	@Override
 	public EmissioneAbbonamento emettiAbbonamento(Utente utente) {
-		this.emissioneAbbonamento.emettiAbbonamento(utente);
-		return emissioneAbbonamento;
+		for (EmissioneAbbonamento abbonamento : abbonamenti) {
+			abbonamento.emettiAbbonamento(utente);
+			return abbonamento;
+		}
+		return null;
 	}
 
 	@Override
 	public String toString() {
-		return "VenditoriAutorizzati [idPuntoVendita=" + idPuntoVendita + ", nomeNegozio=" + nomeNegozio
-				+ ", tipoDiNegozio=" + tipoDiNegozio + ", emissioneBiglietto=" + emissioneBiglietto
-				+ ", emissioneAbbonamento=" + emissioneAbbonamento + ", numeroVendite=" + numeroVendite + ", luogo="
-				+ luogo + ", getIdPuntoVendita()=" + getIdPuntoVendita() + ", getNomeNegozio()=" + getNomeNegozio()
-				+ ", getTipoDiNegozio()=" + getTipoDiNegozio() + ", getEmissioneBiglietto()=" + getEmissioneBiglietto()
-				+ ", getEmissioneAbbonamento()=" + getEmissioneAbbonamento() + ", toString()=" + super.toString()
-				+ ", getNumeroVendite()=" + getNumeroVendite() + ", getLuogo()=" + getLuogo() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + "]";
+		return "VenditoriAutorizzati [idPuntoVendita=" + idPuntoVendita
+				+ ", nomeNegozio=" + nomeNegozio + ", tipoDiNegozio="
+				+ tipoDiNegozio + ", biglietti=" + biglietti + ", abbonamenti="
+				+ abbonamenti + ", puntoVendita=" + puntoVendita
+				+ ", numeroVendite=" + numeroVendite + ", luogo=" + luogo
+				+ ", getIdPuntoVendita()=" + getIdPuntoVendita()
+				+ ", getNomeNegozio()=" + getNomeNegozio()
+				+ ", getTipoDiNegozio()=" + getTipoDiNegozio()
+				+ ", getBiglietti()=" + getBiglietti() + ", getAbbonamenti()="
+				+ getAbbonamenti() + ", getPuntoVendita()=" + getPuntoVendita()
+				+ ", toString()=" + super.toString() + ", getNumeroVendite()="
+				+ getNumeroVendite() + ", getLuogo()=" + getLuogo()
+				+ ", getVenditori()=" + getVenditori() + ", getDistibutori()="
+				+ getDistibutori() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + "]";
 	}
 
 }

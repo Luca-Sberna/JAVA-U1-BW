@@ -42,8 +42,12 @@ public class EmissioneAbbonamento {
 	private Tessera numeroTessera;
 
 	@ManyToOne
-	@JoinColumn(name = "abbonamentoEmesso")
+	@JoinColumn(name = "AbbonamentoEmessoDis")
 	private DistributoriAutomatici distributoreAb;
+
+	@ManyToOne
+	@JoinColumn(name = "abbonamentoEmessoVen")
+	private VenditoriAutorizzati venditoriAb;
 
 	@OneToMany(mappedBy = "bigliettoVidimato")
 	private Set<VidimazioneBiglietti> vidimazioni;
