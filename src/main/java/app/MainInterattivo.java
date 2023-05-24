@@ -1,5 +1,6 @@
 package app;
 
+import java.util.List;
 import java.util.Scanner;
 
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ import dao.TrattaDAO;
 import dao.UtenteDAO;
 import dao.VenditoriAutorizzatiDAO;
 import dao.VidimazioneBigliettiDAO;
+import entities.Mezzo;
 import entities.VenditoriAutorizzati;
 import util.JpaUtil;
 
@@ -74,8 +76,11 @@ public class MainInterattivo {
 			// Logica per l'acquisto del biglietto <--- inserire qui
 
 			System.out.println("Seleziona un mezzo per la tratta disponibile:");
-			// Recupera i mezzi disponibili per la tratta e visualizzali all'utente <---
-			// inserire qui
+			// Recupera i mezzi disponibili e visualizzali all'utente
+			List<Mezzo> mezziDisponibili = md.getAllMezzi();
+			for (Mezzo mezzo : mezziDisponibili) {
+				System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo());
+			}
 
 			int mezzoScelto = scanner.nextInt();
 
@@ -106,7 +111,11 @@ public class MainInterattivo {
 			int uscita;
 			do {
 				System.out.println("Ecco i mezzi disponibili: (premi 0 per uscire)");
-				// Recupera i mezzi disponibili e visualizzali all'utente <--- inserire qui
+				// Recupera i mezzi disponibili e visualizzali all'utente
+				List<Mezzo> mezziDisponibiliPerTessera = md.getAllMezzi();
+				for (Mezzo mezzo : mezziDisponibiliPerTessera) {
+					System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo());
+				}
 
 				uscita = scanner.nextInt();
 				if (uscita == 0) {
