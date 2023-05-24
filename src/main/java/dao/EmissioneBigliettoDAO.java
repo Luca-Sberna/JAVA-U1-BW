@@ -21,10 +21,12 @@ public class EmissioneBigliettoDAO {
 		transaction.commit();
 	}
 
-	public EmissioneBiglietto getById(UUID uuid) {
-		EmissioneBiglietto found = em.find(EmissioneBiglietto.class, uuid);
+	public EmissioneBiglietto getById(String uuid) {
+		EmissioneBiglietto found = em.find(EmissioneBiglietto.class,
+				UUID.fromString(uuid));
 		if (found != null) {
-			System.out.println("Emissione biglietto" + " " + uuid + " " + "trovata");
+			System.out.println(
+					"Emissione biglietto" + " " + uuid + " " + "trovata");
 		} else {
 			System.out.println("Non abbiamo trovato nessun emissione");
 		}

@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 import entities.Mezzo;
 
@@ -43,5 +44,12 @@ public class MezzoDAO {
 	public void refresh(Mezzo mezzo) {
 		mezzo = em.merge(mezzo);
 		em.refresh(mezzo);
+	}
+
+	public long getNumeroBigliettiVidimati(String id) {
+		Query q = em.createQuery(
+				"SELECT COUNT(vb) FROM VidimazioneBiglietti vb WHERE vb.mezzo.id = :id AND vb.dataVidimazione IS NOT NULL");
+		q.setParameter("id", UUID.fromString(id));
+		return (long) q.getSingleResult();
 	}
 }
