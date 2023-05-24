@@ -41,6 +41,7 @@ public class Mezzo {
 	@JoinColumn(name = "tratta_id")
 	private Tratta tratta;
 
+	private Integer velocitàMedia;
 //	private List<PeriodiDiServizio> periodiDiServizio;
 
 	public enum statoMezzo {

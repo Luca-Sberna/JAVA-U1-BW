@@ -52,4 +52,16 @@ public class MezzoDAO {
 		q.setParameter("id", UUID.fromString(id));
 		return (long) q.getSingleResult();
 	}
+	
+	public double getTotalKilometers() {
+		double totalKilometers = 0;
+		try {
+			String query = "SELECT SUM(t.tempoMedioTratta * m.velocitàMedia) FROM Mezzo m JOIN m.tratta t";
+			totalKilometers = (double) em.createQuery(query).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return totalKilometers;
+	}
+
 }
