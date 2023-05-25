@@ -52,8 +52,8 @@ public class EmissioneAbbonamento {
 	@OneToMany(mappedBy = "bigliettoVidimato")
 	private Set<VidimazioneBiglietti> vidimazioni;
 
-	public EmissioneAbbonamento(LocalDate dataEmissione, LocalDate dataScadenza, TipoEvento tipoAbbonamento,
-			Tessera tessera) {
+	public EmissioneAbbonamento(LocalDate dataEmissione, LocalDate dataScadenza,
+			TipoEvento tipoAbbonamento, Tessera tessera) {
 		super();
 		this.dataEmissione = dataEmissione;
 		this.dataScadenza = dataScadenza;
@@ -61,7 +61,7 @@ public class EmissioneAbbonamento {
 		this.tessera = tessera;
 	}
 
-	public EmissioneAbbonamento emettiAbbonamento() {
+	public EmissioneAbbonamento emettiAbbonamento(Utente utente) {
 		// Create a new EmissioneAbbonamento object
 		EmissioneAbbonamento abbonamento = new EmissioneAbbonamento();
 
@@ -70,11 +70,14 @@ public class EmissioneAbbonamento {
 		abbonamento.setIdPuntoVendita(this.idPuntoVendita);
 		abbonamento.setDataEmissione(LocalDate.now());
 
-		// Set the dataScadenzaAbbonamento property based on the desired TipoEvento
+		// Set the dataScadenzaAbbonamento property based on the desired
+		// TipoEvento
 		if (this.tipoAbbonamento == TipoEvento.SETTIMANALE) {
-			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusWeeks(1));
+			abbonamento
+					.setDataScadenzaAbbonamento(LocalDate.now().plusWeeks(1));
 		} else if (this.tipoAbbonamento == TipoEvento.MENSILE) {
-			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
+			abbonamento
+					.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
 		}
 
 		return abbonamento;
@@ -105,14 +108,20 @@ public class EmissioneAbbonamento {
 
 	@Override
 	public String toString() {
-		return "EmissioneAbbonamento [idEmissione=" + idEmissione + ", idPuntoVendita=" + idPuntoVendita
-				+ ", dataEmissione=" + dataEmissione + ", dataScadenza=" + dataScadenza + ", tipoAbbonamento="
-				+ tipoAbbonamento + ", tessera=" + tessera + ", distributoreAb=" + distributoreAb + ", vidimazioni="
-				+ vidimazioni + ", getIdEmissione()=" + getIdEmissione() + ", getIdPuntoVendita()="
-				+ getIdPuntoVendita() + ", getDataEmissione()=" + getDataEmissione() + ", getDataScadenza()="
-				+ getDataScadenza() + ", getTipoAbbonamento()=" + getTipoAbbonamento() + ", getTessera()="
-				+ getTessera() + ", getDistributoreAb()=" + getDistributoreAb() + ", getVidimazioni()="
-				+ getVidimazioni() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+		return "EmissioneAbbonamento [idEmissione=" + idEmissione
+				+ ", idPuntoVendita=" + idPuntoVendita + ", dataEmissione="
+				+ dataEmissione + ", dataScadenza=" + dataScadenza
+				+ ", tipoAbbonamento=" + tipoAbbonamento + ", tessera="
+				+ tessera + ", distributoreAb=" + distributoreAb
+				+ ", vidimazioni=" + vidimazioni + ", getIdEmissione()="
+				+ getIdEmissione() + ", getIdPuntoVendita()="
+				+ getIdPuntoVendita() + ", getDataEmissione()="
+				+ getDataEmissione() + ", getDataScadenza()="
+				+ getDataScadenza() + ", getTipoAbbonamento()="
+				+ getTipoAbbonamento() + ", getTessera()=" + getTessera()
+				+ ", getDistributoreAb()=" + getDistributoreAb()
+				+ ", getVidimazioni()=" + getVidimazioni() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + ", toString()="
 				+ super.toString() + "]";
 	}
 
