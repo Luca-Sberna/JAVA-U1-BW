@@ -15,6 +15,7 @@ import dao.TesseraDAO;
 import dao.TrattaDAO;
 import dao.UtenteDAO;
 import dao.VenditoriAutorizzatiDAO;
+import dao.VidimazioneAbbonamentiDAO;
 import dao.VidimazioneBigliettiDAO;
 import entities.DistributoriAutomatici;
 import entities.EmissioneAbbonamento;
@@ -27,6 +28,7 @@ import entities.Tessera;
 import entities.Tratta;
 import entities.Utente;
 import entities.VenditoriAutorizzati;
+import entities.VidimazioneAbbonamenti;
 import entities.VidimazioneBiglietti;
 import util.JpaUtil;
 
@@ -46,6 +48,7 @@ public class MainInterattivo {
 		UtenteDAO ud = new UtenteDAO(em);
 		TesseraDAO ted = new TesseraDAO(em);
 		VidimazioneBigliettiDAO vbd = new VidimazioneBigliettiDAO(em);
+		VidimazioneAbbonamentiDAO vabd = new VidimazioneAbbonamentiDAO(em);
 
 		Tratta t1 = new Tratta("Roma", "Latina", 2.30, 70.32);
 		Tratta t2 = new Tratta("Milano", "Roma", 5.30, 477.0);
@@ -123,10 +126,10 @@ public class MainInterattivo {
 		if (venditoreScelto >= 1 && venditoreScelto <= venditori.size()) {
 			venditoreSelezionato = venditori.get(venditoreScelto - 1);
 			// Ora puoi utilizzare "mezzoSelezionato" come desideri
-			System.out.println("Hai scelto il mezzo: " + venditoreSelezionato.getIdPuntoVendita() + ". "
-					+ venditoreSelezionato.getNomeNegozio());
+			System.out.println("Hai scelto il venditore: " + venditoreSelezionato.getIdPuntoVendita() + ". "
+					+ venditoreSelezionato.getNomeNegozio() + " " + venditoreSelezionato.getTipoDiNegozio());
 		} else {
-			System.out.println("La scelta del mezzo non è valida.");
+			System.out.println("La scelta del venditore non è valida.");
 		}
 
 		VenditoriAutorizzati venditore = null;
@@ -163,7 +166,6 @@ public class MainInterattivo {
 
 		switch (tipoAcquisto) {
 		case 1:
-			// Logica per l'acquisto del biglietto <--- inserire qui
 			EmissioneBiglietto biglietto = new EmissioneBiglietto(LocalDate.now(), utente, vidimazione, distributore);
 			ebd.save(biglietto);
 			System.out.println("Seleziona un mezzo per la tratta disponibile:");
@@ -195,14 +197,12 @@ public class MainInterattivo {
 			String confermaTimbro = scanner.next();
 
 			if (confermaTimbro.equalsIgnoreCase("S")) {
-				// Logica per il timbro del biglietto sul mezzo selezionato <---
-				// inserire qui
 				VidimazioneBiglietti vidimazioneee = new VidimazioneBiglietti(biglietto, mezzoSelezionato,
 						LocalDate.now());
 				vbd.save(vidimazioneee);
 
-				System.out.println(
-						"Biglietto timbrato correttamente sul mezzo " + mezzoScelto + "bravo picciotto buon viaggio!.");
+				System.out.println("Biglietto timbrato correttamente sul mezzo " + mezzoScelto
+						+ " bravo picciotto buon viaggio!.");
 			} else {
 				System.out.println(
 						"Ricordati di convalidare il biglietto sul mezzo una volta salito o verrai multato a sangue.");
@@ -211,14 +211,12 @@ public class MainInterattivo {
 		case 2:
 			LocalDate dataInizio = LocalDate.now();
 
-			// Richiedere all'utente di selezionare il tipo di abbonamento
 			System.out.println("Seleziona il tipo di abbonamento:");
 			System.out.println("1. Settimanale");
 			System.out.println("2. Mensile");
 			System.out.print("Scelta: ");
 			int tipoAbbonamentoScelto = scanner.nextInt();
 
-			// Impostare il tipo di abbonamento in base alla scelta dell'utente
 			TipoEvento tipoAbbonamento;
 			switch (tipoAbbonamentoScelto) {
 			case 1:
@@ -228,7 +226,6 @@ public class MainInterattivo {
 			case 2:
 				tipoAbbonamento = TipoEvento.MENSILE;
 				break;
-
 			default:
 				System.out.println("Selezione non valida. Uscita dall'app.");
 				em.close();
@@ -249,44 +246,47 @@ public class MainInterattivo {
 			Tessera tessera = new Tessera(utente, dataInizio);
 			ted.save(tessera);
 
-			// Crea un nuovo oggetto EmissioneAbbonamento
+			// Crea un nuovo oggetto EmissioneAbbonamento associato alla tessera dell'utente
 			EmissioneAbbonamento abbonamento = new EmissioneAbbonamento(dataInizio, dataScadenza, tipoAbbonamento,
 					tessera);
 			ead.save(abbonamento);
-
 			System.out.println("Abbonamento emesso e acquistato con successo!");
 
-			int uscita;
+			Mezzo mezzoSelezionatoPerTessera = null;
+			int uscita = -1;
 			do {
 				System.out.println("Ecco i mezzi disponibili: (premi 0 per uscire)");
+
 				List<Mezzo> mezziDisponibiliPerTessera = md.getAllMezzi();
 				for (Mezzo mezzo : mezziDisponibiliPerTessera) {
-					System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo());
+					System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + mezzo.getTratta());
 				}
-				uscita = scanner.nextInt();
-				if (uscita == 0) {
-					System.out.println("Uscita dall'app.");
-					em.close();
-					emf.close();
-					System.exit(0);
+
+				int mezzoSceltoPerTessera = scanner.nextInt();
+				if (mezzoSceltoPerTessera >= 1 && mezzoSceltoPerTessera <= mezziDisponibiliPerTessera.size()) {
+					mezzoSelezionatoPerTessera = mezziDisponibiliPerTessera.get(mezzoSceltoPerTessera - 1);
+					// Ora puoi utilizzare "mezzoSelezionato" come desideri
+					System.out.println("Hai scelto il mezzo: " + mezzoSelezionatoPerTessera.getId() + ". "
+							+ mezzoSelezionatoPerTessera.getTipoMezzo() + "per la tratta: "
+							+ mezzoSelezionatoPerTessera.getTratta());
 				} else {
-					// Altre possibili azioni in base alla selezione del mezzo
-					// <--- inserire qui
-					// (opzionale)
+					System.out.println("La scelta del mezzo non è valida.");
 				}
 			} while (uscita != 0);
 
 			System.out.println("Buon viaggio! WOOOOOO!!!");
 			System.out.println("***Ricordarsi di convalidare la tessera sul mezzo!***");
 
-			System.out.println("Salendo sul mezzo");
+			System.out.println("Salendo sul mezzo" + mezzoSelezionatoPerTessera);
 
 			System.out.println("Vuoi timbrare la tessera sul mezzo selezionato? (S/N)");
 			String confermaTessera = scanner.next();
 
 			if (confermaTessera.equalsIgnoreCase("S")) {
-				// Logica per il timbro del biglietto sul mezzo selezionato <---
-				// inserire qui
+				VidimazioneAbbonamenti vidimazioneAbb = new VidimazioneAbbonamenti(abbonamento, utente,
+						LocalDate.now());
+				vabd.save(vidimazioneAbb);
+
 				System.out.println("Tessera timbrata correttamente sul mezzo bravo picciotto buon viaggio!.");
 			} else {
 				System.out.println(
@@ -303,5 +303,6 @@ public class MainInterattivo {
 		scanner.close();
 		em.close();
 		emf.close();
+
 	}
 }

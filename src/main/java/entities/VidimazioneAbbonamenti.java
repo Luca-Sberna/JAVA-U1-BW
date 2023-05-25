@@ -16,29 +16,30 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "biglietti_vidimati")
+@Table(name = "abbonamenti_vidimati")
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class VidimazioneBiglietti {
+public class VidimazioneAbbonamenti {
 	@Id
 	@GeneratedValue
 	private UUID id;
 
 	@ManyToOne
-	@JoinColumn(name = "idMezzo")
-	private Mezzo mezzo; // Mezzo sulla quale è stato vidimato
+	@JoinColumn(name = "utenti")
+	private Utente utente;
+
 	private LocalDate dataVidimazione;
 
 	@ManyToOne
-	@JoinColumn(name = "idBiglietto")
-	private EmissioneBiglietto bigliettoVidimato;
+	@JoinColumn(name = "id_abbonamento")
+	private EmissioneAbbonamento abbonamentoVidimato;
 
-	public VidimazioneBiglietti(EmissioneBiglietto biglietto, Mezzo mezzo, LocalDate dataVidimazione) {
+	public VidimazioneAbbonamenti(EmissioneAbbonamento abbonamentoVidimato, Utente utente, LocalDate dataVidimazione) {
 		super();
-		this.bigliettoVidimato = biglietto;
-		this.mezzo = mezzo;
+		this.abbonamentoVidimato = abbonamentoVidimato;
+		this.utente = utente;
 		this.dataVidimazione = dataVidimazione;
 	}
 
