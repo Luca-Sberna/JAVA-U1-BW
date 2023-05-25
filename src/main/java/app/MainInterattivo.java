@@ -12,6 +12,7 @@ import dao.DistributoriAutomaticiDAO;
 import dao.EmissioneAbbonamentoDAO;
 import dao.EmissioneBigliettoDAO;
 import dao.MezzoDAO;
+import dao.PuntiVenditaDAO;
 import dao.TesseraDAO;
 import dao.TrattaDAO;
 import dao.UtenteDAO;
@@ -19,6 +20,7 @@ import dao.VenditoriAutorizzatiDAO;
 import dao.VidimazioneAbbonamentiDAO;
 import dao.VidimazioneBigliettiDAO;
 import entities.DistributoriAutomatici;
+import entities.DistributoriAutomatici.StatoDistributore;
 import entities.EmissioneAbbonamento;
 import entities.EmissioneAbbonamento.TipoEvento;
 import entities.EmissioneBiglietto;
@@ -52,6 +54,7 @@ public class MainInterattivo {
 		TesseraDAO ted = new TesseraDAO(em);
 		VidimazioneBigliettiDAO vbd = new VidimazioneBigliettiDAO(em);
 		VidimazioneAbbonamentiDAO vabd = new VidimazioneAbbonamentiDAO(em);
+		PuntiVenditaDAO pvd = new PuntiVenditaDAO(em);
 
 		Tratta t1 = new Tratta("Roma", "Latina", 2.30, 70.32);
 		Tratta t2 = new Tratta("Milano", "Roma", 5.30, 477.0);
@@ -109,16 +112,16 @@ public class MainInterattivo {
 			System.out.println("Sei nella sezione admin! Scegli cosa fare:");
 			System.out.println(" ");
 			System.out.println("1. Visualizza la lista dei mezzi");
-			System.out.println("2. Visualizza la lista dei venditori e distributori");
+			System.out.println("2. Visualizza la lista dei venditori e distributori"); // DA FARE (MATTEO)
 			System.out.println("3. Visualizza la lista degli utenti");
-			System.out.println("8. Crea e aggiungi un mezzo ");
-			System.out.println("9. Crea e aggiungi una tratta ");
-			System.out.println("10. Crea e aggiungi un venditore autorizzato ");
-			System.out.println("11. Crea e aggiungi un distributore automatico ");
 			System.out.println("4. Modifica un mezzo");
 			System.out.println("5. Modifica una tratta ");
 			System.out.println("6. Modifica un venditore autorizzato ");
-			System.out.println("7. Modifica un distributore automatico ");
+			System.out.println("7. Modifica un distributore automatico "); // DA FARE (MATTEO)
+			System.out.println("8. Crea e aggiungi un mezzo ");
+			System.out.println("9. Crea e aggiungi una tratta "); // DA FARE (MATTEO)
+			System.out.println("10. Crea e aggiungi un venditore autorizzato ");
+			System.out.println("11. Crea e aggiungi un distributore automatico ");
 			System.out.println("12. Assegna tratta a mezzo ");
 
 			int sceltaAdmin = scanner.nextInt();
@@ -129,6 +132,8 @@ public class MainInterattivo {
 				break;
 			case 2:
 				System.out.println("Ecco la lista dei venditori e distributori");
+				pvd.getAllPuntiVendita().stream().forEach(
+						pv -> log.info(pv.getLuogo() + " " + pv.getNumeroVendite() + " " + pv.getIdPuntoVendita()));
 				break;
 			case 3:
 				System.out.println("Ecco la lista degli utenti");
@@ -137,8 +142,22 @@ public class MainInterattivo {
 				break;
 			case 4:
 				System.out.println("Modifica un mezzo a tuo piacimento dal suo Id");
-				md.findByIdAndUpdate("42915246-e3c3-4d2c-a33a-2f130fb73126", 124, foundt1);
+				System.out.println("L'id del mezzo che vuoi modificare");
+				String id = scanner.next();
+				UUID idConvertito = UUID.fromString(id);
+
+				System.out.println("La nuova capienza");
+				long nuovaCapienza = scanner.nextLong();
+
+				scanner.nextLine();
+
+				md.findByIdAndUpdate(idConvertito, nuovaCapienza);
 				break;
+			case 7:
+				System.out.println("Modifica un distributore automatico a tuo piacimento dal suo Id");
+				dad.findByIdAndUpdate("00bc70ec-84cc-41ad-8ca3-94809c347520", StatoDistributore.FUORI_SERVIZIO);
+				break;
+
 			default:
 				System.out.println("Selezione non valida");
 			}
