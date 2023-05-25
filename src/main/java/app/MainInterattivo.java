@@ -55,21 +55,9 @@ public class MainInterattivo {
 		VidimazioneBigliettiDAO vbd = new VidimazioneBigliettiDAO(em);
 		VidimazioneAbbonamentiDAO vabd = new VidimazioneAbbonamentiDAO(em);
 
-		Tratta t1 = new Tratta("Roma", "Latina", 2.30, 70.32);
-		Tratta t2 = new Tratta("Milano", "Roma", 5.30, 477.0);
-//		td.save(t1);
-//		td.save(t2);
-		Tratta foundt1 = td.getById("5e3041de-cb42-44a2-a4af-1e243b907003");
-		Mezzo m1 = new Mezzo(60, statoMezzo.inServizio, tipoMezzo.Autobus, t2);
-		Mezzo m2 = new Mezzo(300, statoMezzo.inServizio, tipoMezzo.Tram, t1);
-//		md.save(m2);
-//		md.save(m1);
 		VenditoriAutorizzati venditore1 = new VenditoriAutorizzati("Amazon", "E-Commerce");
 		VenditoriAutorizzati venditore2 = new VenditoriAutorizzati("TuttoQui", "Edicola");
 		VenditoriAutorizzati venditore3 = new VenditoriAutorizzati("Da Enrico", "Tabaccaio");
-//		vad.save(venditore3);
-//		vad.save(venditore2);
-//		vad.save(venditore1);
 
 		// Login/Register
 		System.out.println("Benvenuto all'app di trasporti pubblici!");
@@ -178,6 +166,45 @@ public class MainInterattivo {
 				break;
 
 			case 5:
+				System.out.println("Modifica una tratta");
+				System.out.println("Inserisci l'ID della tratta da modificare: ");
+				UUID trattaId = UUID.fromString(scanner.next());
+
+				// Trova la tratta tramite l'ID
+				Tratta trattaDaModificare = td.getById(trattaId);
+
+				if (trattaDaModificare != null) {
+					System.out.println("Inserisci la nuova città di partenza: ");
+					String nuovaPartenza = scanner.next();
+					System.out.println("Inserisci la nuova città di destinazione: ");
+					String nuovaDestinazione = scanner.next();
+					System.out.println("Inserisci la nuova distanza tra la partenza e il capolinea: ");
+					double nuovaDistanza = scanner.nextDouble();
+					System.out.println("Inserisci la nuova durata totale del viaggio: ");
+					double nuovaDurata = scanner.nextDouble();
+
+					// Mostra all'utente i dettagli delle modifiche e richiedi conferma
+					System.out.println("Dettagli della modifica:");
+					System.out.println("Città di partenza: " + nuovaPartenza);
+					System.out.println("Città di destinazione: " + nuovaDestinazione);
+					System.out.println("Distanza: " + nuovaDistanza);
+					System.out.println("Durata: " + nuovaDurata);
+					System.out.println("Confermi le modifiche? (Sì/No)");
+					String confermaModifiche = scanner.next();
+
+					if (confermaModifiche.equalsIgnoreCase("Sì")) {
+						trattaDaModificare.setZonaPartenza(nuovaPartenza);
+						trattaDaModificare.setCapolinea(nuovaDestinazione);
+						trattaDaModificare.setLunghezzaTratta(nuovaDistanza);
+						trattaDaModificare.setTempoMedioTratta(nuovaDurata);
+						td.saveTratta(trattaDaModificare);
+						System.out.println("Tratta modificata con successo!");
+					} else {
+						System.out.println("Modifica annullata.");
+					}
+				} else {
+					System.out.println("Tratta non trovata.");
+				}
 				break;
 
 			case 6:
