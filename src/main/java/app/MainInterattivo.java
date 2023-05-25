@@ -141,17 +141,41 @@ public class MainInterattivo {
 						.forEach(u -> log.info(u.getNome() + " " + u.getCognome() + " " + u.getIdUtente()));
 				break;
 			case 4:
-				System.out.println("Modifica un mezzo a tuo piacimento dal suo Id");
-				System.out.println("L'id del mezzo che vuoi modificare");
+				System.out.println("Inserisci l'ID del mezzo che desideri modificare:");
 				String id = scanner.next();
-				UUID idConvertito = UUID.fromString(id);
-
-				System.out.println("La nuova capienza");
-				long nuovaCapienza = scanner.nextLong();
-
+				UUID idMezzo = UUID.fromString(id);
+				System.out.println("Inserisci la nuova capienza del mezzo:");
+				long capienza = scanner.nextLong();
 				scanner.nextLine();
+				System.out.println("Inserisci il nuovo stato del mezzo (OPZIONI_VALIDE):");
+				String statoString = scanner.nextLine();
+				statoMezzo stato = statoMezzo.valueOf(statoString);
+				System.out.println("Inserisci il nuovo tipo di mezzo (OPZIONI_VALIDE):");
+				String tipoMezzoString = scanner.nextLine();
+				tipoMezzo tipoMezzoo = tipoMezzo.valueOf(tipoMezzoString);
 
-				md.findByIdAndUpdate(idConvertito, nuovaCapienza);
+				System.out.println("Desideri modificare la tratta associata? (Sì/No)");
+				String modificaTratta = scanner.next();
+
+				if (modificaTratta.equalsIgnoreCase("Si")) {
+					System.out.println("Inserisci la città di partenza per la tratta: ");
+					String partenza = scanner.next();
+					System.out.println("Inserisci la città di destinazione per la tratta: ");
+					String destinazione = scanner.next();
+					System.out.println("Inserisci la distanza tra la partenza e il capolinea: ");
+					double distanza = scanner.nextDouble();
+					System.out.println("Inserisci la durata totale del viaggio: ");
+					double durata = scanner.nextDouble();
+
+					// Crea la nuova tratta con i valori forniti dall'utente
+					Tratta nuovaTratta = new Tratta(partenza, destinazione, distanza, durata);
+					td.save(nuovaTratta); // Mostra all'utente i dettagli della nuova tratta e richiedi conferma
+					System.out.println("Nuova tratta:");
+					System.out.println(nuovaTratta);
+
+					md.findByIdAndUpdate(idMezzo, capienza, stato, tipoMezzoo, nuovaTratta);
+				}
+
 				break;
 			case 7:
 				System.out.println("Modifica un distributore automatico a tuo piacimento dal suo Id");
