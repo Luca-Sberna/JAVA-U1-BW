@@ -20,6 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "utenti")
+
 public class Utente {
 	@Id
 	@GeneratedValue
@@ -38,5 +39,11 @@ public class Utente {
 		this.nome = nome;
 		this.cognome = cognome;
 	}
+
+//	@Override
+//	public String toString() {
+//		return "Utente [idUtente=" + idUtente + ", nome=" + nome + ", cognome=" + cognome + ", biglietti=" + biglietti
+//				+ "]";
+//	}
 
 }

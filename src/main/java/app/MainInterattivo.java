@@ -57,6 +57,7 @@ public class MainInterattivo {
 		Tratta t2 = new Tratta("Milano", "Roma", 5.30, 477.0);
 //		td.save(t1);
 //		td.save(t2);
+		Tratta foundt1 = td.getById("5e3041de-cb42-44a2-a4af-1e243b907003");
 		Mezzo m1 = new Mezzo(60, statoMezzo.inServizio, tipoMezzo.Autobus, t2);
 		Mezzo m2 = new Mezzo(300, statoMezzo.inServizio, tipoMezzo.Tram, t1);
 //		md.save(m2);
@@ -103,13 +104,11 @@ public class MainInterattivo {
 			ud.save(utente);
 			break;
 		case 3:
-			System.out.println(" ");
-			System.out.println("Benvenuto admin fai la tua scelta: ");
-			System.out.println("1. Lista dei mezzi e delle loro tratte");
-			System.out.println("2. Lista dei venditori e distributori");
-			System.out.println("3. Lista degli utenti");
-			System.out.println("4. Modifica un mezzo a tuo piacimento dal suo Id");
-
+			System.out.println("Sei nella sezione admin! Scegli cosa fare:");
+			System.out.println("1. Visualizza la lista dei mezzi");
+			System.out.println("2. Visualizza la lista dei venditori e distributori");
+			System.out.println("3. Visualizza la lista degli utenti");
+			System.out.println("4. Modifica un mezzo");
 			int sceltaAdmin = scanner.nextInt();
 			switch (sceltaAdmin) {
 			case 1:
@@ -121,10 +120,12 @@ public class MainInterattivo {
 				break;
 			case 3:
 				System.out.println("Ecco la lista degli utenti");
+				ud.getAllUsers().stream()
+						.forEach(u -> log.info(u.getNome() + " " + u.getCognome() + " " + u.getIdUtente()));
 				break;
 			case 4:
 				System.out.println("Modifica un mezzo a tuo piacimento dal suo Id");
-				md.findByIdAndUpdate("42915246-e3c3-4d2c-a33a-2f130fb73126", 124);
+				md.findByIdAndUpdate("42915246-e3c3-4d2c-a33a-2f130fb73126", 124, foundt1);
 				break;
 			default:
 				System.out.println("Selezione non valida");

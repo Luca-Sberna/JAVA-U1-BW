@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import entities.Mezzo;
+import entities.Tratta;
 
 public class MezzoDAO {
 	private final EntityManager em;
@@ -71,12 +72,13 @@ public class MezzoDAO {
 		return query.getResultList();
 	}
 
-	public int findByIdAndUpdate(String id, long capienza) {
+	public int findByIdAndUpdate(String id, long capienza, Tratta tratta) {
 		EntityTransaction t = em.getTransaction();
 		t.begin();
-		Query q = em.createQuery("UPDATE Mezzo m SET capienza=:capienza WHERE id = :id");
+		Query q = em.createQuery("UPDATE Mezzo m SET m.capienza=:capienza , m.tratta=:tratta WHERE id = :id");
 		q.setParameter("capienza", capienza);
 		q.setParameter("id", UUID.fromString(id));
+		q.setParameter("tratta", tratta);
 		int num = q.executeUpdate();
 		t.commit();
 		if (num > 0) {
