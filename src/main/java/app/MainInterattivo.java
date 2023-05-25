@@ -19,6 +19,7 @@ import dao.VidimazioneBigliettiDAO;
 import entities.EmissioneAbbonamento;
 import entities.EmissioneAbbonamento.TipoEvento;
 import entities.Mezzo;
+import entities.Tessera;
 import entities.Utente;
 import entities.VenditoriAutorizzati;
 import util.JpaUtil;
@@ -153,10 +154,13 @@ public class MainInterattivo {
 				dataScadenza = dataInizio.plusMonths(1);
 			}
 
+			// Creare un nuovo oggetto Tessera associato all'utente
+			Tessera tessera = new Tessera(utente, dataInizio);
+			ted.save(tessera);
+
 			// Crea un nuovo oggetto EmissioneAbbonamento
 			EmissioneAbbonamento abbonamento = new EmissioneAbbonamento(dataInizio, dataScadenza, tipoAbbonamento,
-					utente);
-
+					tessera);
 			ead.save(abbonamento);
 
 			System.out.println("Abbonamento emesso e acquistato con successo!");
@@ -205,5 +209,8 @@ public class MainInterattivo {
 			emf.close();
 			System.exit(0);
 		}
+		scanner.close();
+		em.close();
+		emf.close();
 	}
 }

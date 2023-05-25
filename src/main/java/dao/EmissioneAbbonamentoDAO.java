@@ -19,15 +19,14 @@ public class EmissioneAbbonamentoDAO {
 	public void save(EmissioneAbbonamento emissioneAbbonamento) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		em.persist(emissioneAbbonamento);
+		em.merge(emissioneAbbonamento);
 		transaction.commit();
 	}
 
 	public EmissioneAbbonamento getById(UUID uuid) {
 		EmissioneAbbonamento found = em.find(EmissioneAbbonamento.class, uuid);
 		if (found != null) {
-			System.out.println(
-					"Emissione abbonamento" + " " + uuid + " " + "trovata");
+			System.out.println("Emissione abbonamento" + " " + uuid + " " + "trovata");
 		} else {
 			System.out.println("Non abbiamo trovato nessun emissione");
 		}

@@ -23,6 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+
 public class EmissioneAbbonamento {
 	@Id
 	@GeneratedValue
@@ -37,9 +38,18 @@ public class EmissioneAbbonamento {
 		SETTIMANALE, MENSILE
 	}
 
+	public EmissioneAbbonamento(LocalDate dataEmissione, LocalDate dataScadenza, TipoEvento tipoAbbonamento,
+			Tessera tessera) {
+		super();
+		this.dataEmissione = dataEmissione;
+		this.dataScadenza = dataScadenza;
+		this.tipoAbbonamento = tipoAbbonamento;
+		this.tessera = tessera;
+	}
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "numeroTessera", referencedColumnName = "numeroTessera")
-	private Tessera numeroTessera;
+	private Tessera tessera;
 
 	@ManyToOne
 	@JoinColumn(name = "abbonamentoEmesso")
@@ -57,8 +67,7 @@ public class EmissioneAbbonamento {
 		abbonamento.setIdPuntoVendita(this.idPuntoVendita);
 		abbonamento.setDataEmissione(LocalDate.now());
 
-		// Set the dataScadenzaAbbonamento property based on the desired
-		// TipoEvento
+		// Set the dataScadenzaAbbonamento property based on the desired TipoEvento
 		if (this.tipoAbbonamento == TipoEvento.SETTIMANALE) {
 			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusWeeks(1));
 		} else if (this.tipoAbbonamento == TipoEvento.MENSILE) {
@@ -74,22 +83,15 @@ public class EmissioneAbbonamento {
 
 	@Override
 	public String toString() {
-		return "EmissioneAbbonamento [idEmissione=" + idEmissione + ", numeroTessera=" + numeroTessera
-				+ ", idPuntoVendita=" + idPuntoVendita + ", dataEmissione=" + dataEmissione
-				+ ", dataScadenzaAbbonamento=" + tipoAbbonamento + ", getIdEmissione()=" + getIdEmissione()
-				+ ", getNumeroTessera()=" + getNumeroTessera() + ", getIdPuntoVendita()=" + getIdPuntoVendita()
-				+ ", getDataEmissione()=" + getDataEmissione() + ", getDataScadenzaAbbonamento()="
-				+ getTipoAbbonamento() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+		return "EmissioneAbbonamento [idEmissione=" + idEmissione + ", idPuntoVendita=" + idPuntoVendita
+				+ ", dataEmissione=" + dataEmissione + ", dataScadenza=" + dataScadenza + ", tipoAbbonamento="
+				+ tipoAbbonamento + ", tessera=" + tessera + ", distributoreAb=" + distributoreAb + ", vidimazioni="
+				+ vidimazioni + ", getIdEmissione()=" + getIdEmissione() + ", getIdPuntoVendita()="
+				+ getIdPuntoVendita() + ", getDataEmissione()=" + getDataEmissione() + ", getDataScadenza()="
+				+ getDataScadenza() + ", getTipoAbbonamento()=" + getTipoAbbonamento() + ", getTessera()="
+				+ getTessera() + ", getDistributoreAb()=" + getDistributoreAb() + ", getVidimazioni()="
+				+ getVidimazioni() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
 				+ super.toString() + "]";
-	}
-
-	public EmissioneAbbonamento(LocalDate dataEmissione, LocalDate dataScadenza, TipoEvento tipoAbbonamento,
-			Utente utente) {
-		super();
-		this.dataEmissione = dataEmissione;
-		this.dataScadenza = dataScadenza;
-		this.tipoAbbonamento = tipoAbbonamento;
-		this.numeroTessera = utente.getNumeroTessera();
 	}
 
 }

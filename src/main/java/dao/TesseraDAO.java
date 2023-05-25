@@ -17,11 +17,24 @@ public class TesseraDAO {
 		this.em = em;
 	}
 
-	public void save(Tessera e) {
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
-		em.persist(e);
-		transaction.commit();
+	public void save(Tessera tessera) {
+		EntityTransaction tx = em.getTransaction();
+		try {
+			tx.begin();
+			UUID numeroTessera = generateNumeroTessera();
+			tessera.setNumeroTessera(numeroTessera);
+			em.merge(tessera);
+			tx.commit();
+		} catch (Exception e) {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+		}
 	}
 
 	public Tessera getById(String id) {
@@ -46,6 +59,11 @@ public class TesseraDAO {
 	public void refresh(Tessera tessera) {
 		tessera = em.merge(tessera);
 		em.refresh(tessera);
+	}
+
+	private UUID generateNumeroTessera() {
+		// Genera un numero di tessera
+		return UUID.randomUUID();
 	}
 
 	public List<EmissioneAbbonamento> getAbbonamentoAttivo(String nTessera) {
