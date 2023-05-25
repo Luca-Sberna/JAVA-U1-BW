@@ -57,7 +57,7 @@ public class EmissioneAbbonamento {
 		this.tessera = tessera;
 	}
 
-	public EmissioneAbbonamento emettiAbbonamento() {
+	public EmissioneAbbonamento emettiAbbonamento(Utente utente) {
 		// Create a new EmissioneAbbonamento object
 		EmissioneAbbonamento abbonamento = new EmissioneAbbonamento();
 

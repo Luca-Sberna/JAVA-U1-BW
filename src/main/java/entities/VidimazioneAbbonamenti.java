@@ -36,11 +36,11 @@ public class VidimazioneAbbonamenti {
 	@JoinColumn(name = "id_abbonamento")
 	private EmissioneAbbonamento abbonamentoVidimato;
 
-	public VidimazioneAbbonamenti(Utente utente, LocalDate dataVidimazione, EmissioneAbbonamento abbonamentoVidimato) {
+	public VidimazioneAbbonamenti(EmissioneAbbonamento abbonamentoVidimato, Utente utente, LocalDate dataVidimazione) {
 		super();
+		this.abbonamentoVidimato = abbonamentoVidimato;
 		this.utente = utente;
 		this.dataVidimazione = dataVidimazione;
-		this.abbonamentoVidimato = abbonamentoVidimato;
 	}
 
 	public Tessera getTessera() {

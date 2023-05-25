@@ -164,10 +164,10 @@ public class MainInterattivo {
 			System.out.println("Buon viaggio! WOOOO!");
 			System.out.println("***Ricordarsi di convalidare il biglietto sul mezzo!***");
 
-			System.out.println("Salendo sul mezzo" + mezzoScelto);
+			System.out.println("Salendo sul mezzo" + " " + mezzoSelezionato);
 
-			System.out
-					.println("Vuoi timbrare il biglietto sul mezzo " + "(" + mezzoScelto + ")" + " selezionato? (S/N)");
+			System.out.println(
+					"Vuoi timbrare il biglietto sul mezzo " + "(" + mezzoSelezionato + ")" + " selezionato? (S/N)");
 			String confermaTimbro = scanner.next();
 
 			if (confermaTimbro.equalsIgnoreCase("S")) {
@@ -254,7 +254,7 @@ public class MainInterattivo {
 			System.out.println("Buon viaggio! WOOOOOO!!!");
 			System.out.println("***Ricordarsi di convalidare la tessera sul mezzo!***");
 
-			System.out.println("Salendo sul mezzo" + mezzoSelezionatoPerTessera);
+			System.out.println("Salendo sul mezzo " + mezzoSelezionatoPerTessera.getId());
 
 			System.out.println("Vuoi timbrare la tessera sul mezzo selezionato? (S/N)");
 			String confermaTessera = scanner.next();
