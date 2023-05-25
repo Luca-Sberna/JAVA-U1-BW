@@ -53,4 +53,5 @@ public class EmissioneAbbonamentoDAO {
 		return q.getResultList();
 
 	}
+
 }
