@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,11 +21,8 @@ import lombok.Setter;
 @Setter
 public class EmissioneBiglietto {
 	@Id
-	@EmbeddedId
-	private EmissioneBigliettoId id;
-
+	@GeneratedValue
 	private UUID idEmissione;
-
 	private LocalDate dataEmissione;
 //	protected UUID idBiglietto;
 //	protected UUID idPuntoVendita;
@@ -33,9 +30,9 @@ public class EmissioneBiglietto {
 	public EmissioneBiglietto emettiBiglietto(Utente utente) {
 		EmissioneBiglietto biglietto = new EmissioneBiglietto();
 
+		biglietto.setIdEmissione(UUID.randomUUID());
 		biglietto.setIdPuntoVendita(this.IdPuntoVendita);
 		biglietto.setDataEmissione(LocalDate.now());
-		biglietto.setUtente(utente);
 
 		return biglietto;
 	}
@@ -48,20 +45,28 @@ public class EmissioneBiglietto {
 	@JoinColumn(name = "IdPuntoVendita")
 	private PuntiVendita IdPuntoVendita;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "idBiglietto", referencedColumnName = "idBiglietto")
+	private VidimazioneBiglietti vidimazione;
+
+	@ManyToOne
+	@JoinColumn(name = "bigliettoEmesso")
+	private DistributoriAutomatici distributoreBi;
+
 	@ManyToOne
 	@JoinColumn(name = "bigliettoEmessoV")
 	private VenditoriAutorizzati venditoreBi;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id", referencedColumnName = "id")
-	private VidimazioneBiglietti vidimazione;
+	@Override
+	public String toString() {
+		return "EmissioneBiglietto [idEmissione=" + idEmissione + ", dataEmissione=" + dataEmissione + ", idBiglietto="
+				+ ", idPuntoVendita=" + IdPuntoVendita + ", utente=" + utente + ", getIdEmissione()=" + getIdEmissione()
+				+ ", getDataEmissione()=" + getDataEmissione() + ", getIdBiglietto()=" + ", getIdPuntoVendita()="
+				+ getIdPuntoVendita() + ", getUtente()=" + getUtente() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
 
-	@ManyToOne
-	@JoinColumn(name = "bigliettoEmessoD")
-	private DistributoriAutomatici distributoreBi;
-
-	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente,
-			VidimazioneBiglietti vidimazione,
+	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente, VidimazioneBiglietti vidimazione,
 			DistributoriAutomatici distributoreBi) {
 		super();
 		this.dataEmissione = dataEmissione;
@@ -70,28 +75,13 @@ public class EmissioneBiglietto {
 		this.distributoreBi = distributoreBi;
 	}
 
-	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente,
-			PuntiVendita idPuntoVendita) {
+	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente, PuntiVendita idPuntoVendita,
+			DistributoriAutomatici distributoreBi) {
 		super();
 		this.dataEmissione = dataEmissione;
 		this.utente = utente;
 		IdPuntoVendita = idPuntoVendita;
-		idEmissione = UUID.randomUUID();
-
-	}
-
-	@Override
-	public String toString() {
-		return "EmissioneBiglietto [id=" + id + ", dataEmissione="
-				+ dataEmissione + ", utente=" + utente + ", IdPuntoVendita="
-				+ IdPuntoVendita + ", vidimazione=" + vidimazione
-				+ ", distributoreBi=" + distributoreBi + ", getId()=" + getId()
-				+ ", getDataEmissione()=" + getDataEmissione()
-				+ ", getUtente()=" + getUtente() + ", getIdPuntoVendita()="
-				+ getIdPuntoVendita() + ", getVidimazione()=" + getVidimazione()
-				+ ", getDistributoreBi()=" + getDistributoreBi()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		this.distributoreBi = distributoreBi;
 	}
 
 }

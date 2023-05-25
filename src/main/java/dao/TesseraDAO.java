@@ -56,4 +56,12 @@ public class TesseraDAO {
 		return q.getResultList();
 	}
 
+	public List<Tessera> trovaTessereScadutePerUtente(String idUtente) {
+		TypedQuery<Tessera> query = em.createQuery(
+				"SELECT t FROM Tessera t WHERE t.proprietario.idUtente = :idUtente AND t.dataScadenzaTessera < CURRENT_DATE()",
+				Tessera.class);
+		query.setParameter("idUtente", UUID.fromString(idUtente));
+		return query.getResultList();
+	}
+
 }

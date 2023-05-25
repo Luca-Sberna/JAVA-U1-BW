@@ -24,13 +24,41 @@ public class VenditoriAutorizzati extends PuntiVendita {
 
 	@OneToMany(mappedBy = "venditoreBi")
 	private Set<EmissioneBiglietto> biglietti;
-
 	@OneToMany(mappedBy = "distributoreAb")
 	private Set<EmissioneAbbonamento> abbonamenti;
 
 	@ManyToOne
 	@JoinColumn(name = "venditoriAutorizzati")
 	private PuntiVendita puntoVendita;
+
+//	public VenditoriAutorizzati(String nomeNegozio, String tipoDiNegozio) {
+//		this.emissioneBiglietto = new EmissioneBiglietto();
+//		this.emissioneAbbonamento = new EmissioneAbbonamento();
+//	}
+//
+//	@Override
+//	public EmissioneBiglietto emettiBiglietto(Utente utente) {
+//		this.emissioneBiglietto.emettiBiglietto(utente);
+//		return emissioneBiglietto;
+//	}
+//
+//	@Override
+//	public EmissioneAbbonamento emettiAbbonamento(Utente utente) {
+//		this.emissioneAbbonamento.emettiAbbonamento(utente);
+//		return emissioneAbbonamento;
+//	}
+//
+//	@Override
+//	public String toString() {
+//		return "VenditoriAutorizzati [idPuntoVendita=" + idPuntoVendita + ", nomeNegozio=" + nomeNegozio
+//				+ ", tipoDiNegozio=" + tipoDiNegozio + ", emissioneBiglietto=" + emissioneBiglietto
+//				+ ", emissioneAbbonamento=" + emissioneAbbonamento + ", numeroVendite=" + numeroVendite + ", luogo="
+//				+ luogo + ", getIdPuntoVendita()=" + getIdPuntoVendita() + ", getNomeNegozio()=" + getNomeNegozio()
+//				+ ", getTipoDiNegozio()=" + getTipoDiNegozio() + ", getEmissioneBiglietto()=" + getEmissioneBiglietto()
+//				+ ", getEmissioneAbbonamento()=" + getEmissioneAbbonamento() + ", toString()=" + super.toString()
+//				+ ", getNumeroVendite()=" + getNumeroVendite() + ", getLuogo()=" + getLuogo() + ", getClass()="
+//				+ getClass() + ", hashCode()=" + hashCode() + "]";
+//	}
 
 	public VenditoriAutorizzati(String nomeNegozio, String tipoDiNegozio) {
 		this.idPuntoVendita = UUID.randomUUID();
@@ -60,25 +88,6 @@ public class VenditoriAutorizzati extends PuntiVendita {
 			return abbonamento;
 		}
 		return null;
-	}
-
-	@Override
-	public String toString() {
-		return "VenditoriAutorizzati [idPuntoVendita=" + idPuntoVendita
-				+ ", nomeNegozio=" + nomeNegozio + ", tipoDiNegozio="
-				+ tipoDiNegozio + ", biglietti=" + biglietti + ", abbonamenti="
-				+ abbonamenti + ", puntoVendita=" + puntoVendita
-				+ ", numeroVendite=" + numeroVendite + ", luogo=" + luogo
-				+ ", getIdPuntoVendita()=" + getIdPuntoVendita()
-				+ ", getNomeNegozio()=" + getNomeNegozio()
-				+ ", getTipoDiNegozio()=" + getTipoDiNegozio()
-				+ ", getBiglietti()=" + getBiglietti() + ", getAbbonamenti()="
-				+ getAbbonamenti() + ", getPuntoVendita()=" + getPuntoVendita()
-				+ ", toString()=" + super.toString() + ", getNumeroVendite()="
-				+ getNumeroVendite() + ", getLuogo()=" + getLuogo()
-				+ ", getVenditori()=" + getVenditori() + ", getDistibutori()="
-				+ getDistibutori() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + "]";
 	}
 
 }
