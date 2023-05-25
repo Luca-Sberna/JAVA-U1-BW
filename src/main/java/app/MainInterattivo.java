@@ -72,6 +72,7 @@ public class MainInterattivo {
 		System.out.println("Benvenuto all'app di trasporti pubblici!");
 		System.out.println("1. Accedi");
 		System.out.println("2. Nuovo nell'app? Registrati");
+		System.out.println("3. Admin");
 		int sceltaUtente = scanner.nextInt();
 
 		Utente utente = null;
@@ -101,6 +102,28 @@ public class MainInterattivo {
 			utente = new Utente(nomeScelto, cognomeScelto);
 			ud.save(utente);
 			break;
+		case 3:
+			int sceltaAdmin = scanner.nextInt();
+			switch (sceltaAdmin) {
+			case 1:
+				System.out.println("Ecco la lista dei mezzi e delle loro tratte");
+				md.getAllMezzi().stream().forEach(m -> log.info(m.toString()));
+				break;
+			case 2:
+				System.out.println("Ecco la lista dei venditori e distributori");
+				break;
+			case 3:
+				System.out.println("Ecco la lista degli utenti");
+				break;
+			case 4:
+				System.out.println("Modifica un mezzo a tuo piacimento dal suo Id");
+				md.findByIdAndUpdate("42915246-e3c3-4d2c-a33a-2f130fb73126", 124);
+				break;
+			default:
+				System.out.println("Selezione non valida");
+			}
+
+			break;
 
 		default:
 			System.out.println("Selezione non valida. Uscita dall'app.");
@@ -109,178 +132,182 @@ public class MainInterattivo {
 			System.exit(0);
 		}
 
-		// Recupera tutti i venditori autorizzati e visualizzali all'utente
-		System.out.println("seleziona il venditore:");
-		List<VenditoriAutorizzati> venditori = vad.getAllVenditoriAutorizzati();
-		for (VenditoriAutorizzati venditore : venditori) {
-			System.out.println(venditore.getIdPuntoVendita() + ". " + venditore.getNomeNegozio());
-		}
-		int venditoreScelto = scanner.nextInt();
+		if (sceltaUtente != 3) {
 
-		VenditoriAutorizzati venditoreSelezionato = null;
-		if (venditoreScelto >= 1 && venditoreScelto <= venditori.size()) {
-			venditoreSelezionato = venditori.get(venditoreScelto - 1);
-			// Ora puoi utilizzare "mezzoSelezionato" come desideri
-			System.out.println("Hai scelto il venditore: " + venditoreSelezionato.getIdPuntoVendita() + ". "
-					+ venditoreSelezionato.getNomeNegozio() + " " + venditoreSelezionato.getTipoDiNegozio());
-		} else {
-			System.out.println("La scelta del venditore non è valida.");
-		}
-
-		VenditoriAutorizzati venditore = null;
-		DistributoriAutomatici distributore = null;
-		VidimazioneBiglietti vidimazione = null;
-
-		System.out.println("Cosa desideri acquistare?");
-		System.out.println("1. Biglietto");
-		System.out.println("2. Abbonamento");
-		System.out.print("Scelta: ");
-
-		int tipoAcquisto = scanner.nextInt();
-
-		switch (tipoAcquisto) {
-		case 1:
-			EmissioneBiglietto biglietto = new EmissioneBiglietto(LocalDate.now(), utente, vidimazione, distributore);
-			ebd.save(biglietto);
-			System.out.println("Seleziona un mezzo per la tratta disponibile:");
-			// Recupera i mezzi disponibili e visualizzali all'utente
-			List<Mezzo> mezziDisponibili = md.getAllMezzi();
-			for (Mezzo mezzo : mezziDisponibili) {
-				System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + " " + mezzo.getTratta());
+			// Recupera tutti i venditori autorizzati e visualizzali all'utente
+			System.out.println("seleziona il venditore:");
+			List<VenditoriAutorizzati> venditori = vad.getAllVenditoriAutorizzati();
+			for (VenditoriAutorizzati venditore : venditori) {
+				System.out.println(venditore.getIdPuntoVendita() + ". " + venditore.getNomeNegozio());
 			}
+			int venditoreScelto = scanner.nextInt();
 
-			int mezzoScelto = scanner.nextInt();
-			Mezzo mezzoSelezionato = null;
-			if (mezzoScelto >= 1 && mezzoScelto <= mezziDisponibili.size()) {
-				mezzoSelezionato = mezziDisponibili.get(mezzoScelto - 1);
+			VenditoriAutorizzati venditoreSelezionato = null;
+			if (venditoreScelto >= 1 && venditoreScelto <= venditori.size()) {
+				venditoreSelezionato = venditori.get(venditoreScelto - 1);
 				// Ora puoi utilizzare "mezzoSelezionato" come desideri
-				System.out.println("Hai scelto il mezzo: " + mezzoSelezionato.getId() + ". "
-						+ mezzoSelezionato.getTipoMezzo() + " " + mezzoSelezionato.getTratta());
+				System.out.println("Hai scelto il venditore: " + venditoreSelezionato.getIdPuntoVendita() + ". "
+						+ venditoreSelezionato.getNomeNegozio() + " " + venditoreSelezionato.getTipoDiNegozio());
 			} else {
-				System.out.println("La scelta del mezzo non è valida.");
+				System.out.println("La scelta del venditore non è valida.");
 			}
 
-			System.out.println("Biglietto emesso!");
-			System.out.println("Buon viaggio! WOOOO!");
-			System.out.println("***Ricordarsi di convalidare il biglietto sul mezzo!***");
+			VenditoriAutorizzati venditore = null;
+			DistributoriAutomatici distributore = null;
+			VidimazioneBiglietti vidimazione = null;
 
-			System.out.println("Salendo sul mezzo" + mezzoScelto);
-
-			System.out
-					.println("Vuoi timbrare il biglietto sul mezzo " + "(" + mezzoScelto + ")" + " selezionato? (S/N)");
-			String confermaTimbro = scanner.next();
-
-			if (confermaTimbro.equalsIgnoreCase("S")) {
-				VidimazioneBiglietti vidimazioneee = new VidimazioneBiglietti(biglietto, mezzoSelezionato,
-						LocalDate.now());
-				vbd.save(vidimazioneee);
-
-				System.out.println("Biglietto timbrato correttamente sul mezzo " + mezzoScelto
-						+ " bravo picciotto buon viaggio!.");
-			} else {
-				System.out.println(
-						"Ricordati di convalidare il biglietto sul mezzo una volta salito o verrai multato a sangue.");
-			}
-			break;
-		case 2:
-			LocalDate dataInizio = LocalDate.now();
-
-			System.out.println("Seleziona il tipo di abbonamento:");
-			System.out.println("1. Settimanale");
-			System.out.println("2. Mensile");
+			System.out.println("Cosa desideri acquistare?");
+			System.out.println("1. Biglietto");
+			System.out.println("2. Abbonamento");
 			System.out.print("Scelta: ");
-			int tipoAbbonamentoScelto = scanner.nextInt();
 
-			TipoEvento tipoAbbonamento;
-			switch (tipoAbbonamentoScelto) {
+			int tipoAcquisto = scanner.nextInt();
+
+			switch (tipoAcquisto) {
 			case 1:
-				tipoAbbonamento = TipoEvento.SETTIMANALE;
+				EmissioneBiglietto biglietto = new EmissioneBiglietto(LocalDate.now(), utente, vidimazione,
+						distributore);
+				ebd.save(biglietto);
+				System.out.println("Seleziona un mezzo per la tratta disponibile:");
+				// Recupera i mezzi disponibili e visualizzali all'utente
+				List<Mezzo> mezziDisponibili = md.getAllMezzi();
+				for (Mezzo mezzo : mezziDisponibili) {
+					System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + " " + mezzo.getTratta());
+				}
+
+				int mezzoScelto = scanner.nextInt();
+				Mezzo mezzoSelezionato = null;
+				if (mezzoScelto >= 1 && mezzoScelto <= mezziDisponibili.size()) {
+					mezzoSelezionato = mezziDisponibili.get(mezzoScelto - 1);
+					// Ora puoi utilizzare "mezzoSelezionato" come desideri
+					System.out.println("Hai scelto il mezzo: " + mezzoSelezionato.getId() + ". "
+							+ mezzoSelezionato.getTipoMezzo() + " " + mezzoSelezionato.getTratta());
+				} else {
+					System.out.println("La scelta del mezzo non è valida.");
+				}
+
+				System.out.println("Biglietto emesso!");
+				System.out.println("Buon viaggio! WOOOO!");
+				System.out.println("***Ricordarsi di convalidare il biglietto sul mezzo!***");
+
+				System.out.println("Salendo sul mezzo" + " " + mezzoSelezionato);
+
+				System.out.println(
+						"Vuoi timbrare il biglietto sul mezzo " + "(" + mezzoScelto + ")" + " selezionato? (S/N)");
+				String confermaTimbro = scanner.next();
+
+				if (confermaTimbro.equalsIgnoreCase("S")) {
+					VidimazioneBiglietti vidimazioneee = new VidimazioneBiglietti(biglietto, mezzoSelezionato,
+							LocalDate.now());
+					vbd.save(vidimazioneee);
+
+					System.out.println("Biglietto timbrato correttamente sul mezzo " + mezzoScelto
+							+ " bravo picciotto buon viaggio!.");
+				} else {
+					System.out.println(
+							"Ricordati di convalidare il biglietto sul mezzo una volta salito o verrai multato a sangue.");
+				}
+				break;
+			case 2:
+				LocalDate dataInizio = LocalDate.now();
+
+				System.out.println("Seleziona il tipo di abbonamento:");
+				System.out.println("1. Settimanale");
+				System.out.println("2. Mensile");
+				System.out.print("Scelta: ");
+				int tipoAbbonamentoScelto = scanner.nextInt();
+
+				TipoEvento tipoAbbonamento;
+				switch (tipoAbbonamentoScelto) {
+				case 1:
+					tipoAbbonamento = TipoEvento.SETTIMANALE;
+					break;
+
+				case 2:
+					tipoAbbonamento = TipoEvento.MENSILE;
+					break;
+				default:
+					System.out.println("Selezione non valida. Uscita dall'app.");
+					em.close();
+					emf.close();
+					System.exit(0);
+					return;
+				}
+
+				// Calcolare la data di scadenza in base al tipo di abbonamento scelto
+				LocalDate dataScadenza;
+				if (tipoAbbonamento == TipoEvento.SETTIMANALE) {
+					dataScadenza = dataInizio.plusWeeks(1);
+				} else {
+					dataScadenza = dataInizio.plusMonths(1);
+				}
+
+				// Creare un nuovo oggetto Tessera associato all'utente
+				Tessera tessera = new Tessera(utente, dataInizio);
+				ted.save(tessera);
+
+				// Crea un nuovo oggetto EmissioneAbbonamento associato alla tessera dell'utente
+				EmissioneAbbonamento abbonamento = new EmissioneAbbonamento(dataInizio, dataScadenza, tipoAbbonamento,
+						tessera);
+				abbonamento.setIdEmissione(UUID.randomUUID());
+				ead.save2(abbonamento);
+
+				log.info(abbonamento.toString());
+				System.out.println("Abbonamento emesso e acquistato con successo!");
+
+				Mezzo mezzoSelezionatoPerTessera = null;
+				int uscita = 0;
+				do {
+					System.out.println("Ecco i mezzi disponibili: (premi 0 per uscire)");
+
+					List<Mezzo> mezziDisponibiliPerTessera = md.getAllMezzi();
+					for (Mezzo mezzo : mezziDisponibiliPerTessera) {
+						System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + mezzo.getTratta());
+					}
+
+					int mezzoSceltoPerTessera = scanner.nextInt();
+					if (mezzoSceltoPerTessera >= 1 && mezzoSceltoPerTessera <= mezziDisponibiliPerTessera.size()) {
+						mezzoSelezionatoPerTessera = mezziDisponibiliPerTessera.get(mezzoSceltoPerTessera - 1);
+						// Ora puoi utilizzare "mezzoSelezionato" come desideri
+						System.out.println("Hai scelto il mezzo: " + mezzoSelezionatoPerTessera.getId() + ". "
+								+ mezzoSelezionatoPerTessera.getTipoMezzo() + "per la tratta: "
+								+ mezzoSelezionatoPerTessera.getTratta());
+					} else {
+						System.out.println("La scelta del mezzo non è valida.");
+					}
+				} while (uscita != 0);
+
+				System.out.println("Buon viaggio! WOOOOOO!!!");
+				System.out.println("***Ricordarsi di convalidare la tessera sul mezzo!***");
+
+				System.out.println("Salendo sul mezzo" + " " + mezzoSelezionatoPerTessera.getId());
+
+				System.out.println("Vuoi timbrare la tessera sul mezzo selezionato? (S/N)");
+				String confermaTessera = scanner.next();
+
+				if (confermaTessera.equalsIgnoreCase("S")) {
+
+					VidimazioneAbbonamenti vidimazioneAbb = new VidimazioneAbbonamenti(abbonamento, utente,
+							LocalDate.now());
+					vabd.save(vidimazioneAbb);
+
+					System.out.println("Tessera timbrata correttamente sul mezzo bravo picciotto buon viaggio!.");
+				} else {
+					System.out.println(
+							"Ricordati di convalidare la tessera sul mezzo una volta saliti o verrai mandato a quel paese.");
+				}
 				break;
 
-			case 2:
-				tipoAbbonamento = TipoEvento.MENSILE;
-				break;
 			default:
 				System.out.println("Selezione non valida. Uscita dall'app.");
 				em.close();
 				emf.close();
 				System.exit(0);
-				return;
 			}
-
-			// Calcolare la data di scadenza in base al tipo di abbonamento scelto
-			LocalDate dataScadenza;
-			if (tipoAbbonamento == TipoEvento.SETTIMANALE) {
-				dataScadenza = dataInizio.plusWeeks(1);
-			} else {
-				dataScadenza = dataInizio.plusMonths(1);
-			}
-
-			// Creare un nuovo oggetto Tessera associato all'utente
-			Tessera tessera = new Tessera(utente, dataInizio);
-			ted.save(tessera);
-
-			// Crea un nuovo oggetto EmissioneAbbonamento associato alla tessera dell'utente
-			EmissioneAbbonamento abbonamento = new EmissioneAbbonamento(dataInizio, dataScadenza, tipoAbbonamento,
-					tessera);
-			abbonamento.setIdEmissione(UUID.randomUUID());
-			ead.save2(abbonamento);
-
-			log.info(abbonamento.toString());
-			System.out.println("Abbonamento emesso e acquistato con successo!");
-
-			Mezzo mezzoSelezionatoPerTessera = null;
-			int uscita = 0;
-			do {
-				System.out.println("Ecco i mezzi disponibili: (premi 0 per uscire)");
-
-				List<Mezzo> mezziDisponibiliPerTessera = md.getAllMezzi();
-				for (Mezzo mezzo : mezziDisponibiliPerTessera) {
-					System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + mezzo.getTratta());
-				}
-
-				int mezzoSceltoPerTessera = scanner.nextInt();
-				if (mezzoSceltoPerTessera >= 1 && mezzoSceltoPerTessera <= mezziDisponibiliPerTessera.size()) {
-					mezzoSelezionatoPerTessera = mezziDisponibiliPerTessera.get(mezzoSceltoPerTessera - 1);
-					// Ora puoi utilizzare "mezzoSelezionato" come desideri
-					System.out.println("Hai scelto il mezzo: " + mezzoSelezionatoPerTessera.getId() + ". "
-							+ mezzoSelezionatoPerTessera.getTipoMezzo() + "per la tratta: "
-							+ mezzoSelezionatoPerTessera.getTratta());
-				} else {
-					System.out.println("La scelta del mezzo non è valida.");
-				}
-			} while (uscita != 0);
-
-			System.out.println("Buon viaggio! WOOOOOO!!!");
-			System.out.println("***Ricordarsi di convalidare la tessera sul mezzo!***");
-
-			System.out.println("Salendo sul mezzo" + mezzoSelezionatoPerTessera);
-
-			System.out.println("Vuoi timbrare la tessera sul mezzo selezionato? (S/N)");
-			String confermaTessera = scanner.next();
-
-			if (confermaTessera.equalsIgnoreCase("S")) {
-
-				VidimazioneAbbonamenti vidimazioneAbb = new VidimazioneAbbonamenti(abbonamento, utente,
-						LocalDate.now());
-				vabd.save(vidimazioneAbb);
-
-				System.out.println("Tessera timbrata correttamente sul mezzo bravo picciotto buon viaggio!.");
-			} else {
-				System.out.println(
-						"Ricordati di convalidare la tessera sul mezzo una volta saliti o verrai mandato a quel paese.");
-			}
-			break;
-
-		default:
-			System.out.println("Selezione non valida. Uscita dall'app.");
+			scanner.close();
 			em.close();
 			emf.close();
-			System.exit(0);
 		}
-		scanner.close();
-		em.close();
-		emf.close();
 
 	}
 }
