@@ -4,10 +4,8 @@ import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
 
 import entities.DistributoriAutomatici;
-import entities.DistributoriAutomatici.StatoDistributore;
 
 public class DistributoriAutomaticiDAO {
 	private final EntityManager em;
@@ -45,21 +43,7 @@ public class DistributoriAutomaticiDAO {
 		em.refresh(distributoriAutomatici);
 	}
 
-	public int findByIdAndUpdate(String id, StatoDistributore stato) {
-		EntityTransaction t = em.getTransaction();
-		t.begin();
-		Query q = em.createQuery(
-				"UPDATE DistributoriAutomatici m SET m.StatoDistributore=:StatoDistributore WHERE id = :id");
-		q.setParameter("stato", stato);
-		q.setParameter("id", UUID.fromString(id));
-		int num = q.executeUpdate();
-		t.commit();
-		if (num > 0) {
-			System.out.println("Distributore modificato correttamente");
-		} else {
-			System.out.println("non abbiamo modificato nulla");
-		}
-		return num;
+	public void saveDistributoreAutomatico(DistributoriAutomatici nuovoDistributore) {
+		em.persist(nuovoDistributore);
 	}
-
 }

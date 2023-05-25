@@ -57,4 +57,25 @@ public class VenditoriAutorizzatiDAO {
 				VenditoriAutorizzati.class);
 		return query.getResultList();
 	}
+
+	public void modificaVenditoreAutorizzato(UUID idPuntoVendita, VenditoriAutorizzati datiAggiornati) {
+		VenditoriAutorizzati venditore = getById(idPuntoVendita);
+
+		if (venditore != null) {
+			// Applica le modifiche desiderate al venditore autorizzato
+			venditore.setNomeNegozio(datiAggiornati.getNomeNegozio());
+			venditore.setTipoDiNegozio(datiAggiornati.getTipoDiNegozio());
+
+			// Salva le modifiche nel sistema di persistenza dei dati
+			saveVenditoreAutorizzato(venditore);
+			System.out.println("Modificato con successo!.");
+		} else {
+			System.out.println("Venditore autorizzato non trovato.");
+		}
+	}
+
+	public void saveVenditoreAutorizzato(VenditoriAutorizzati venditore) {
+		em.persist(venditore);
+
+	}
 }
