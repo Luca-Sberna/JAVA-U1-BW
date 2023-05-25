@@ -60,11 +60,9 @@ public class EmissioneAbbonamento {
 		// Set the dataScadenzaAbbonamento property based on the desired
 		// TipoEvento
 		if (this.tipoAbbonamento == TipoEvento.SETTIMANALE) {
-			abbonamento
-					.setDataScadenzaAbbonamento(LocalDate.now().plusWeeks(1));
+			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusWeeks(1));
 		} else if (this.tipoAbbonamento == TipoEvento.MENSILE) {
-			abbonamento
-					.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
+			abbonamento.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
 		}
 
 		return abbonamento;
@@ -76,26 +74,22 @@ public class EmissioneAbbonamento {
 
 	@Override
 	public String toString() {
-		return "EmissioneAbbonamento [idEmissione=" + idEmissione
-				+ ", numeroTessera=" + numeroTessera + ", idPuntoVendita="
-				+ idPuntoVendita + ", dataEmissione=" + dataEmissione
-				+ ", dataScadenzaAbbonamento=" + tipoAbbonamento
-				+ ", getIdEmissione()=" + getIdEmissione()
-				+ ", getNumeroTessera()=" + getNumeroTessera()
-				+ ", getIdPuntoVendita()=" + getIdPuntoVendita()
-				+ ", getDataEmissione()=" + getDataEmissione()
-				+ ", getDataScadenzaAbbonamento()=" + getTipoAbbonamento()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		return "EmissioneAbbonamento [idEmissione=" + idEmissione + ", numeroTessera=" + numeroTessera
+				+ ", idPuntoVendita=" + idPuntoVendita + ", dataEmissione=" + dataEmissione
+				+ ", dataScadenzaAbbonamento=" + tipoAbbonamento + ", getIdEmissione()=" + getIdEmissione()
+				+ ", getNumeroTessera()=" + getNumeroTessera() + ", getIdPuntoVendita()=" + getIdPuntoVendita()
+				+ ", getDataEmissione()=" + getDataEmissione() + ", getDataScadenzaAbbonamento()="
+				+ getTipoAbbonamento() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
-	public EmissioneAbbonamento(LocalDate dataEmissione, LocalDate dataScadenza,
-			TipoEvento tipoAbbonamento, Tessera numeroTessera) {
+	public EmissioneAbbonamento(LocalDate dataEmissione, LocalDate dataScadenza, TipoEvento tipoAbbonamento,
+			Utente utente) {
 		super();
 		this.dataEmissione = dataEmissione;
 		this.dataScadenza = dataScadenza;
 		this.tipoAbbonamento = tipoAbbonamento;
-		this.numeroTessera = numeroTessera;
+		this.numeroTessera = utente.getNumeroTessera();
 	}
 
 }
