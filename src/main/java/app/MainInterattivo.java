@@ -141,10 +141,8 @@ public class MainInterattivo {
 				break;
 
 			case 4:
-				System.out.println("Modifica un mezzo a tuo piacimento dal suo Id");
-				md.findByIdAndUpdate("42915246-e3c3-4d2c-a33a-2f130fb73126", 124, foundt1);
-				break;
 
+				break;
 			case 5:
 				break;
 
