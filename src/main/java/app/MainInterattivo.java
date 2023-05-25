@@ -190,7 +190,7 @@ public class MainInterattivo {
 			System.out.println("Buon viaggio! WOOOO!");
 			System.out.println("***Ricordarsi di convalidare il biglietto sul mezzo!***");
 
-			System.out.println("Salendo sul mezzo" + mezzoSelezionato);
+			System.out.println("Salendo sul mezzo" + mezzoScelto);
 
 			System.out
 					.println("Vuoi timbrare il biglietto sul mezzo " + "(" + mezzoScelto + ")" + " selezionato? (S/N)");
@@ -253,7 +253,7 @@ public class MainInterattivo {
 			System.out.println("Abbonamento emesso e acquistato con successo!");
 
 			Mezzo mezzoSelezionatoPerTessera = null;
-			int uscita = -1;
+			int uscita = 0;
 			do {
 				System.out.println("Ecco i mezzi disponibili: (premi 0 per uscire)");
 
@@ -267,7 +267,7 @@ public class MainInterattivo {
 					mezzoSelezionatoPerTessera = mezziDisponibiliPerTessera.get(mezzoSceltoPerTessera - 1);
 					// Ora puoi utilizzare "mezzoSelezionato" come desideri
 					System.out.println("Hai scelto il mezzo: " + mezzoSelezionatoPerTessera.getId() + ". "
-							+ mezzoSelezionatoPerTessera.getTipoMezzo() + "per la tratta: "
+							+ mezzoSelezionatoPerTessera.getTipoMezzo() + " per la tratta: "
 							+ mezzoSelezionatoPerTessera.getTratta());
 				} else {
 					System.out.println("La scelta del mezzo non è valida.");
@@ -283,8 +283,8 @@ public class MainInterattivo {
 			String confermaTessera = scanner.next();
 
 			if (confermaTessera.equalsIgnoreCase("S")) {
-				VidimazioneAbbonamenti vidimazioneAbb = new VidimazioneAbbonamenti(abbonamento, utente,
-						LocalDate.now());
+				VidimazioneAbbonamenti vidimazioneAbb = new VidimazioneAbbonamenti(utente, LocalDate.now(),
+						abbonamento);
 				vabd.save(vidimazioneAbb);
 
 				System.out.println("Tessera timbrata correttamente sul mezzo bravo picciotto buon viaggio!.");

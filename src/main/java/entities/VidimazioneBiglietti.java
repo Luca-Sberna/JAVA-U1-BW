@@ -27,13 +27,14 @@ public class VidimazioneBiglietti {
 	private UUID id;
 
 	@ManyToOne
-	@JoinColumn(name = "idMezzo")
-	private Mezzo mezzo; // Mezzo sulla quale è stato vidimato
-	private LocalDate dataVidimazione;
-
-	@ManyToOne
 	@JoinColumn(name = "idBiglietto")
 	private EmissioneBiglietto bigliettoVidimato;
+
+	@ManyToOne
+	@JoinColumn(name = "idMezzo")
+	private Mezzo mezzo; // Mezzo sulla quale è stato vidimato
+
+	private LocalDate dataVidimazione;
 
 	public VidimazioneBiglietti(EmissioneBiglietto biglietto, Mezzo mezzo, LocalDate dataVidimazione) {
 		super();

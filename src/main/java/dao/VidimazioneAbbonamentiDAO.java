@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import entities.Tessera;
 import entities.VidimazioneAbbonamenti;
 
 public class VidimazioneAbbonamentiDAO {
@@ -18,7 +19,21 @@ public class VidimazioneAbbonamentiDAO {
 	public void save(VidimazioneAbbonamenti e) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		em.persist(e);
+
+		// Aggiorna l'abbonamento vidimato
+		em.merge(e.getAbbonamentoVidimato());
+
+		// Verifica e persisti la tessera
+		Tessera tessera = e.getTessera();
+		if (!em.contains(tessera)) {
+			em.merge(tessera);
+		} else {
+			em.merge(tessera);
+		}
+
+		// Persisti la vidimazione dell'abbonamento
+		em.merge(e);
+
 		transaction.commit();
 	}
 
