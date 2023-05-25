@@ -103,6 +103,13 @@ public class MainInterattivo {
 			ud.save(utente);
 			break;
 		case 3:
+			System.out.println(" ");
+			System.out.println("Benvenuto admin fai la tua scelta: ");
+			System.out.println("1. Lista dei mezzi e delle loro tratte");
+			System.out.println("2. Lista dei venditori e distributori");
+			System.out.println("3. Lista degli utenti");
+			System.out.println("4. Modifica un mezzo a tuo piacimento dal suo Id");
+
 			int sceltaAdmin = scanner.nextInt();
 			switch (sceltaAdmin) {
 			case 1:
@@ -190,11 +197,11 @@ public class MainInterattivo {
 				System.out.println("Buon viaggio! WOOOO!");
 				System.out.println("***Ricordarsi di convalidare il biglietto sul mezzo!***");
 
-			System.out.println("Salendo sul mezzo" + " " + mezzoSelezionato);
+				System.out.println("Salendo sul mezzo" + " " + mezzoSelezionato);
 
-			System.out.println(
-					"Vuoi timbrare il biglietto sul mezzo " + "(" + mezzoSelezionato + ")" + " selezionato? (S/N)");
-			String confermaTimbro = scanner.next();
+				System.out.println(
+						"Vuoi timbrare il biglietto sul mezzo " + "(" + mezzoSelezionato + ")" + " selezionato? (S/N)");
+				String confermaTimbro = scanner.next();
 
 				if (confermaTimbro.equalsIgnoreCase("S")) {
 					VidimazioneBiglietti vidimazioneee = new VidimazioneBiglietti(biglietto, mezzoSelezionato,
@@ -265,17 +272,17 @@ public class MainInterattivo {
 						System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + mezzo.getTratta());
 					}
 
-				int mezzoSceltoPerTessera = scanner.nextInt();
-				if (mezzoSceltoPerTessera >= 1 && mezzoSceltoPerTessera <= mezziDisponibiliPerTessera.size()) {
-					mezzoSelezionatoPerTessera = mezziDisponibiliPerTessera.get(mezzoSceltoPerTessera - 1);
-					// Ora puoi utilizzare "mezzoSelezionato" come desideri
-					System.out.println("Hai scelto il mezzo: " + mezzoSelezionatoPerTessera.getId() + ". "
-							+ mezzoSelezionatoPerTessera.getTipoMezzo() + " per la tratta: "
-							+ mezzoSelezionatoPerTessera.getTratta());
-				} else {
-					System.out.println("La scelta del mezzo non è valida.");
-				}
-			} while (uscita != 0);
+					int mezzoSceltoPerTessera = scanner.nextInt();
+					if (mezzoSceltoPerTessera >= 1 && mezzoSceltoPerTessera <= mezziDisponibiliPerTessera.size()) {
+						mezzoSelezionatoPerTessera = mezziDisponibiliPerTessera.get(mezzoSceltoPerTessera - 1);
+						// Ora puoi utilizzare "mezzoSelezionato" come desideri
+						System.out.println("Hai scelto il mezzo: " + mezzoSelezionatoPerTessera.getId() + ". "
+								+ mezzoSelezionatoPerTessera.getTipoMezzo() + " per la tratta: "
+								+ mezzoSelezionatoPerTessera.getTratta());
+					} else {
+						System.out.println("La scelta del mezzo non è valida.");
+					}
+				} while (uscita != 0);
 
 				System.out.println("Buon viaggio! WOOOOOO!!!");
 				System.out.println("***Ricordarsi di convalidare la tessera sul mezzo!***");
