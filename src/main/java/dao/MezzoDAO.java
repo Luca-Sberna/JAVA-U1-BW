@@ -71,4 +71,20 @@ public class MezzoDAO {
 		return query.getResultList();
 	}
 
+	public int findByIdAndUpdate(String id, long capienza) {
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+		Query q = em.createQuery("UPDATE Mezzo m SET capienza=:capienza WHERE id = :id");
+		q.setParameter("capienza", capienza);
+		q.setParameter("id", UUID.fromString(id));
+		int num = q.executeUpdate();
+		t.commit();
+		if (num > 0) {
+			System.out.println("Mezzo modificato");
+		} else {
+			System.out.println("non abbiamo modificato nulla");
+		}
+		return num;
+	}
+
 }
