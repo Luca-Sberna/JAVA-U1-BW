@@ -1,6 +1,5 @@
 package app;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +15,6 @@ import dao.TrattaDAO;
 import dao.UtenteDAO;
 import dao.VenditoriAutorizzatiDAO;
 import dao.VidimazioneBigliettiDAO;
-import entities.EmissioneBiglietto;
 import entities.Mezzo;
 import entities.Utente;
 import entities.VenditoriAutorizzati;
@@ -39,45 +37,55 @@ public class MainInterattivo {
 		TesseraDAO ted = new TesseraDAO(em);
 		VidimazioneBigliettiDAO vbd = new VidimazioneBigliettiDAO(em);
 
-		// Creazione utente
+		// Login/Register
 		System.out.println("Benvenuto all'app di trasporti pubblici!");
-		System.out.println("Inserisci il tuo nome: ");
-		String nomeScelto = scanner.nextLine();
-		System.out.println("Inserisci il tuo cognome: ");
-		String cognomeScelto = scanner.nextLine();
-		Utente utente = new Utente(nomeScelto, cognomeScelto);
-		ud.save(utente);
+		System.out.println("1. Accedi");
+		System.out.println("2. Nuovo nell'app? Registrati");
+		int sceltaUtente = scanner.nextInt();
 
-		// Prompt per l'utente
-		System.out.println(
-				nomeScelto + " " + cognomeScelto + ", seleziona il venditore:");
-		System.out.println("1. Amazon (E-Commerce)");
-		System.out.println("2. TuttoQui (Edicola)");
-		System.out.println("3. Da Enrico (Tabaccaio)");
-		System.out.print("Scelta: ");
-
-		int venditoreScelto = scanner.nextInt();
-		VenditoriAutorizzati venditore = null;
-
-		switch (venditoreScelto) {
+		switch (sceltaUtente) {
 		case 1:
-			venditore = new VenditoriAutorizzati("Amazon", "E-Commerce");
-			vad.save(venditore);
+			// Login
+			System.out.println("Inserisci l'ID dell'utente:");
+			String idUtente = scanner.next();
+
+			Utente utente = ud.getById(idUtente);
+
+			if (utente == null) {
+				System.out.println("Utente non valido.");
+				// Gestire l'errore o uscire dall'applicazione
+				break;
+			}
+			System.out.println("Che bello rivederti " + utente.getNome() + " "
+					+ utente.getCognome());
 			break;
+
 		case 2:
-			venditore = new VenditoriAutorizzati("TuttoQui", "Edicola");
-			vad.save(venditore);
+			// Creazione utente (Register)
+			scanner.nextLine(); // Pulisce lo scanner
+			System.out.println("Inserisci il tuo nome: ");
+			String nomeScelto = scanner.nextLine();
+			System.out.println("Inserisci il tuo cognome: ");
+			String cognomeScelto = scanner.nextLine();
+			Utente nuovoUtente = new Utente(nomeScelto, cognomeScelto);
+			ud.save(nuovoUtente);
 			break;
-		case 3:
-			venditore = new VenditoriAutorizzati("Da Enrico", "Tabaccaio");
-			vad.save(venditore);
-			break;
+
 		default:
 			System.out.println("Selezione non valida. Uscita dall'app.");
 			em.close();
 			emf.close();
 			System.exit(0);
 		}
+
+		// Recupera tutti i venditori autorizzati e visualizzali all'utente
+		System.out.println("seleziona il venditore:");
+		List<VenditoriAutorizzati> venditori = vad.getAllVenditoriAutorizzati();
+		for (VenditoriAutorizzati venditore : venditori) {
+			System.out.println(venditore.getIdPuntoVendita() + ". "
+					+ venditore.getNomeNegozio());
+		}
+		int venditoreScelto = scanner.nextInt();
 
 		System.out.println("Cosa desideri acquistare?");
 		System.out.println("1. Biglietto");
@@ -89,11 +97,11 @@ public class MainInterattivo {
 		switch (tipoAcquisto) {
 		case 1:
 			// Logica per l'acquisto del biglietto
-			EmissioneBiglietto bigliettoScelto = new EmissioneBiglietto(
-					LocalDate.now(), utente, venditore);
+//			EmissioneBiglietto bigliettoScelto = new EmissioneBiglietto(
+//					LocalDate.now(), utente, venditore);
 
 //			System.out.println(venditore.emettiBiglietto(utente).toString());
-			ebd.save(bigliettoScelto);
+//			ebd.save(bigliettoScelto);
 
 			System.out.println("Seleziona un mezzo per la tratta disponibile:");
 
