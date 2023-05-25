@@ -103,12 +103,24 @@ public class MainInterattivo {
 			utente = new Utente(nomeScelto, cognomeScelto);
 			ud.save(utente);
 			break;
+
 		case 3:
+			System.out.println(" ");
 			System.out.println("Sei nella sezione admin! Scegli cosa fare:");
+			System.out.println(" ");
 			System.out.println("1. Visualizza la lista dei mezzi");
 			System.out.println("2. Visualizza la lista dei venditori e distributori");
 			System.out.println("3. Visualizza la lista degli utenti");
+			System.out.println("8. Crea e aggiungi un mezzo ");
+			System.out.println("9. Crea e aggiungi una tratta ");
+			System.out.println("10. Crea e aggiungi un venditore autorizzato ");
+			System.out.println("11. Crea e aggiungi un distributore automatico ");
 			System.out.println("4. Modifica un mezzo");
+			System.out.println("5. Modifica una tratta ");
+			System.out.println("6. Modifica un venditore autorizzato ");
+			System.out.println("7. Modifica un distributore automatico ");
+			System.out.println("12. Assegna tratta a mezzo ");
+
 			int sceltaAdmin = scanner.nextInt();
 			switch (sceltaAdmin) {
 			case 1:
