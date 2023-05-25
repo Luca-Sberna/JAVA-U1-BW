@@ -30,9 +30,8 @@ public class VidimazioneBiglietti {
 	@JoinColumn(name = "idMezzo")
 	private Mezzo mezzo; // Mezzo sulla quale è stato vidimato
 	private LocalDate dataVidimazione;
-
 	@ManyToOne
-	@JoinColumn(name = "idBigliettoEmesso")
+	@JoinColumn(name = "idBiglietto")
 	private EmissioneBiglietto bigliettoVidimato;
 
 	public VidimazioneBiglietti(EmissioneBiglietto biglietto, Mezzo mezzo,
