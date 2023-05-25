@@ -40,4 +40,10 @@ public abstract class PuntiVendita implements Emissione {
 				+ ", getLuogo()=" + getLuogo() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 				+ ", toString()=" + super.toString() + "]";
 	}
+
+	public PuntiVendita(String luogo) {
+		super();
+		this.luogo = luogo;
+	}
+
 }

@@ -1,9 +1,11 @@
 package dao;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import entities.VenditoriAutorizzati;
 
@@ -14,10 +16,17 @@ public class VenditoriAutorizzatiDAO {
 		this.em = em;
 	}
 
+//	public void save(VenditoriAutorizzati venditoriAutorizzati) {
+//		EntityTransaction transaction = em.getTransaction();
+//		transaction.begin();
+//		em.persist(venditoriAutorizzati);
+//		transaction.commit();
+//	}
 	public void save(VenditoriAutorizzati venditoriAutorizzati) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		em.persist(venditoriAutorizzati);
+		VenditoriAutorizzati mergedVenditore = em.merge(venditoriAutorizzati);
+		em.persist(mergedVenditore);
 		transaction.commit();
 	}
 
@@ -41,5 +50,11 @@ public class VenditoriAutorizzatiDAO {
 	public void refresh(VenditoriAutorizzati venditoriAutorizzati) {
 		venditoriAutorizzati = em.merge(venditoriAutorizzati);
 		em.refresh(venditoriAutorizzati);
+	}
+
+	public List<VenditoriAutorizzati> getAllVenditoriAutorizzati() {
+		TypedQuery<VenditoriAutorizzati> query = em.createQuery("SELECT va FROM VenditoriAutorizzati va",
+				VenditoriAutorizzati.class);
+		return query.getResultList();
 	}
 }

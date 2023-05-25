@@ -83,4 +83,8 @@ public class DistributoriAutomatici extends PuntiVendita {
 				+ ", hashCode()=" + hashCode() + "]";
 	}
 
+	public DistributoriAutomatici(String luogo) {
+		super(luogo);
+	}
+
 }

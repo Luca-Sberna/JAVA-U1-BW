@@ -53,21 +53,20 @@ public class EmissioneBiglietto {
 	@JoinColumn(name = "bigliettoEmesso")
 	private DistributoriAutomatici distributoreBi;
 
+	@ManyToOne
+	@JoinColumn(name = "bigliettoEmessoV")
+	private VenditoriAutorizzati venditoreBi;
+
 	@Override
 	public String toString() {
-		return "EmissioneBiglietto [idEmissione=" + idEmissione
-				+ ", dataEmissione=" + dataEmissione + ", idBiglietto="
-				+ ", idPuntoVendita=" + IdPuntoVendita + ", utente=" + utente
-				+ ", getIdEmissione()=" + getIdEmissione()
-				+ ", getDataEmissione()=" + getDataEmissione()
-				+ ", getIdBiglietto()=" + ", getIdPuntoVendita()="
-				+ getIdPuntoVendita() + ", getUtente()=" + getUtente()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		return "EmissioneBiglietto [idEmissione=" + idEmissione + ", dataEmissione=" + dataEmissione + ", idBiglietto="
+				+ ", idPuntoVendita=" + IdPuntoVendita + ", utente=" + utente + ", getIdEmissione()=" + getIdEmissione()
+				+ ", getDataEmissione()=" + getDataEmissione() + ", getIdBiglietto()=" + ", getIdPuntoVendita()="
+				+ getIdPuntoVendita() + ", getUtente()=" + getUtente() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
 
-	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente,
-			VidimazioneBiglietti vidimazione,
+	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente, VidimazioneBiglietti vidimazione,
 			DistributoriAutomatici distributoreBi) {
 		super();
 		this.dataEmissione = dataEmissione;
@@ -76,8 +75,7 @@ public class EmissioneBiglietto {
 		this.distributoreBi = distributoreBi;
 	}
 
-	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente,
-			PuntiVendita idPuntoVendita,
+	public EmissioneBiglietto(LocalDate dataEmissione, Utente utente, PuntiVendita idPuntoVendita,
 			DistributoriAutomatici distributoreBi) {
 		super();
 		this.dataEmissione = dataEmissione;
