@@ -1,6 +1,7 @@
 package entities;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,7 +23,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-
 public class EmissioneAbbonamento {
 	@Id
 //	@GeneratedValue
@@ -42,18 +42,14 @@ public class EmissioneAbbonamento {
 	private Tessera tessera;
 
 	@ManyToOne
-	@JoinColumn(name = "AbbonamentoEmessoDis")
+	@JoinColumn(name = "abbonamentoEmesso")
 	private DistributoriAutomatici distributoreAb;
 
-	@ManyToOne
-	@JoinColumn(name = "abbonamentoEmessoVen")
-	private VenditoriAutorizzati venditoriAb;
+	@OneToMany(mappedBy = "abbonamentoVidimato")
+	private Set<VidimazioneAbbonamenti> vidimazioni;
 
-	@OneToMany(mappedBy = "bigliettoVidimato")
-	private Set<VidimazioneBiglietti> vidimazioni;
-
-	public EmissioneAbbonamento(LocalDate dataEmissione, LocalDate dataScadenza,
-			TipoEvento tipoAbbonamento, Tessera tessera) {
+	public EmissioneAbbonamento(LocalDate dataEmissione, LocalDate dataScadenza, TipoEvento tipoAbbonamento,
+			Tessera tessera) {
 		super();
 		this.dataEmissione = dataEmissione;
 		this.dataScadenza = dataScadenza;
@@ -70,15 +66,21 @@ public class EmissioneAbbonamento {
 		abbonamento.setIdPuntoVendita(this.idPuntoVendita);
 		abbonamento.setDataEmissione(LocalDate.now());
 
-		// Set the dataScadenzaAbbonamento property based on the desired
-		// TipoEvento
+		// Set the dataScadenzaAbbonamento property based on the desired TipoEvento
 		if (this.tipoAbbonamento == TipoEvento.SETTIMANALE) {
-			abbonamento
-					.setDataScadenzaAbbonamento(LocalDate.now().plusWeeks(1));
+			abbonamento.setDataScadenza(LocalDate.now().plusWeeks(1));
 		} else if (this.tipoAbbonamento == TipoEvento.MENSILE) {
-			abbonamento
-					.setDataScadenzaAbbonamento(LocalDate.now().plusMonths(1));
+			abbonamento.setDataScadenza(LocalDate.now().plusMonths(1));
 		}
+
+		// Create a new VidimazioneAbbonamenti object
+		VidimazioneAbbonamenti vidimazione = new VidimazioneAbbonamenti();
+		vidimazione.setUtente(utente);
+		vidimazione.setDataVidimazione(LocalDate.now());
+
+		// Set the association between EmissioneAbbonamento and VidimazioneAbbonamenti
+		vidimazione.setAbbonamentoVidimato(abbonamento);
+		abbonamento.setVidimazioni(Collections.singleton(vidimazione));
 
 		return abbonamento;
 	}
@@ -102,27 +104,15 @@ public class EmissioneAbbonamento {
 //		return abbonamento;
 //	}
 
-	private void setDataScadenzaAbbonamento(LocalDate dataScadenzaAbbonamento) {
-
+	private void setVidimazioni(Set<VidimazioneAbbonamenti> vidimazioni) {
+		this.vidimazioni = vidimazioni;
 	}
 
 	@Override
 	public String toString() {
-		return "EmissioneAbbonamento [idEmissione=" + idEmissione
-				+ ", idPuntoVendita=" + idPuntoVendita + ", dataEmissione="
-				+ dataEmissione + ", dataScadenza=" + dataScadenza
-				+ ", tipoAbbonamento=" + tipoAbbonamento + ", tessera="
-				+ tessera + ", distributoreAb=" + distributoreAb
-				+ ", vidimazioni=" + vidimazioni + ", getIdEmissione()="
-				+ getIdEmissione() + ", getIdPuntoVendita()="
-				+ getIdPuntoVendita() + ", getDataEmissione()="
-				+ getDataEmissione() + ", getDataScadenza()="
-				+ getDataScadenza() + ", getTipoAbbonamento()="
-				+ getTipoAbbonamento() + ", getTessera()=" + getTessera()
-				+ ", getDistributoreAb()=" + getDistributoreAb()
-				+ ", getVidimazioni()=" + getVidimazioni() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+		return "EmissioneAbbonamento [idEmissione=" + idEmissione + ", idPuntoVendita=" + idPuntoVendita
+				+ ", dataEmissione=" + dataEmissione + ", dataScadenza=" + dataScadenza + ", tipoAbbonamento="
+				+ tipoAbbonamento + ", tessera=" + tessera + ", distributoreAb=" + distributoreAb + ", vidimazioni="
+				+ vidimazioni + "]";
 	}
-
 }

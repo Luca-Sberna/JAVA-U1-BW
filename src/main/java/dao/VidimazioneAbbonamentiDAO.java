@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import entities.Tessera;
 import entities.VidimazioneAbbonamenti;
 
 public class VidimazioneAbbonamentiDAO {

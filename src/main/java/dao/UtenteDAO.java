@@ -1,9 +1,11 @@
 package dao;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import entities.Utente;
 
@@ -43,6 +45,11 @@ public class UtenteDAO {
 	public void refresh(Utente utente) {
 		utente = em.merge(utente);
 		em.refresh(utente);
+	}
+
+	public List<Utente> getAllUsers() {
+		TypedQuery<Utente> query = em.createQuery("SELECT u FROM Utente u", Utente.class);
+		return query.getResultList();
 	}
 
 }

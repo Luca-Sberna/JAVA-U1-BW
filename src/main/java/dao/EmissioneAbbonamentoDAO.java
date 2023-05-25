@@ -21,6 +21,7 @@ public class EmissioneAbbonamentoDAO {
 		transaction.begin();
 		em.merge(emissioneAbbonamento);
 		transaction.commit();
+
 	}
 
 	public EmissioneAbbonamento save2(EmissioneAbbonamento emissioneAbbonamento) {

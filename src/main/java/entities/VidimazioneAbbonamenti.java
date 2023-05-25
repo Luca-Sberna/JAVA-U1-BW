@@ -43,4 +43,8 @@ public class VidimazioneAbbonamenti {
 		this.dataVidimazione = dataVidimazione;
 	}
 
+	public Tessera getTessera() {
+		return abbonamentoVidimato.getTessera();
+	}
+
 }
