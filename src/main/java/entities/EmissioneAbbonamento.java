@@ -9,7 +9,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,7 +25,7 @@ import lombok.Setter;
 @Setter
 public class EmissioneAbbonamento {
 	@Id
-	@GeneratedValue
+//	@GeneratedValue
 	protected UUID idEmissione;
 	protected UUID idPuntoVendita;
 	protected LocalDate dataEmissione;
@@ -36,15 +35,6 @@ public class EmissioneAbbonamento {
 
 	public enum TipoEvento {
 		SETTIMANALE, MENSILE
-	}
-
-	public EmissioneAbbonamento(LocalDate dataEmissione, LocalDate dataScadenza, TipoEvento tipoAbbonamento,
-			Tessera tessera) {
-		super();
-		this.dataEmissione = dataEmissione;
-		this.dataScadenza = dataScadenza;
-		this.tipoAbbonamento = tipoAbbonamento;
-		this.tessera = tessera;
 	}
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -58,7 +48,16 @@ public class EmissioneAbbonamento {
 	@OneToMany(mappedBy = "abbonamentoVidimato")
 	private Set<VidimazioneAbbonamenti> vidimazioni;
 
-	public EmissioneAbbonamento emettiAbbonamento(Utente utente) {
+	public EmissioneAbbonamento(LocalDate dataEmissione, LocalDate dataScadenza, TipoEvento tipoAbbonamento,
+			Tessera tessera) {
+		super();
+		this.dataEmissione = dataEmissione;
+		this.dataScadenza = dataScadenza;
+		this.tipoAbbonamento = tipoAbbonamento;
+		this.tessera = tessera;
+	}
+
+	public EmissioneAbbonamento emettiAbbonamento() {
 		// Create a new EmissioneAbbonamento object
 		EmissioneAbbonamento abbonamento = new EmissioneAbbonamento();
 
@@ -85,6 +84,25 @@ public class EmissioneAbbonamento {
 
 		return abbonamento;
 	}
+//		EmissioneAbbonamento abbonamento = new EmissioneAbbonamento(this.dataEmissione, this.dataScadenza,
+//				this.tipoAbbonamento, this.tessera);
+//
+//		// Imposta la nuova data di emissione
+//		abbonamento.setDataEmissione(LocalDate.now());
+//
+//		// Imposta la nuova data di scadenza in base al tipo di abbonamento
+//		if (this.tipoAbbonamento == TipoEvento.SETTIMANALE) {
+//			abbonamento.setDataScadenza(LocalDate.now().plusWeeks(1));
+//		} else if (this.tipoAbbonamento == TipoEvento.MENSILE) {
+//			abbonamento.setDataScadenza(LocalDate.now().plusMonths(1));
+//		}
+//
+//		// Assegna un nuovo UUID all'entità
+//		abbonamento.setIdEmissione(UUID.randomUUID());
+//
+//		// Restituisci la nuova entità
+//		return abbonamento;
+//	}
 
 	private void setVidimazioni(Set<VidimazioneAbbonamenti> vidimazioni) {
 		this.vidimazioni = vidimazioni;

@@ -19,21 +19,7 @@ public class VidimazioneAbbonamentiDAO {
 	public void save(VidimazioneAbbonamenti e) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-
-		// Aggiorna l'abbonamento vidimato
-		em.merge(e.getAbbonamentoVidimato());
-
-		// Verifica e persisti la tessera
-		Tessera tessera = e.getTessera();
-		if (!em.contains(tessera)) {
-			em.merge(tessera);
-		} else {
-			em.merge(tessera);
-		}
-
-		// Persisti la vidimazione dell'abbonamento
 		em.merge(e);
-
 		transaction.commit();
 	}
 
