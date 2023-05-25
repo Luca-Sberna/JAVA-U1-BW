@@ -13,6 +13,7 @@ import entities.Tratta;
 
 public class MezzoDAO {
 	private final EntityManager em;
+	private List<Mezzo> mezzi; // Lista dei mezzi
 
 	public MezzoDAO(EntityManager em) {
 		this.em = em;
@@ -87,6 +88,13 @@ public class MezzoDAO {
 			System.out.println("non abbiamo modificato nulla");
 		}
 		return num;
+	}
+
+	public void aggiungiMezzo(Mezzo nuovoMezzo) {
+		// Salva il nuovo mezzo nel sistema di persistenza dei dati
+		em.getTransaction().begin();
+		em.persist(nuovoMezzo);
+		em.getTransaction().commit();
 	}
 
 }

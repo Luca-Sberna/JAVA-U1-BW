@@ -12,6 +12,7 @@ import dao.DistributoriAutomaticiDAO;
 import dao.EmissioneAbbonamentoDAO;
 import dao.EmissioneBigliettoDAO;
 import dao.MezzoDAO;
+import dao.PuntiVenditaDAO;
 import dao.TesseraDAO;
 import dao.TrattaDAO;
 import dao.UtenteDAO;
@@ -43,6 +44,7 @@ public class MainInterattivo {
 		EntityManager em = emf.createEntityManager();
 
 		MezzoDAO md = new MezzoDAO(em);
+		PuntiVenditaDAO pvd = new PuntiVenditaDAO(em);
 		TrattaDAO td = new TrattaDAO(em);
 		EmissioneBigliettoDAO ebd = new EmissioneBigliettoDAO(em);
 		EmissioneAbbonamentoDAO ead = new EmissioneAbbonamentoDAO(em);
@@ -109,17 +111,15 @@ public class MainInterattivo {
 			System.out.println("Sei nella sezione admin! Scegli cosa fare:");
 			System.out.println(" ");
 			System.out.println("1. Visualizza la lista dei mezzi");
-			System.out.println("2. Visualizza la lista dei venditori e distributori");
+			System.out.println("2. Visualizza la lista dei venditori e distributori");// teo
 			System.out.println("3. Visualizza la lista degli utenti");
-			System.out.println("8. Crea e aggiungi un mezzo ");
-			System.out.println("9. Crea e aggiungi una tratta ");
-			System.out.println("10. Crea e aggiungi un venditore autorizzato ");
-			System.out.println("11. Crea e aggiungi un distributore automatico ");
 			System.out.println("4. Modifica un mezzo");
-			System.out.println("5. Modifica una tratta ");
+			System.out.println("5. Modifica una tratta ");// nest
 			System.out.println("6. Modifica un venditore autorizzato ");
 			System.out.println("7. Modifica un distributore automatico ");
-			System.out.println("12. Assegna tratta a mezzo ");
+			System.out.println("8. Crea e aggiungi un mezzo con una tratta propria ");
+			System.out.println("9. Crea e aggiungi un venditore autorizzato ");
+			System.out.println("10. Crea e aggiungi un distributore automatico ");// teo
 
 			int sceltaAdmin = scanner.nextInt();
 			switch (sceltaAdmin) {
@@ -127,24 +127,105 @@ public class MainInterattivo {
 				System.out.println("Ecco la lista dei mezzi e delle loro tratte");
 				md.getAllMezzi().stream().forEach(m -> log.info(m.toString()));
 				break;
+
 			case 2:
 				System.out.println("Ecco la lista dei venditori e distributori");
+				pvd.getAllPuntiVendita().stream().forEach(
+						pv -> log.info(pv.getLuogo() + " " + pv.getNumeroVendite() + " " + pv.getIdPuntoVendita()));
 				break;
+
 			case 3:
 				System.out.println("Ecco la lista degli utenti");
 				ud.getAllUsers().stream()
 						.forEach(u -> log.info(u.getNome() + " " + u.getCognome() + " " + u.getIdUtente()));
 				break;
+
 			case 4:
 				System.out.println("Modifica un mezzo a tuo piacimento dal suo Id");
 				md.findByIdAndUpdate("42915246-e3c3-4d2c-a33a-2f130fb73126", 124, foundt1);
 				break;
+
+			case 5:
+				break;
+
+			case 6:
+				System.out.println(" ");
+				System.out.println("Inserisci l'ID del venditore autorizzato da modificare: ");
+				String venditoreIdString = scanner.next();
+				UUID venditoreId = UUID.fromString(venditoreIdString);
+
+				VenditoriAutorizzati venditoreEsistente = vad.getById(venditoreId);
+				if (venditoreEsistente != null) {
+					System.out.println("Inserisci il nuovo nome del negozio: ");
+					String nuovoNomeNegozio = scanner.next();
+					System.out.println("Inserisci il nuovo tipo di negozio: ");
+					String nuovoTipoNegozio = scanner.next();
+
+					VenditoriAutorizzati datiAggiornati = new VenditoriAutorizzati(nuovoNomeNegozio, nuovoTipoNegozio);
+					vad.modificaVenditoreAutorizzato(venditoreId, datiAggiornati);
+					System.out.println("Venditore autorizzato modificato con successo!");
+				} else {
+					System.out.println("Venditore autorizzato non trovato.");
+				}
+				break;
+
+			case 7:
+				break;
+
+			case 8:
+				System.out.println("Inserisci il tipo di mezzo: ");
+				String tipoMezzo = scanner.next();
+				System.out.println("Inserisci il numero di posti disponibili: ");
+				int postiDisponibili = scanner.nextInt();
+				System.out.println("Inserisci lo stato del mezzo (inServizio o inManutenzione): ");
+				String statoMezzo = scanner.next();
+				System.out.println("Inserisci la velocità media del mezzo: ");
+				int velocitàMedia = scanner.nextInt();
+
+				System.out.println("Inserisci la città di partenza per la tratta: ");
+				String partenza = scanner.next();
+				System.out.println("Inserisci la città di destinazione per la tratta: ");
+				String destinazione = scanner.next();
+				System.out.println("Inserisci la distanza tra la partenza e il capolinea: ");
+				double distanza = scanner.nextDouble();
+				System.out.println("Inserisci la durata totale del viaggio: ");
+				double durata = scanner.nextDouble();
+
+				Tratta tratta = new Tratta(partenza, destinazione, distanza, durata);
+
+				Mezzo nuovoMezzo = new Mezzo(postiDisponibili, Mezzo.statoMezzo.valueOf(statoMezzo),
+						Mezzo.tipoMezzo.valueOf(tipoMezzo), tratta);
+				nuovoMezzo.setVelocitàMedia(velocitàMedia);
+
+				md.aggiungiMezzo(nuovoMezzo);
+				System.out.println("Nuovo mezzo creato e aggiunto con successo!");
+				break;
+
+			case 9:
+				System.out.println("Inserisci il nome del negozio: ");
+				String nomeNegozio = scanner.next();
+				System.out.println("Inserisci il tipo di negozio: ");
+				String tipoNegozio = scanner.next();
+
+				VenditoriAutorizzati nuovoVenditore = new VenditoriAutorizzati(nomeNegozio, tipoNegozio);
+				vad.saveVenditoreAutorizzato(nuovoVenditore);
+				System.out.println("Nuovo venditore autorizzato creato e aggiunto con successo!");
+				break;
+
+			case 10:
+				System.out.println("Inserisci lo stato del distributore automatico (FUNZIONANTE o FUORI_SERVIZIO): ");
+				String statoDistributore = scanner.next().toUpperCase();
+
+				DistributoriAutomatici nuovoDistributore = new DistributoriAutomatici(
+						DistributoriAutomatici.StatoDistributore.valueOf(statoDistributore));
+				dad.saveDistributoreAutomatico(nuovoDistributore);
+				System.out.println("Nuovo distributore automatico creato e aggiunto con successo!");
+				break;
+
 			default:
 				System.out.println("Selezione non valida");
 			}
-
 			break;
-
 		default:
 			System.out.println("Selezione non valida. Uscita dall'app.");
 			em.close();
