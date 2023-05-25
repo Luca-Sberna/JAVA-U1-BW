@@ -19,7 +19,7 @@ public class EmissioneAbbonamentoDAO {
 	public void save(EmissioneAbbonamento emissioneAbbonamento) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		em.persist(emissioneAbbonamento);
+		em.merge(emissioneAbbonamento);
 		transaction.commit();
 	}
 
