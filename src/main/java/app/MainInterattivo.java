@@ -23,8 +23,8 @@ import entities.EmissioneBiglietto;
 import entities.Mezzo;
 import entities.Mezzo.statoMezzo;
 import entities.Mezzo.tipoMezzo;
-import entities.Tratta;
 import entities.Tessera;
+import entities.Tratta;
 import entities.Utente;
 import entities.VenditoriAutorizzati;
 import entities.VidimazioneBiglietti;
@@ -170,7 +170,7 @@ public class MainInterattivo {
 			// Recupera i mezzi disponibili e visualizzali all'utente
 			List<Mezzo> mezziDisponibili = md.getAllMezzi();
 			for (Mezzo mezzo : mezziDisponibili) {
-				System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo());
+				System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + " " + mezzo.getTratta());
 			}
 
 			int mezzoScelto = scanner.nextInt();
@@ -178,8 +178,8 @@ public class MainInterattivo {
 			if (mezzoScelto >= 1 && mezzoScelto <= mezziDisponibili.size()) {
 				mezzoSelezionato = mezziDisponibili.get(mezzoScelto - 1);
 				// Ora puoi utilizzare "mezzoSelezionato" come desideri
-				System.out.println(
-						"Hai scelto il mezzo: " + mezzoSelezionato.getId() + ". " + mezzoSelezionato.getTipoMezzo());
+				System.out.println("Hai scelto il mezzo: " + mezzoSelezionato.getId() + ". "
+						+ mezzoSelezionato.getTipoMezzo() + " " + mezzoSelezionato.getTratta());
 			} else {
 				System.out.println("La scelta del mezzo non è valida.");
 			}
@@ -188,7 +188,7 @@ public class MainInterattivo {
 			System.out.println("Buon viaggio! WOOOO!");
 			System.out.println("***Ricordarsi di convalidare il biglietto sul mezzo!***");
 
-			System.out.println("Salendo sul mezzo");
+			System.out.println("Salendo sul mezzo" + mezzoScelto);
 
 			System.out
 					.println("Vuoi timbrare il biglietto sul mezzo " + "(" + mezzoScelto + ")" + " selezionato? (S/N)");
