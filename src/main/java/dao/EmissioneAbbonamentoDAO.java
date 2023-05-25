@@ -23,6 +23,15 @@ public class EmissioneAbbonamentoDAO {
 		transaction.commit();
 	}
 
+	public EmissioneAbbonamento save2(EmissioneAbbonamento emissioneAbbonamento) {
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
+		EmissioneAbbonamento managedEmissioneAbbonamento = em.merge(emissioneAbbonamento);
+		em.flush();
+		transaction.commit();
+		return managedEmissioneAbbonamento;
+	}
+
 	public EmissioneAbbonamento getById(UUID uuid) {
 		EmissioneAbbonamento found = em.find(EmissioneAbbonamento.class, uuid);
 		if (found != null) {

@@ -18,7 +18,7 @@ public class VidimazioneAbbonamentiDAO {
 	public void save(VidimazioneAbbonamenti e) {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		em.persist(e);
+		em.merge(e);
 		transaction.commit();
 	}
 

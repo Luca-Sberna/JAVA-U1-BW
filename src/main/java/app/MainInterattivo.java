@@ -3,6 +3,7 @@ package app;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -30,8 +31,10 @@ import entities.Utente;
 import entities.VenditoriAutorizzati;
 import entities.VidimazioneAbbonamenti;
 import entities.VidimazioneBiglietti;
+import lombok.extern.slf4j.Slf4j;
 import util.JpaUtil;
 
+@Slf4j
 public class MainInterattivo {
 	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
@@ -61,9 +64,9 @@ public class MainInterattivo {
 		VenditoriAutorizzati venditore1 = new VenditoriAutorizzati("Amazon", "E-Commerce");
 		VenditoriAutorizzati venditore2 = new VenditoriAutorizzati("TuttoQui", "Edicola");
 		VenditoriAutorizzati venditore3 = new VenditoriAutorizzati("Da Enrico", "Tabaccaio");
-		vad.save(venditore3);
-		vad.save(venditore2);
-		vad.save(venditore1);
+//		vad.save(venditore3);
+//		vad.save(venditore2);
+//		vad.save(venditore1);
 
 		// Login/Register
 		System.out.println("Benvenuto all'app di trasporti pubblici!");
@@ -106,14 +109,6 @@ public class MainInterattivo {
 			System.exit(0);
 		}
 
-		// Prompt per l'utente
-//		System.out.println(nomeScelto + " " + cognomeScelto + ", seleziona il venditore:");
-//		System.out.println("1. Amazon (E-Commerce)");
-//		System.out.println("2. TuttoQui (Edicola)");
-//		System.out.println("3. Da Enrico (Tabaccaio)");
-//		System.out.println("4. Distributore via carrara");
-//		System.out.print("Scelta: ");
-
 		// Recupera tutti i venditori autorizzati e visualizzali all'utente
 		System.out.println("seleziona il venditore:");
 		List<VenditoriAutorizzati> venditori = vad.getAllVenditoriAutorizzati();
@@ -136,27 +131,6 @@ public class MainInterattivo {
 		DistributoriAutomatici distributore = null;
 		VidimazioneBiglietti vidimazione = null;
 
-//		switch (venditoreScelto) {
-//		case 1:
-//			venditore = new VenditoriAutorizzati("Amazon", "E-Commerce");
-//			break;
-//		case 2:
-//			venditore = new VenditoriAutorizzati("TuttoQui", "Edicola");
-//			break;
-//		case 3:
-//			venditore = new VenditoriAutorizzati("Da Enrico", "Tabaccaio");
-//			break;
-//		case 4:
-//			distributore = new DistributoriAutomatici("Via Carrara 23 Milano");
-//			dad.save(distributore);
-//			break;
-//		default:
-//			System.out.println("Selezione non valida. Uscita dall'app.");
-//			em.close();
-//			emf.close();
-//			System.exit(0);
-//		}
-
 		System.out.println("Cosa desideri acquistare?");
 		System.out.println("1. Biglietto");
 		System.out.println("2. Abbonamento");
@@ -172,7 +146,7 @@ public class MainInterattivo {
 			// Recupera i mezzi disponibili e visualizzali all'utente
 			List<Mezzo> mezziDisponibili = md.getAllMezzi();
 			for (Mezzo mezzo : mezziDisponibili) {
-				System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + mezzo.getTratta());
+				System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + " " + mezzo.getTratta());
 			}
 
 			int mezzoScelto = scanner.nextInt();
@@ -181,7 +155,7 @@ public class MainInterattivo {
 				mezzoSelezionato = mezziDisponibili.get(mezzoScelto - 1);
 				// Ora puoi utilizzare "mezzoSelezionato" come desideri
 				System.out.println("Hai scelto il mezzo: " + mezzoSelezionato.getId() + ". "
-						+ mezzoSelezionato.getTipoMezzo() + "per la tratta: " + mezzoSelezionato.getTratta());
+						+ mezzoSelezionato.getTipoMezzo() + " " + mezzoSelezionato.getTratta());
 			} else {
 				System.out.println("La scelta del mezzo non è valida.");
 			}
@@ -190,7 +164,7 @@ public class MainInterattivo {
 			System.out.println("Buon viaggio! WOOOO!");
 			System.out.println("***Ricordarsi di convalidare il biglietto sul mezzo!***");
 
-			System.out.println("Salendo sul mezzo" + mezzoSelezionato);
+			System.out.println("Salendo sul mezzo" + mezzoScelto);
 
 			System.out
 					.println("Vuoi timbrare il biglietto sul mezzo " + "(" + mezzoScelto + ")" + " selezionato? (S/N)");
@@ -249,11 +223,14 @@ public class MainInterattivo {
 			// Crea un nuovo oggetto EmissioneAbbonamento associato alla tessera dell'utente
 			EmissioneAbbonamento abbonamento = new EmissioneAbbonamento(dataInizio, dataScadenza, tipoAbbonamento,
 					tessera);
-			ead.save(abbonamento);
+			abbonamento.setIdEmissione(UUID.randomUUID());
+			ead.save2(abbonamento);
+
+			log.info(abbonamento.toString());
 			System.out.println("Abbonamento emesso e acquistato con successo!");
 
 			Mezzo mezzoSelezionatoPerTessera = null;
-			int uscita = -1;
+			int uscita = 0;
 			do {
 				System.out.println("Ecco i mezzi disponibili: (premi 0 per uscire)");
 
@@ -283,6 +260,7 @@ public class MainInterattivo {
 			String confermaTessera = scanner.next();
 
 			if (confermaTessera.equalsIgnoreCase("S")) {
+
 				VidimazioneAbbonamenti vidimazioneAbb = new VidimazioneAbbonamenti(abbonamento, utente,
 						LocalDate.now());
 				vabd.save(vidimazioneAbb);
