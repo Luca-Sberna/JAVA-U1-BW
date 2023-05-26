@@ -425,6 +425,7 @@ public class MainInterattivo {
 					System.out.println("Inserisci il tipo di negozio: ");
 					String tipoNegozio = scanner.next();
 					System.out.println("Inserisci il luogo del venditore");
+					scanner.nextLine();
 					String luogoVenditore = scanner.nextLine();
 
 					// CREA ISTANZA E SALVA RECORD SU DB
