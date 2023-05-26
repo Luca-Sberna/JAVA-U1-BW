@@ -11,3 +11,6 @@ mezzo esso deve essere annullato e deve essere possibile acquisire il numero di 
 
 Ogni mezzo in servizio può essere assegnato ad una tratta, che è caretterizzata da una zona di partenza, un capolinea ed un tempo medio di percorrrenza. Occorre 
 tenere traccia del numero di volte che un mezzo percorre una tappa e del tempo effettivo di percorrenza di ogni tratta
+
+## Diagramma ER
+![Diagramma ER - Mezzi Pubblici](https://github.com/matteovcc/Buildweek-Java/assets/113930607/8a345c28-7c75-42ca-9de7-609f5c108315)
