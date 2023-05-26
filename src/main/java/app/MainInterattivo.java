@@ -17,6 +17,7 @@ import dao.TesseraDAO;
 import dao.TrattaDAO;
 import dao.UtenteDAO;
 import dao.VenditoriAutorizzatiDAO;
+import dao.ViaggioDAO;
 import dao.VidimazioneAbbonamentiDAO;
 import dao.VidimazioneBigliettiDAO;
 import entities.DistributoriAutomatici;
@@ -44,6 +45,7 @@ public class MainInterattivo {
 		Scanner scanner = new Scanner(System.in);
 		EntityManager em = emf.createEntityManager();
 
+		// CREAZIONE DEGLI OGGETTI DAO ⬇️⬇️⬇️
 		MezzoDAO md = new MezzoDAO(em);
 		PuntiVenditaDAO pvd = new PuntiVenditaDAO(em);
 		TrattaDAO td = new TrattaDAO(em);
@@ -55,28 +57,26 @@ public class MainInterattivo {
 		TesseraDAO ted = new TesseraDAO(em);
 		VidimazioneBigliettiDAO vbd = new VidimazioneBigliettiDAO(em);
 		VidimazioneAbbonamentiDAO vabd = new VidimazioneAbbonamentiDAO(em);
+		ViaggioDAO vd = new ViaggioDAO(em);
 
-		DistributoriAutomatici distributore2 = new DistributoriAutomatici(
-				"Stazione Milano Centrale", StatoDistributore.FUNZIONANTE);
+		// CREAZIONE OGGETTI DISTRIBUTORIAUTOMATICI E VENDITORIAUTORIZZATI ⬇️⬇️⬇️
+		DistributoriAutomatici distributore2 = new DistributoriAutomatici("Stazione Milano Centrale",
+				StatoDistributore.FUNZIONANTE);
+		VenditoriAutorizzati venditore1 = new VenditoriAutorizzati("Amazon", "E-Commerce");
+		VenditoriAutorizzati venditore2 = new VenditoriAutorizzati("TuttoQui", "Edicola");
+		VenditoriAutorizzati venditore3 = new VenditoriAutorizzati("Da Enrico", "Tabaccaio");
 
-		VenditoriAutorizzati venditore1 = new VenditoriAutorizzati("Amazon",
-				"E-Commerce");
-		VenditoriAutorizzati venditore2 = new VenditoriAutorizzati("TuttoQui",
-				"Edicola");
-		VenditoriAutorizzati venditore3 = new VenditoriAutorizzati("Da Enrico",
-				"Tabaccaio");
-
-		// Login/Register
+		// LOGIN/REGISTER - MENÙ PRINCIPALE ⬇️⬇️⬇️
 		System.out.println("Benvenuto all'app di trasporti pubblici!");
 		System.out.println("1. Accedi");
 		System.out.println("2. Nuovo nell'app? Registrati");
 		System.out.println("3. Admin");
-		int sceltaUtente = scanner.nextInt();
 
+		int sceltaUtente = scanner.nextInt();
 		Utente utente = null;
 		switch (sceltaUtente) {
 		case 1:
-			// Login
+			// LOGIN UTENTE ⬇️⬇️⬇️
 			System.out.println("Inserisci l'ID dell'utente:");
 			String idUtente = scanner.next();
 
@@ -84,7 +84,7 @@ public class MainInterattivo {
 
 			if (utente == null) {
 				System.out.println("Utente non valido.");
-				// Gestire l'errore o uscire dall'applicazione
+				// GESTIRE L'ERRORE O USCIRE DALL'APPLICAZIONE
 				break;
 			}
 			System.out.println("Che bello rivederti " + utente.getNome() + " "
@@ -92,8 +92,8 @@ public class MainInterattivo {
 			break;
 
 		case 2:
-			// Creazione utente (Register)
-			scanner.nextLine(); // Pulisce lo scanner
+			// CREAZIONE UTENTE (REGISTER)⬇️⬇️⬇️
+			scanner.nextLine();
 			System.out.println("Inserisci il tuo nome: ");
 			String nomeScelto = scanner.nextLine();
 			System.out.println("Inserisci il tuo cognome: ");
@@ -103,60 +103,51 @@ public class MainInterattivo {
 			break;
 
 		case 3:
+			// MENÙ ADMIN ⬇️⬇️⬇️
 			System.out.println(" ");
 			System.out.println("Sei nella sezione admin! Scegli cosa fare:");
 			System.out.println(" ");
 			System.out.println("1. Visualizza la lista dei mezzi");
-			System.out.println(
-					"2. Visualizza la lista dei venditori e distributori");// teo
+			System.out.println("2. Visualizza la lista dei venditori e distributori");
 			System.out.println("3. Visualizza la lista degli utenti");
 			System.out.println("4. Modifica un mezzo");
-			System.out.println("5. Modifica una tratta ");// nest
+			System.out.println("5. Modifica una tratta ");
 			System.out.println("6. Modifica un venditore autorizzato ");
 			System.out.println("7. Modifica un distributore automatico ");
 			System.out.println(
 					"8. Crea e aggiungi un mezzo con una tratta propria ");
 			System.out.println("9. Crea e aggiungi un venditore autorizzato ");
-			System.out
-					.println("10. Crea e aggiungi un distributore automatico ");// teo
-			// query ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️
-			System.out.println(
-					"11. Visualizza Abbonamenti attivi dal numero tessera");
-			System.out.println(
-					"12. Visualizza quante volte è stata percorsa una tratta");
-			System.out.println(
-					"13. Visualizza quante volte è stata percorsa una tratta da un singolo mezzo");
-			System.out.println(
-					"14. Visualizza le tessere scadute che devono essere rinnovate");
-			System.out.println(
-					"15. Visualizza numero biglietti vidimati in un periodo di tempo");
-
+			System.out.println("10. Crea e aggiungi un distributore automatico ");
+			System.out.println("11. Visualizza Abbonamenti attivi dal numero tessera");
+			System.out.println("12. Visualizza quante volte è stata percorsa una tratta");
+			System.out.println("13. Visualizza quante volte è stata percorsa una tratta da un singolo mezzo");
+			System.out.println("14. Visualizza le tessere scadute che devono essere rinnovate");
+			System.out.println("15. Visualizza numero biglietti vidimati in un periodo di tempo");
 			int sceltaAdmin = scanner.nextInt();
 			switch (sceltaAdmin) {
 			case 1:
-				System.out
-						.println("Ecco la lista dei mezzi e delle loro tratte");
+				// VISUALIZZA LISTA DEI MEZZI ⬇️⬇️⬇️
+				System.out.println("Ecco la lista dei mezzi e delle loro tratte");
 				md.getAllMezzi().stream().forEach(m -> log.info(m.toString()));
 				break;
 
 			case 2:
-				System.out
-						.println("Ecco la lista dei venditori e distributori");
-				pvd.getAllPuntiVendita().stream()
-						.forEach(pv -> log.info(
-								pv.getLuogo() + " " + pv.getNumeroVendite()
-										+ " " + pv.getIdPuntoVendita()));
+				// VISUALIZZA LISTA DEI VENDITORI E DISTRIBUTORI ⬇️⬇️⬇️
+				System.out.println("Ecco la lista dei venditori e distributori");
+				pvd.getAllPuntiVendita().stream().forEach(
+						pv -> log.info(pv.getLuogo() + " " + pv.getNumeroVendite() + " " + pv.getIdPuntoVendita()));
 				break;
 
 			case 3:
+				// VISUALIZZA LISTA DEGLI UTENTI ⬇️⬇️⬇️
 				System.out.println("Ecco la lista degli utenti");
 				ud.getAllUsers().stream().forEach(u -> log.info(u.getNome()
 						+ " " + u.getCognome() + " " + u.getIdUtente()));
 				break;
 
 			case 4:
-				System.out.println(
-						"Inserisci l'ID del mezzo che desideri modificare:");
+				// MODIFICA UN MEZZO ⬇️⬇️⬇️
+				System.out.println("Inserisci l'ID del mezzo che desideri modificare:");
 				String id = scanner.next();
 				UUID idMezzo = UUID.fromString(id);
 				System.out.println("Inserisci la nuova capienza del mezzo:");
@@ -171,8 +162,8 @@ public class MainInterattivo {
 				String tipoMezzoString = scanner.nextLine();
 				tipoMezzo tipoMezzoo = tipoMezzo.valueOf(tipoMezzoString);
 
-				System.out.println(
-						"Desideri modificare la tratta associata? (Sì/No)");
+				// MODIFICA LA TRATTA ASSOCIATA AL MEZZO SE LO SI DESIDERA ⬇️⬇️⬇️
+				System.out.println("Desideri modificare la tratta associata? (Sì/No)");
 				String modificaTratta = scanner.next();
 
 				if (modificaTratta.equalsIgnoreCase("Si")) {
@@ -189,26 +180,26 @@ public class MainInterattivo {
 							"Inserisci la durata totale del viaggio: ");
 					double durata = scanner.nextDouble();
 
-					// Crea la nuova tratta con i valori forniti dall'utente
-					Tratta nuovaTratta = new Tratta(partenza, destinazione,
-							distanza, durata);
-					td.save(nuovaTratta); // Mostra all'utente i dettagli della
-											// nuova tratta e richiedi conferma
+					// CREA LA NUOVA TRATTA CON I VALORI FORNITI DALL'UTENTE ⬇️⬇️⬇️
+					Tratta nuovaTratta = new Tratta(partenza, destinazione, distanza, durata);
+					td.save(nuovaTratta);
+					// MOSTRA ALL'UTENTE I DETTAGLI DELLA
+					// NUOVA TRATTA E RICHIEDI CONFERMA ⬇️⬇️⬇️
 					System.out.println("Nuova tratta:");
 					System.out.println(nuovaTratta);
-
-					md.findByIdAndUpdate(idMezzo, capienza, stato, tipoMezzoo,
-							nuovaTratta);
+					// AGGIORNA IL MEZZO CON LA NUOVA TRATTA ⬇️⬇️⬇️
+					md.findByIdAndUpdate(idMezzo, capienza, stato, tipoMezzoo, nuovaTratta);
 				}
 				break;
 
 			case 5:
+				// MODIFICA LA TRATTA ASSOCIATA AD UN MEZZO ⬇️⬇️⬇️
 				System.out.println("Modifica una tratta");
 				System.out
 						.println("Inserisci l'ID della tratta da modificare: ");
 				UUID trattaId = UUID.fromString(scanner.next());
 
-				// TROVA LA TRATTA TRAMITE L'ID
+				// TROVA LA TRATTA TRAMITE L'ID ⬇️⬇️⬇️
 				Tratta trattaDaModificare = td.getById(trattaId);
 
 				if (trattaDaModificare != null) {
@@ -226,7 +217,7 @@ public class MainInterattivo {
 					double nuovaDurata = scanner.nextDouble();
 
 					// MOSTRA ALL'UTENTE I DETTAGLI DELLE MODIFICHE E RICHIEDI
-					// CONFERMA
+					// CONFERMA ⬇️⬇️⬇️
 					System.out.println("Dettagli della modifica:");
 					System.out.println("Città di partenza: " + nuovaPartenza);
 					System.out.println(
@@ -462,12 +453,11 @@ public class MainInterattivo {
 				// UN PRECISO PERIODO DI TEMPO
 				System.out.println("Inserisci l'id del mezzo");
 				String idMezz = scanner.next();
-				log.info(
-						"Il numero dei biglietti vidimati nel range che stavi cercando sono  "
-								+ vbd.getBigliettiVidimatiPerMezzoInRange(
-										idMezz, LocalDate.of(2025, 06, 26),
-										LocalDate.of(2022, 04, 24)));
+				log.info("Il numero dei biglietti vidimati nel range che stavi cercando sono  "
+						+ vbd.getBigliettiVidimatiPerMezzoInRange(idMezz, LocalDate.of(2022, 04, 24),
+								LocalDate.of(2025, 06, 26)));
 				break;
+
 			default:
 				System.out.println("Selezione non valida");
 			}
@@ -517,6 +507,7 @@ public class MainInterattivo {
 				System.out.println("La scelta del venditore non è valida.");
 			}
 
+			// ACQUISTO BIGLIETTO O ABBONAMENTO ⬇️⬇️⬇️
 			VenditoriAutorizzati venditore = null;
 			DistributoriAutomatici distributore = null;
 			VidimazioneBiglietti vidimazione = null;
@@ -530,18 +521,20 @@ public class MainInterattivo {
 
 			switch (tipoAcquisto) {
 			case 1:
-				EmissioneBiglietto biglietto = new EmissioneBiglietto(
-						LocalDate.now(), utente, vidimazione, distributore);
+				// CASE ACQUISTO BIGLIETTO ⬇️⬇️⬇️
+				EmissioneBiglietto biglietto = new EmissioneBiglietto(LocalDate.now(), utente, vidimazione,
+						distributore);
 				ebd.save(biglietto);
 				System.out.println(
 						"Seleziona un mezzo per la tratta disponibile:");
 
+				// SELEZIONE MEZZO ⬇️⬇️⬇️
 				List<Mezzo> mezziDisponibili = md.getAllMezzi();
 				for (Mezzo mezzo : mezziDisponibili) {
 					System.out.println(mezzo.getId() + ". "
 							+ mezzo.getTipoMezzo() + " " + mezzo.getTratta());
 				}
-
+				// STAMPA IN CONSOLE IL MEZZO SCELTO ⬇️⬇️⬇️
 				int mezzoScelto = scanner.nextInt();
 				Mezzo mezzoSelezionato = null;
 				if (mezzoScelto >= 1
@@ -568,6 +561,7 @@ public class MainInterattivo {
 						+ mezzoSelezionato + ")" + " selezionato? (S/N)");
 				String confermaTimbro = scanner.next();
 
+				// VIDIMAZIONE BIGLIETTO ⬇️⬇️⬇️
 				if (confermaTimbro.equalsIgnoreCase("S")) {
 					VidimazioneBiglietti vidimazioneee = new VidimazioneBiglietti(
 							biglietto, mezzoSelezionato, LocalDate.now());
@@ -583,6 +577,7 @@ public class MainInterattivo {
 				}
 				break;
 			case 2:
+				// CASE ACQUISTO ABBONAMENTO ⬇️⬇️⬇️
 				LocalDate dataInizio = LocalDate.now();
 
 				System.out.println("Seleziona il tipo di abbonamento:");
@@ -590,7 +585,7 @@ public class MainInterattivo {
 				System.out.println("2. Mensile");
 				System.out.print("Scelta: ");
 				int tipoAbbonamentoScelto = scanner.nextInt();
-
+				// TIPO ABBONAMENTO ⬇️⬇️⬇️
 				TipoEvento tipoAbbonamento;
 				switch (tipoAbbonamentoScelto) {
 				case 1:
@@ -609,8 +604,7 @@ public class MainInterattivo {
 					return;
 				}
 
-				// Calcolare la data di scadenza in base al tipo di abbonamento
-				// scelto
+				// CALCOLO DATA SCADENZA IN BASE AL TIPO DI ABBONAMENTO SCELTO ⬇️⬇️⬇️
 				LocalDate dataScadenza;
 				if (tipoAbbonamento == TipoEvento.SETTIMANALE) {
 					dataScadenza = dataInizio.plusWeeks(1);
@@ -618,14 +612,14 @@ public class MainInterattivo {
 					dataScadenza = dataInizio.plusMonths(1);
 				}
 
-				// Creare un nuovo oggetto Tessera associato all'utente
+				// CREAZIONE NUOVO OGGETTO TESSERA ASSOCIATO ALL'UTENTE ⬇️⬇️⬇️
 				Tessera tessera = new Tessera(utente, dataInizio);
 				ted.save(tessera);
 
-				// Crea un nuovo oggetto EmissioneAbbonamento associato alla
-				// tessera dell'utente
-				EmissioneAbbonamento abbonamento = new EmissioneAbbonamento(
-						dataInizio, dataScadenza, tipoAbbonamento, tessera);
+				// CREAZIONE UN NUOVO OGGETTO EMISSIONEABBONAMENTO ASSOCIATO ALLA TESSERA
+				// DELL'UTENTE (SETTANDO L'ID MANUALMENTE) ⬇️⬇️⬇️
+				EmissioneAbbonamento abbonamento = new EmissioneAbbonamento(dataInizio, dataScadenza, tipoAbbonamento,
+						tessera);
 				abbonamento.setIdEmissione(UUID.randomUUID());
 				ead.save2(abbonamento);
 
@@ -633,6 +627,7 @@ public class MainInterattivo {
 				System.out.println(
 						"Abbonamento emesso e acquistato con successo!");
 
+				// SELEZIONE DEL MEZZO ⬇️⬇️⬇️
 				Mezzo mezzoSelezionatoPerTessera = null;
 				int uscita = 0;
 				do {
@@ -644,18 +639,12 @@ public class MainInterattivo {
 						System.out.println(mezzo.getId() + ". "
 								+ mezzo.getTipoMezzo() + mezzo.getTratta());
 					}
-
+					// STAMPA IN CONSOLE IL MEZZO SCELTO ⬇️⬇️⬇️
 					int mezzoSceltoPerTessera = scanner.nextInt();
-					if (mezzoSceltoPerTessera >= 1
-							&& mezzoSceltoPerTessera <= mezziDisponibiliPerTessera
-									.size()) {
-						mezzoSelezionatoPerTessera = mezziDisponibiliPerTessera
-								.get(mezzoSceltoPerTessera - 1);
-						// Ora puoi utilizzare "mezzoSelezionato" come desideri
-						System.out.println("Hai scelto il mezzo: "
-								+ mezzoSelezionatoPerTessera.getId() + ". "
-								+ mezzoSelezionatoPerTessera.getTipoMezzo()
-								+ " per la tratta: "
+					if (mezzoSceltoPerTessera >= 1 && mezzoSceltoPerTessera <= mezziDisponibiliPerTessera.size()) {
+						mezzoSelezionatoPerTessera = mezziDisponibiliPerTessera.get(mezzoSceltoPerTessera - 1);
+						System.out.println("Hai scelto il mezzo: " + mezzoSelezionatoPerTessera.getId() + ". "
+								+ mezzoSelezionatoPerTessera.getTipoMezzo() + " per la tratta: "
 								+ mezzoSelezionatoPerTessera.getTratta());
 					} else {
 						System.out.println("La scelta del mezzo non è valida.");
@@ -672,7 +661,7 @@ public class MainInterattivo {
 				System.out.println(
 						"Vuoi timbrare la tessera sul mezzo selezionato? (S/N)");
 				String confermaTessera = scanner.next();
-
+				// TIMBRO TESSERA ⬇️⬇️⬇️
 				if (confermaTessera.equalsIgnoreCase("S")) {
 
 					VidimazioneAbbonamenti vidimazioneAbb = new VidimazioneAbbonamenti(
