@@ -45,7 +45,7 @@ public class MainInterattivo {
 		Scanner scanner = new Scanner(System.in);
 		EntityManager em = emf.createEntityManager();
 
-		// CREAZIONE DEGLI OGGETTI DAO
+		// CREAZIONE DEGLI OGGETTI DAO ⬇️⬇️⬇️
 		MezzoDAO md = new MezzoDAO(em);
 		PuntiVenditaDAO pvd = new PuntiVenditaDAO(em);
 		TrattaDAO td = new TrattaDAO(em);
@@ -59,14 +59,14 @@ public class MainInterattivo {
 		VidimazioneAbbonamentiDAO vabd = new VidimazioneAbbonamentiDAO(em);
 		ViaggioDAO vd = new ViaggioDAO(em);
 
-		// CREAZIONE OGGETTI DISTRIBUTORIAUTOMATICI E VENDITORIAUTORIZZATI
+		// CREAZIONE OGGETTI DISTRIBUTORIAUTOMATICI E VENDITORIAUTORIZZATI ⬇️⬇️⬇️
 		DistributoriAutomatici distributore2 = new DistributoriAutomatici("Stazione Milano Centrale",
 				StatoDistributore.FUNZIONANTE);
 		VenditoriAutorizzati venditore1 = new VenditoriAutorizzati("Amazon", "E-Commerce");
 		VenditoriAutorizzati venditore2 = new VenditoriAutorizzati("TuttoQui", "Edicola");
 		VenditoriAutorizzati venditore3 = new VenditoriAutorizzati("Da Enrico", "Tabaccaio");
 
-		// LOGIN/REGISTER - MENÙ PRINCIPALE
+		// LOGIN/REGISTER - MENÙ PRINCIPALE ⬇️⬇️⬇️
 		System.out.println("Benvenuto all'app di trasporti pubblici!");
 		System.out.println("1. Accedi");
 		System.out.println("2. Nuovo nell'app? Registrati");
@@ -76,7 +76,7 @@ public class MainInterattivo {
 		Utente utente = null;
 		switch (sceltaUtente) {
 		case 1:
-			// LOGIN UTENTE
+			// LOGIN UTENTE ⬇️⬇️⬇️
 			System.out.println("Inserisci l'ID dell'utente:");
 			String idUtente = scanner.next();
 
@@ -91,7 +91,7 @@ public class MainInterattivo {
 			break;
 
 		case 2:
-			// CREAZIONE UTENTE (REGISTER)
+			// CREAZIONE UTENTE (REGISTER)⬇️⬇️⬇️
 			scanner.nextLine();
 			System.out.println("Inserisci il tuo nome: ");
 			String nomeScelto = scanner.nextLine();
@@ -102,7 +102,7 @@ public class MainInterattivo {
 			break;
 
 		case 3:
-			// MENÙ ADMIN
+			// MENÙ ADMIN ⬇️⬇️⬇️
 			System.out.println(" ");
 			System.out.println("Sei nella sezione admin! Scegli cosa fare:");
 			System.out.println(" ");
@@ -124,27 +124,27 @@ public class MainInterattivo {
 			int sceltaAdmin = scanner.nextInt();
 			switch (sceltaAdmin) {
 			case 1:
-				// VISUALIZZA LISTA DEI MEZZI
+				// VISUALIZZA LISTA DEI MEZZI ⬇️⬇️⬇️
 				System.out.println("Ecco la lista dei mezzi e delle loro tratte");
 				md.getAllMezzi().stream().forEach(m -> log.info(m.toString()));
 				break;
 
 			case 2:
-				// VISUALIZZA LISTA DEI VENDITORI E DISTRIBUTORI
+				// VISUALIZZA LISTA DEI VENDITORI E DISTRIBUTORI ⬇️⬇️⬇️
 				System.out.println("Ecco la lista dei venditori e distributori");
 				pvd.getAllPuntiVendita().stream().forEach(
 						pv -> log.info(pv.getLuogo() + " " + pv.getNumeroVendite() + " " + pv.getIdPuntoVendita()));
 				break;
 
 			case 3:
-				// VISUALIZZA LISTA DEGLI UTENTI
+				// VISUALIZZA LISTA DEGLI UTENTI ⬇️⬇️⬇️
 				System.out.println("Ecco la lista degli utenti");
 				ud.getAllUsers().stream()
 						.forEach(u -> log.info(u.getNome() + " " + u.getCognome() + " " + u.getIdUtente()));
 				break;
 
 			case 4:
-				// MODIFICA UN MEZZO
+				// MODIFICA UN MEZZO ⬇️⬇️⬇️
 				System.out.println("Inserisci l'ID del mezzo che desideri modificare:");
 				String id = scanner.next();
 				UUID idMezzo = UUID.fromString(id);
@@ -158,7 +158,7 @@ public class MainInterattivo {
 				String tipoMezzoString = scanner.nextLine();
 				tipoMezzo tipoMezzoo = tipoMezzo.valueOf(tipoMezzoString);
 
-				// MODIFICA LA TRATTA ASSOCIATA AL MEZZO SE LO SI DESIDERA
+				// MODIFICA LA TRATTA ASSOCIATA AL MEZZO SE LO SI DESIDERA ⬇️⬇️⬇️
 				System.out.println("Desideri modificare la tratta associata? (Sì/No)");
 				String modificaTratta = scanner.next();
 
@@ -172,25 +172,25 @@ public class MainInterattivo {
 					System.out.println("Inserisci la durata totale del viaggio: ");
 					double durata = scanner.nextDouble();
 
-					// CREA LA NUOVA TRATTA CON I VALORI FORNITI DALL'UTENTE
+					// CREA LA NUOVA TRATTA CON I VALORI FORNITI DALL'UTENTE ⬇️⬇️⬇️
 					Tratta nuovaTratta = new Tratta(partenza, destinazione, distanza, durata);
 					td.save(nuovaTratta);
 					// MOSTRA ALL'UTENTE I DETTAGLI DELLA
-					// NUOVA TRATTA E RICHIEDI CONFERMA
+					// NUOVA TRATTA E RICHIEDI CONFERMA ⬇️⬇️⬇️
 					System.out.println("Nuova tratta:");
 					System.out.println(nuovaTratta);
-					// AGGIORNA IL MEZZO CON LA NUOVA TRATTA
+					// AGGIORNA IL MEZZO CON LA NUOVA TRATTA ⬇️⬇️⬇️
 					md.findByIdAndUpdate(idMezzo, capienza, stato, tipoMezzoo, nuovaTratta);
 				}
 				break;
 
 			case 5:
-				// MODIFICA LA TRATTA ASSOCIATA AD UN MEZZO
+				// MODIFICA LA TRATTA ASSOCIATA AD UN MEZZO ⬇️⬇️⬇️
 				System.out.println("Modifica una tratta");
 				System.out.println("Inserisci l'ID della tratta da modificare: ");
 				UUID trattaId = UUID.fromString(scanner.next());
 
-				// TROVA LA TRATTA TRAMITE L'ID
+				// TROVA LA TRATTA TRAMITE L'ID ⬇️⬇️⬇️
 				Tratta trattaDaModificare = td.getById(trattaId);
 
 				if (trattaDaModificare != null) {
@@ -204,7 +204,7 @@ public class MainInterattivo {
 					double nuovaDurata = scanner.nextDouble();
 
 					// MOSTRA ALL'UTENTE I DETTAGLI DELLE MODIFICHE E RICHIEDI
-					// CONFERMA
+					// CONFERMA ⬇️⬇️⬇️
 					System.out.println("Dettagli della modifica:");
 					System.out.println("Città di partenza: " + nuovaPartenza);
 					System.out.println("Città di destinazione: " + nuovaDestinazione);
