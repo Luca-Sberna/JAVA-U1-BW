@@ -59,16 +59,40 @@ public class TrattaDAO {
 //	}
 
 	public long getTimesTrattaPercorsa(String id) {
-		Query q = em.createQuery("SELECT COUNT(m) FROM Mezzo m WHERE m.tratta.id = :id");
+		Query q = em.createQuery(
+				"SELECT COUNT(m) FROM Mezzo m WHERE m.tratta.id = :id");
 		q.setParameter("id", UUID.fromString(id));
 		return (Long) q.getSingleResult();
 	}
 
-	public long getTimesTrattaPercorsaBySingleMezzo(String trattaId, String mezzoId) {
-		Query q = em.createQuery("SELECT COUNT(m) FROM Mezzo m WHERE m.tratta.id = :trattaId AND m.id = :mezzoId");
+	public long getTimesTrattaPercorsaBySingleMezzo(String trattaId,
+			String mezzoId) {
+		Query q = em.createQuery(
+				"SELECT COUNT(m) FROM Mezzo m WHERE m.tratta.id = :trattaId AND m.id = :mezzoId");
 		q.setParameter("trattaId", UUID.fromString(trattaId));
 		q.setParameter("mezzoId", UUID.fromString(mezzoId));
 		return (Long) q.getSingleResult();
+	}
+
+	public int findByIdAndUpdate(String id, String zonaPartenza,
+			String capolinea, double tempoMedioTratta, double lunghezzaTratta) {
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+		Query q = em.createQuery(
+				"UPDATE Tratta t SET t.zonaPartenza=:zonaPartenza , t.capolinea=:capolinea, t.tempoMedioTratta=:tempoMedioTratta, t.lunghezzaTratta=:lunghezzaTratta WHERE id = :id");
+		q.setParameter("id", UUID.fromString(id));
+		q.setParameter("zonaPartenza", zonaPartenza);
+		q.setParameter("capolinea", capolinea);
+		q.setParameter("tempoMedioTratta", tempoMedioTratta);
+		q.setParameter("lunghezzaTratta", lunghezzaTratta);
+		int edited = q.executeUpdate();
+		t.commit();
+		if (edited > 0) {
+			System.out.println("Mezzo modificato");
+		} else {
+			System.out.println("non abbiamo modificato nulla");
+		}
+		return edited;
 	}
 
 }
