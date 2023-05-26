@@ -466,7 +466,7 @@ public class MainInterattivo {
 				System.out.println("2. Mensile");
 				System.out.print("Scelta: ");
 				int tipoAbbonamentoScelto = scanner.nextInt();
-
+				// TIPO ABBONAMENTO ⬇️⬇️⬇️
 				TipoEvento tipoAbbonamento;
 				switch (tipoAbbonamentoScelto) {
 				case 1:
