@@ -44,4 +44,5 @@ public class VidimazioneBigliettiDAO {
 		q.setParameter("fineRange", fineRange);
 		return q.getSingleResult();
 	}
+
 }
