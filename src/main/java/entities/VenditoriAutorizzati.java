@@ -60,7 +60,9 @@ public class VenditoriAutorizzati extends PuntiVendita {
 //				+ getClass() + ", hashCode()=" + hashCode() + "]";
 //	}
 
-	public VenditoriAutorizzati(String nomeNegozio, String tipoDiNegozio) {
+	public VenditoriAutorizzati(String nomeNegozio, String tipoDiNegozio,
+			String luogo) {
+		super(luogo);
 		this.idPuntoVendita = UUID.randomUUID();
 		this.biglietti = new HashSet<>();
 		this.biglietti.add(new EmissioneBiglietto());

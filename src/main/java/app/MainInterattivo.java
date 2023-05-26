@@ -64,11 +64,15 @@ public class MainInterattivo {
 		DistributoriAutomatici distributore2 = new DistributoriAutomatici(
 				"Stazione Milano Centrale", StatoDistributore.FUNZIONANTE);
 		VenditoriAutorizzati venditore1 = new VenditoriAutorizzati("Amazon",
-				"E-Commerce");
+				"E-Commerce", "Alaska");
 		VenditoriAutorizzati venditore2 = new VenditoriAutorizzati("TuttoQui",
-				"Edicola");
+				"Edicola", "Hawaii");
 		VenditoriAutorizzati venditore3 = new VenditoriAutorizzati("Da Enrico",
-				"Tabaccaio");
+				"Tabaccaio", "Sardegna");
+//		dad.save(distributore2);
+//		vad.save(venditore1);
+//		vad.save(venditore2);
+//		vad.save(venditore3);
 
 		// LOGIN/REGISTER - MENÙ PRINCIPALE ⬇️⬇️⬇️
 		System.out.println("Benvenuto all'app di trasporti pubblici!");
@@ -342,10 +346,14 @@ public class MainInterattivo {
 						System.out.println(
 								"Inserisci il nuovo tipo di negozio: ");
 						String nuovoTipoNegozio = scanner.next();
+						scanner.nextLine();
+						System.out.println("Inserisci il luogo del negozio: ");
+						String nuovoLuogoVenditore = scanner.nextLine();
 
 						// VIENE CREATA UN'ISTANZA CON I DATI AGGIORNATI
 						VenditoriAutorizzati datiAggiornati = new VenditoriAutorizzati(
-								nuovoNomeNegozio, nuovoTipoNegozio);
+								nuovoNomeNegozio, nuovoTipoNegozio,
+								nuovoLuogoVenditore);
 						// MODIFICA ATTRIBUTI E SALVA SU DB
 						vad.modificaVenditoreAutorizzato(venditoreId,
 								datiAggiornati);
@@ -478,15 +486,18 @@ public class MainInterattivo {
 				case 9:
 					// CREA E AGGIUNGE UN VENDITORE AUTORIZZATO
 					// CHIEDE IN INPUT GLI ATTRIBUTI DEI VENDITORI
+					scanner.nextLine();
 					System.out.println("Inserisci il nome del negozio: ");
-					String nomeNegozio = scanner.next();
+					String nomeNegozio = scanner.nextLine();
 					System.out.println("Inserisci il tipo di negozio: ");
-					String tipoNegozio = scanner.next();
+					String tipoNegozio = scanner.nextLine();
+					System.out.println("Inserisci il luogo del venditore: ");
+					String luogoVenditore = scanner.nextLine();
 
 					// CREA ISTANZA E SALVA RECORD SU DB
 					VenditoriAutorizzati nuovoVenditore = new VenditoriAutorizzati(
-							nomeNegozio, tipoNegozio);
-					vad.saveVenditoreAutorizzato(nuovoVenditore);
+							nomeNegozio, tipoNegozio, luogoVenditore);
+					vad.save(nuovoVenditore);
 					System.out.println(
 							"Nuovo venditore autorizzato creato e aggiunto con successo!");
 
@@ -503,15 +514,21 @@ public class MainInterattivo {
 				case 10:
 					// CREA E AGGIUNGE UN DISTRIBUTORE AUTOMATICO
 					// CHIEDE VALORI DA MODIFICARE IN INPUT
+
 					System.out.println(
 							"Inserisci lo stato del distributore automatico (FUNZIONANTE o FUORI_SERVIZIO): ");
 					String statoDistributore = scanner.next().toUpperCase();
+					scanner.nextLine(); // PULISCE LO SCANNER
+					System.out.println("Inserisci il luogo del distributore ");
+					String luogoDistributore = scanner.nextLine();
 
 					// MODIFICA E SALVA SU DB
 					DistributoriAutomatici nuovoDistributore = new DistributoriAutomatici(
+							luogoDistributore,
 							DistributoriAutomatici.StatoDistributore
 									.valueOf(statoDistributore));
-					dad.saveDistributoreAutomatico(nuovoDistributore);
+
+					dad.save(nuovoDistributore);
 					System.out.println(
 							"Nuovo distributore automatico creato e aggiunto con successo!");
 
