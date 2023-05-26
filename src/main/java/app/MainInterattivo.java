@@ -17,6 +17,7 @@ import dao.TesseraDAO;
 import dao.TrattaDAO;
 import dao.UtenteDAO;
 import dao.VenditoriAutorizzatiDAO;
+import dao.ViaggioDAO;
 import dao.VidimazioneAbbonamentiDAO;
 import dao.VidimazioneBigliettiDAO;
 import entities.DistributoriAutomatici;
@@ -55,6 +56,7 @@ public class MainInterattivo {
 		TesseraDAO ted = new TesseraDAO(em);
 		VidimazioneBigliettiDAO vbd = new VidimazioneBigliettiDAO(em);
 		VidimazioneAbbonamentiDAO vabd = new VidimazioneAbbonamentiDAO(em);
+		ViaggioDAO vd = new ViaggioDAO(em);
 
 		DistributoriAutomatici distributore2 = new DistributoriAutomatici("Stazione Milano Centrale",
 				StatoDistributore.FUNZIONANTE);
@@ -118,7 +120,6 @@ public class MainInterattivo {
 			System.out.println("13. Visualizza quante volte è stata percorsa una tratta da un singolo mezzo");
 			System.out.println("14. Visualizza le tessere scadute che devono essere rinnovate");
 			System.out.println("15. Visualizza numero biglietti vidimati in un periodo di tempo");
-
 			int sceltaAdmin = scanner.nextInt();
 			switch (sceltaAdmin) {
 			case 1:
@@ -365,6 +366,7 @@ public class MainInterattivo {
 						+ vbd.getBigliettiVidimatiPerMezzoInRange(idMezz, LocalDate.of(2022, 04, 24),
 								LocalDate.of(2025, 06, 26)));
 				break;
+
 			default:
 				System.out.println("Selezione non valida");
 			}
@@ -395,6 +397,7 @@ public class MainInterattivo {
 				System.out.println("La scelta del venditore non è valida.");
 			}
 
+			// ACQUISTO BIGLIETTO O ABBONAMENTO ⬇️⬇️⬇️
 			VenditoriAutorizzati venditore = null;
 			DistributoriAutomatici distributore = null;
 			VidimazioneBiglietti vidimazione = null;
@@ -408,16 +411,18 @@ public class MainInterattivo {
 
 			switch (tipoAcquisto) {
 			case 1:
+				// CASE ACQUISTO BIGLIETTO ⬇️⬇️⬇️
 				EmissioneBiglietto biglietto = new EmissioneBiglietto(LocalDate.now(), utente, vidimazione,
 						distributore);
 				ebd.save(biglietto);
 				System.out.println("Seleziona un mezzo per la tratta disponibile:");
 
+				// SELEZIONE MEZZO ⬇️⬇️⬇️
 				List<Mezzo> mezziDisponibili = md.getAllMezzi();
 				for (Mezzo mezzo : mezziDisponibili) {
 					System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + " " + mezzo.getTratta());
 				}
-
+				// STAMPA IN CONSOLE IL MEZZO SCELTO ⬇️⬇️⬇️
 				int mezzoScelto = scanner.nextInt();
 				Mezzo mezzoSelezionato = null;
 				if (mezzoScelto >= 1 && mezzoScelto <= mezziDisponibili.size()) {
@@ -439,6 +444,7 @@ public class MainInterattivo {
 						"Vuoi timbrare il biglietto sul mezzo " + "(" + mezzoSelezionato + ")" + " selezionato? (S/N)");
 				String confermaTimbro = scanner.next();
 
+				// VIDIMAZIONE BIGLIETTO ⬇️⬇️⬇️
 				if (confermaTimbro.equalsIgnoreCase("S")) {
 					VidimazioneBiglietti vidimazioneee = new VidimazioneBiglietti(biglietto, mezzoSelezionato,
 							LocalDate.now());
@@ -452,6 +458,7 @@ public class MainInterattivo {
 				}
 				break;
 			case 2:
+				// CASE ACQUISTO ABBONAMENTO ⬇️⬇️⬇️
 				LocalDate dataInizio = LocalDate.now();
 
 				System.out.println("Seleziona il tipo di abbonamento:");
@@ -477,8 +484,7 @@ public class MainInterattivo {
 					return;
 				}
 
-				// Calcolare la data di scadenza in base al tipo di abbonamento
-				// scelto
+				// CALCOLO DATA SCADENZA IN BASE AL TIPO DI ABBONAMENTO SCELTO ⬇️⬇️⬇️
 				LocalDate dataScadenza;
 				if (tipoAbbonamento == TipoEvento.SETTIMANALE) {
 					dataScadenza = dataInizio.plusWeeks(1);
@@ -486,12 +492,12 @@ public class MainInterattivo {
 					dataScadenza = dataInizio.plusMonths(1);
 				}
 
-				// Creare un nuovo oggetto Tessera associato all'utente
+				// CREAZIONE NUOVO OGGETTO TESSERA ASSOCIATO ALL'UTENTE ⬇️⬇️⬇️
 				Tessera tessera = new Tessera(utente, dataInizio);
 				ted.save(tessera);
 
-				// Crea un nuovo oggetto EmissioneAbbonamento associato alla
-				// tessera dell'utente
+				// CREAZIONE UN NUOVO OGGETTO EMISSIONEABBONAMENTO ASSOCIATO ALLA TESSERA
+				// DELL'UTENTE (SETTANDO L'ID MANUALMENTE) ⬇️⬇️⬇️
 				EmissioneAbbonamento abbonamento = new EmissioneAbbonamento(dataInizio, dataScadenza, tipoAbbonamento,
 						tessera);
 				abbonamento.setIdEmissione(UUID.randomUUID());
@@ -500,6 +506,7 @@ public class MainInterattivo {
 				log.info(abbonamento.toString());
 				System.out.println("Abbonamento emesso e acquistato con successo!");
 
+				// SELEZIONE DEL MEZZO ⬇️⬇️⬇️
 				Mezzo mezzoSelezionatoPerTessera = null;
 				int uscita = 0;
 				do {
@@ -509,11 +516,10 @@ public class MainInterattivo {
 					for (Mezzo mezzo : mezziDisponibiliPerTessera) {
 						System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + mezzo.getTratta());
 					}
-
+					// STAMPA IN CONSOLE IL MEZZO SCELTO ⬇️⬇️⬇️
 					int mezzoSceltoPerTessera = scanner.nextInt();
 					if (mezzoSceltoPerTessera >= 1 && mezzoSceltoPerTessera <= mezziDisponibiliPerTessera.size()) {
 						mezzoSelezionatoPerTessera = mezziDisponibiliPerTessera.get(mezzoSceltoPerTessera - 1);
-						// Ora puoi utilizzare "mezzoSelezionato" come desideri
 						System.out.println("Hai scelto il mezzo: " + mezzoSelezionatoPerTessera.getId() + ". "
 								+ mezzoSelezionatoPerTessera.getTipoMezzo() + " per la tratta: "
 								+ mezzoSelezionatoPerTessera.getTratta());
@@ -529,7 +535,7 @@ public class MainInterattivo {
 
 				System.out.println("Vuoi timbrare la tessera sul mezzo selezionato? (S/N)");
 				String confermaTessera = scanner.next();
-
+				// TIMBRO TESSERA ⬇️⬇️⬇️
 				if (confermaTessera.equalsIgnoreCase("S")) {
 
 					VidimazioneAbbonamenti vidimazioneAbb = new VidimazioneAbbonamenti(abbonamento, utente,
