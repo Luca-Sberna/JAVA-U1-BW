@@ -225,7 +225,7 @@ public class MainInterattivo {
 					System.out.println("Confermi le modifiche? (Sì/No)");
 					String confermaModifiche = scanner.next();
 
-					if (confermaModifiche.equalsIgnoreCase("Sì")) {
+					if (confermaModifiche.equalsIgnoreCase("Si")) {
 						trattaDaModificare.setZonaPartenza(nuovaPartenza);
 						trattaDaModificare.setCapolinea(nuovaDestinazione);
 						trattaDaModificare.setLunghezzaTratta(nuovaDistanza);
