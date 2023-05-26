@@ -430,7 +430,7 @@ public class MainInterattivo {
 					// CREA ISTANZA E SALVA RECORD SU DB
 					VenditoriAutorizzati nuovoVenditore = new VenditoriAutorizzati(nomeNegozio, tipoNegozio,
 							luogoVenditore);
-					vad.saveVenditoreAutorizzato(nuovoVenditore);
+					vad.save(nuovoVenditore);
 					System.out.println("Nuovo venditore autorizzato creato e aggiunto con successo!");
 
 					// OPZIONE PER TORNARE INDIETRO
@@ -456,7 +456,7 @@ public class MainInterattivo {
 					// MODIFICA E SALVA SU DB
 					DistributoriAutomatici nuovoDistributore = new DistributoriAutomatici(luogoDistributore,
 							DistributoriAutomatici.StatoDistributore.valueOf(statoDistributore));
-					dad.saveDistributoreAutomatico(nuovoDistributore);
+					dad.save(nuovoDistributore);
 					System.out.println("Nuovo distributore automatico creato e aggiunto con successo!");
 
 					// OPZIONE PER TORNARE INDIETRO
