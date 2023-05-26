@@ -22,11 +22,11 @@ public class TrattaDAO {
 		transaction.commit();
 	}
 
-	public Tratta getById(String id) {
-		Tratta found = em.find(Tratta.class, UUID.fromString(id));
+	public Tratta getById(UUID uuid) {
+		Tratta found = em.find(Tratta.class, uuid);
 
 		if (found != null) {
-			System.out.println("Tratta" + " " + id + " " + "trovata");
+			System.out.println("Tratta" + " " + uuid + " " + "trovata");
 		} else {
 			System.out.println("Non abbiamo trovato niente");
 		}
@@ -69,6 +69,11 @@ public class TrattaDAO {
 		q.setParameter("trattaId", UUID.fromString(trattaId));
 		q.setParameter("mezzoId", UUID.fromString(mezzoId));
 		return (Long) q.getSingleResult();
+	}
+
+	public void saveTratta(Tratta tratta) {
+		em.merge(tratta);
+
 	}
 
 }
