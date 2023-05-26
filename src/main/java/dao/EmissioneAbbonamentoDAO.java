@@ -55,13 +55,12 @@ public class EmissioneAbbonamentoDAO {
 		em.refresh(emissioneAbbonamento);
 	}
 
-	public List<EmissioneAbbonamento> findAbbonamentiAttiviByNumeroTessera(String numeroTessera) {
+	public List<EmissioneAbbonamento> findAbbonamentiAttiviByNumeroTessera(String tessera) {
 		TypedQuery<EmissioneAbbonamento> q = em.createQuery(
-				"SELECT a FROM EmissioneAbbonamento a WHERE a.numeroTessera.numeroTessera = :numeroTessera AND CURRENT_DATE() BETWEEN a.dataEmissione AND a.dataScadenza",
+				"SELECT a FROM EmissioneAbbonamento a WHERE a.tessera.numeroTessera = :tessera AND CURRENT_DATE() BETWEEN a.dataEmissione AND a.dataScadenza",
 				EmissioneAbbonamento.class);
-		q.setParameter("numeroTessera", UUID.fromString(numeroTessera));
+		q.setParameter("tessera", UUID.fromString(tessera));
 		return q.getResultList();
-
 	}
 
 }

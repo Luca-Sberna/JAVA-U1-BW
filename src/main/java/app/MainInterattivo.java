@@ -1,7 +1,6 @@
 package app;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -256,7 +255,7 @@ public class MainInterattivo {
 						Mezzo.tipoMezzo.valueOf(tipoMezzo), tratta);
 				nuovoMezzo.setVelocitàMedia(velocitàMedia);
 
-				md.aggiungiMezzo(nuovoMezzo);
+				md.save(nuovoMezzo);
 				System.out.println("Nuovo mezzo creato e aggiunto con successo!");
 				break;
 
@@ -294,7 +293,6 @@ public class MainInterattivo {
 
 		if (sceltaUtente != 3) {
 
-			// Recupera tutti i venditori autorizzati e visualizzali all'utente
 			System.out.println("seleziona il venditore:");
 			List<VenditoriAutorizzati> venditori = vad.getAllVenditoriAutorizzati();
 			for (VenditoriAutorizzati venditore : venditori) {
@@ -305,7 +303,7 @@ public class MainInterattivo {
 			VenditoriAutorizzati venditoreSelezionato = null;
 			if (venditoreScelto >= 1 && venditoreScelto <= venditori.size()) {
 				venditoreSelezionato = venditori.get(venditoreScelto - 1);
-				// Ora puoi utilizzare "mezzoSelezionato" come desideri
+
 				System.out.println("Hai scelto il venditore: " + venditoreSelezionato.getIdPuntoVendita() + ". "
 						+ venditoreSelezionato.getNomeNegozio() + " " + venditoreSelezionato.getTipoDiNegozio());
 			} else {
@@ -329,7 +327,7 @@ public class MainInterattivo {
 						distributore);
 				ebd.save(biglietto);
 				System.out.println("Seleziona un mezzo per la tratta disponibile:");
-				// Recupera i mezzi disponibili e visualizzali all'utente
+
 				List<Mezzo> mezziDisponibili = md.getAllMezzi();
 				for (Mezzo mezzo : mezziDisponibili) {
 					System.out.println(mezzo.getId() + ". " + mezzo.getTipoMezzo() + " " + mezzo.getTratta());
@@ -339,7 +337,7 @@ public class MainInterattivo {
 				Mezzo mezzoSelezionato = null;
 				if (mezzoScelto >= 1 && mezzoScelto <= mezziDisponibili.size()) {
 					mezzoSelezionato = mezziDisponibili.get(mezzoScelto - 1);
-					// Ora puoi utilizzare "mezzoSelezionato" come desideri
+
 					System.out.println("Hai scelto il mezzo: " + mezzoSelezionato.getId() + ". "
 							+ mezzoSelezionato.getTipoMezzo() + " " + mezzoSelezionato.getTratta());
 				} else {
