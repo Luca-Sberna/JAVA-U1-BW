@@ -88,8 +88,10 @@ public class DistributoriAutomatici extends PuntiVendita {
 				+ getClass() + ", hashCode()=" + hashCode() + "]";
 	}
 
-	public DistributoriAutomatici(String luogo) {
+	public DistributoriAutomatici(String luogo,
+			StatoDistributore statoDistributore) {
 		super(luogo);
+		this.stato = statoDistributore;
 	}
 
 }
