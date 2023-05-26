@@ -13,4 +13,5 @@ Ogni mezzo in servizio può essere assegnato ad una tratta, che è caretterizzat
 tenere traccia del numero di volte che un mezzo percorre una tappa e del tempo effettivo di percorrenza di ogni tratta
 
 ## Diagramma ER
-![Diagramma ER - Mezzi Pubblici](https://github.com/matteovcc/Buildweek-Java/assets/113930607/8a345c28-7c75-42ca-9de7-609f5c108315)
+
+![Diagramma ER - Mezzi Pubblici(1)](https://github.com/matteovcc/Buildweek-Java/assets/113930607/f5b6288b-78f9-402f-a21d-39c3660ba82b)
