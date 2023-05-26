@@ -1,9 +1,11 @@
 package dao;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import entities.PuntiVendita;
 
@@ -31,5 +33,10 @@ public class PuntiVenditaDAO {
 		}
 		return found;
 
+	}
+
+	public List<PuntiVendita> getAllPuntiVendita() {
+		TypedQuery<PuntiVendita> query = em.createQuery("SELECT m FROM PuntiVendita m", PuntiVendita.class);
+		return query.getResultList();
 	}
 }

@@ -42,4 +42,8 @@ public class DistributoriAutomaticiDAO {
 		distributoriAutomatici = em.merge(distributoriAutomatici);
 		em.refresh(distributoriAutomatici);
 	}
+
+	public void saveDistributoreAutomatico(DistributoriAutomatici nuovoDistributore) {
+		em.persist(nuovoDistributore);
+	}
 }

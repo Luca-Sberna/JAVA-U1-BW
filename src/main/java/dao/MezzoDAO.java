@@ -9,10 +9,13 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import entities.Mezzo;
+import entities.Mezzo.statoMezzo;
+import entities.Mezzo.tipoMezzo;
 import entities.Tratta;
 
 public class MezzoDAO {
 	private final EntityManager em;
+	private List<Mezzo> mezzi; // Lista dei mezzi
 
 	public MezzoDAO(EntityManager em) {
 		this.em = em;
@@ -25,11 +28,11 @@ public class MezzoDAO {
 		transaction.commit();
 	}
 
-	public Mezzo getById(String id) {
-		Mezzo found = em.find(Mezzo.class, UUID.fromString(id));
+	public Mezzo getById(UUID uuid) {
+		Mezzo found = em.find(Mezzo.class, uuid);
 
 		if (found != null) {
-			System.out.println("Mezzo" + " " + id + " " + "trovato");
+			System.out.println("Mezzo" + " " + uuid + " " + "trovato");
 		} else {
 			System.out.println("Non abbiamo trovato niente");
 		}
@@ -72,12 +75,15 @@ public class MezzoDAO {
 		return query.getResultList();
 	}
 
-	public int findByIdAndUpdate(String id, long capienza, Tratta tratta) {
+	public int findByIdAndUpdate(UUID id, long capienza, statoMezzo stato, tipoMezzo tipoMezzo, Tratta tratta) {
 		EntityTransaction t = em.getTransaction();
 		t.begin();
-		Query q = em.createQuery("UPDATE Mezzo m SET m.capienza=:capienza , m.tratta=:tratta WHERE id = :id");
+		Query q = em.createQuery(
+				"UPDATE Mezzo m SET m.capienza=:capienza, m.stato=:stato,m.tipoMezzo = :tipoMezzo, m.tratta = :tratta WHERE m.id = :id");
 		q.setParameter("capienza", capienza);
-		q.setParameter("id", UUID.fromString(id));
+		q.setParameter("id", id);
+		q.setParameter("stato", stato);
+		q.setParameter("tipoMezzo", tipoMezzo);
 		q.setParameter("tratta", tratta);
 		int num = q.executeUpdate();
 		t.commit();
@@ -87,6 +93,17 @@ public class MezzoDAO {
 			System.out.println("non abbiamo modificato nulla");
 		}
 		return num;
+	}
+
+	public void aggiungiMezzo(Mezzo nuovoMezzo) {
+		// Salva il nuovo mezzo nel sistema di persistenza dei dati
+		em.getTransaction().begin();
+		em.persist(nuovoMezzo);
+		em.getTransaction().commit();
+	}
+
+	public void saveMezzo(Mezzo mezzoDaModificare) {
+		em.persist(mezzoDaModificare);
 	}
 
 }
