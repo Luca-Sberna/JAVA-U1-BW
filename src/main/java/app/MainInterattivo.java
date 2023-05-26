@@ -362,8 +362,8 @@ public class MainInterattivo {
 				System.out.println("Inserisci l'id del mezzo");
 				String idMezz = scanner.next();
 				log.info("Il numero dei biglietti vidimati nel range che stavi cercando sono  "
-						+ vbd.getBigliettiVidimatiPerMezzoInRange(idMezz, LocalDate.of(2025, 06, 26),
-								LocalDate.of(2022, 04, 24)));
+						+ vbd.getBigliettiVidimatiPerMezzoInRange(idMezz, LocalDate.of(2022, 04, 24),
+								LocalDate.of(2025, 06, 26)));
 				break;
 			default:
 				System.out.println("Selezione non valida");
